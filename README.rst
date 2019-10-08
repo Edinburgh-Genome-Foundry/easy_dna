@@ -17,6 +17,8 @@ Easy_dna was originally created to gather useful methods repeatedly used in the
 different software projects of the Edinburgh Genome Foundry for DNA design and
 manufacturing. 
 
+See the API reference `here <https://edinburgh-genome-foundry.github.io/easy_dna/>`_.
+
 Installation
 -------------
 
