@@ -97,6 +97,7 @@ design and genbank generation.</p>
 <p>Easy_dna was originally created to gather useful methods repeatedly used in the
 different software projects of the Edinburgh Genome Foundry for DNA design and
 manufacturing.</p>
+<p>See the API reference <a class="reference external" href="https://edinburgh-genome-foundry.github.io/easy_dna/">here</a>.</p>
 <div class="section" id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
 <p>You can install easy_dna through PIP:</p>
@@ -224,6 +225,34 @@ with (length-2) random amino-acids in the middle</p>
 <div><p>The seed to feed to the random number generator. When a seed is provided
 the random results depend deterministically on the seed, thus enabling
 reproducibility</p>
+</div></blockquote>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="easy_dna.list_common_enzymes">
+<code class="sig-prename descclassname">easy_dna.</code><code class="sig-name descname">list_common_enzymes</code><span class="sig-paren">(</span><em class="sig-param">site_length=(6</em>, <em class="sig-param">)</em>, <em class="sig-param">opt_temp=(37</em>, <em class="sig-param">)</em>, <em class="sig-param">min_suppliers=1</em>, <em class="sig-param">site_unlike=()</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/easy_dna/enzymes.html#list_common_enzymes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easy_dna.list_common_enzymes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a list of enzyme names with the given constraints.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>site_length</strong></p>
+<blockquote>
+<div><p>List of accepted site lengths (6, 4, …)</p>
+</div></blockquote>
+<p><strong>opt_temp</strong></p>
+<blockquote>
+<div><p>List of accepted optimal temperatures for the enzyme</p>
+</div></blockquote>
+<p><strong>min_suppliers</strong></p>
+<blockquote>
+<div><p>Minimal number registered suppliers in the Biopython data. A minimum
+of 3 known suppliers returns the most common enzymes.</p>
+</div></blockquote>
+<p><strong>site_unlike</strong></p>
+<blockquote>
+<div><p>List of (ambiguous or unambiguous) DNA sequences that should NOT be
+recognized by the selected enzymes.</p>
 </div></blockquote>
 </dd>
 </dl>
