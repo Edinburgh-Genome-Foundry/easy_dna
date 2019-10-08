@@ -1,0 +1,4 @@
+include *.txt
+include *.rst
+include ez_setup.py
+recursive-include easy_dna/data *
