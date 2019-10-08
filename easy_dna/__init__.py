@@ -18,6 +18,8 @@ from .matching import dna_pattern_to_regexpr, all_iupac_variants
 
 from .random_sequences import random_dna_sequence, random_protein_sequence
 
+from .enzymes import list_common_enzymes
+
 from .record_operations import (
     annotate_record,
     sequence_to_biopython_record,
@@ -51,6 +53,7 @@ __all__ = [
     "all_iupac_variants",
     "random_dna_sequence",
     "random_protein_sequence",
+    "list_common_enzymes",
     "annotate_record",
     "sequence_to_biopython_record",
     "record_with_different_sequence",

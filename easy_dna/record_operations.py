@@ -9,8 +9,8 @@ def sequence_to_biopython_record(
     sequence, id="<unknown id>", name="<unknown name>", features=()
 ):
     """Return a SeqRecord of the sequence, ready to be Genbanked."""
-    if hasattr(seq, 'seq'):
-        return seq
+    if hasattr(sequence, 'seq'):
+        return sequence
     return SeqRecord(
         Seq(sequence, alphabet=DNAAlphabet()),
         id=id,
