@@ -33,6 +33,8 @@ setup(
     install_requires=[
         "numpy",
         "Biopython",
-        "snapgene_reader"
+        "snapgene_reader",
+        "flametree",
+        "pandas"
     ]
 )
