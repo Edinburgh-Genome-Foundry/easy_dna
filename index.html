@@ -158,9 +158,67 @@ amino-acid (so it is deterministic but no codon-optimization is done).</p>
 </dd></dl>
 
 <dl class="function">
+<dt id="easy_dna.load_record">
+<code class="sig-prename descclassname">easy_dna.</code><code class="sig-name descname">load_record</code><span class="sig-paren">(</span><em class="sig-param">filename</em>, <em class="sig-param">record_id='auto'</em>, <em class="sig-param">upperize=False</em>, <em class="sig-param">id_cutoff=20</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/easy_dna/io.html#load_record"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easy_dna.load_record" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load a Fasta/Genbank/Snapgen file as a biopython record.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>filename</strong></p>
+<blockquote>
+<div><p>Path to the file containing the record.</p>
+</div></blockquote>
+<p><strong>record_id</strong></p>
+<blockquote>
+<div><p>Id of the record (leave to “auto” to keep the record’s original Id, which
+will default to the file name if the record has no Id).</p>
+</div></blockquote>
+<p><strong>upperize</strong></p>
+<blockquote>
+<div><p>If true, the record’s sequence will be upperized.</p>
+</div></blockquote>
+<p><strong>id_cutoff</strong></p>
+<blockquote>
+<div><p>If the Id is read from a filename, it will get truncated at this cutoff
+to avoid errors at report write time.</p>
+</div></blockquote>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
 <dt id="easy_dna.write_record">
 <code class="sig-prename descclassname">easy_dna.</code><code class="sig-name descname">write_record</code><span class="sig-paren">(</span><em class="sig-param">record</em>, <em class="sig-param">target</em>, <em class="sig-param">fmt='genbank'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/easy_dna/io.html#write_record"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easy_dna.write_record" title="Permalink to this definition">¶</a></dt>
 <dd><p>Write a record as genbank, fasta, etc. via Biopython, with fixes</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="easy_dna.anonymized_record">
+<code class="sig-prename descclassname">easy_dna.</code><code class="sig-name descname">anonymized_record</code><span class="sig-paren">(</span><em class="sig-param">record</em>, <em class="sig-param">record_id='anonymized'</em>, <em class="sig-param">label_generator='feature_%d'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/easy_dna/record_operations.html#anonymized_record"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easy_dna.anonymized_record" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a record with removed annotations/keywords/features/etc.</p>
+<p>Warning: this does not change the record sequence!</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>record</strong></p>
+<blockquote>
+<div><p>The record to be anonymized</p>
+</div></blockquote>
+<p><strong>record_id</strong></p>
+<blockquote>
+<div><p>Id of the new record</p>
+</div></blockquote>
+<p><strong>label_generator</strong></p>
+<blockquote>
+<div><p>Recipe to change feature labels. Either “feature_%d” or None (no label)
+of a function (i, feature)=&gt;label</p>
+</div></blockquote>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="easy_dna.records_from_data_files">
+<code class="sig-prename descclassname">easy_dna.</code><code class="sig-name descname">records_from_data_files</code><span class="sig-paren">(</span><em class="sig-param">filepaths=None</em>, <em class="sig-param">folder=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/easy_dna/io.html#records_from_data_files"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easy_dna.records_from_data_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>Automatically convert files or a folder’s content to biopython records.</p>
 </dd></dl>
 
 <dl class="function">
