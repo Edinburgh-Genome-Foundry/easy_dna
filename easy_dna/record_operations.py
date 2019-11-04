@@ -9,7 +9,7 @@ def sequence_to_biopython_record(
     sequence, id="<unknown id>", name="<unknown name>", features=()
 ):
     """Return a SeqRecord of the sequence, ready to be Genbanked."""
-    if hasattr(sequence, 'seq'):
+    if hasattr(sequence, "seq"):
         return sequence
     return SeqRecord(
         Seq(sequence, alphabet=DNAAlphabet()),
@@ -17,6 +17,7 @@ def sequence_to_biopython_record(
         name=name,
         features=list(features),
     )
+
 
 def sequence_to_atgc_string(sequence):
     if isinstance(sequence, str):
@@ -65,8 +66,46 @@ def annotate_record(
     strand = location[2] if len(location) == 3 else 1
     seqrecord.features.append(
         SeqFeature(
-            FeatureLocation(location[0], location[1], strand),
+            FeatureLocation(int(location[0]), int(location[1]), strand),
             qualifiers=qualifiers,
             type=feature_type,
         )
     )
+
+
+def anonymized_record(
+    record, record_id="anonymized", label_generator="feature_%d"
+):
+    """Return a record with removed annotations/keywords/features/etc.
+
+    Warning: this does not change the record sequence!
+
+    Parameters
+    ----------
+    record
+      The record to be anonymized
+
+    record_id
+      Id of the new record
+
+    label_generator
+      Recipe to change feature labels. Either "feature_%d" or None (no label)
+      of a function (i, feature)=>label
+    """
+    new_record = deepcopy(record)
+    new_record.annotations = {
+        "molecule_type": "ds-DNA",
+        "data_file_division": "   ",
+        "keywords": [],
+    }
+    new_record.id = new_record.name = record_id
+    for i, feature in enumerate(new_record.features):
+        label = None
+        if hasattr(label_generator, '__call__'):
+            label = label_generator(i, feature)
+        elif isinstance(label_generator, str):
+            label = label_generator % i
+        feature.qualifiers = {}
+        if label is not None:
+            feature.qualifiers['label'] = label
+    return new_record

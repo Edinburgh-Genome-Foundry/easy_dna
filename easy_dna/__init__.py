@@ -12,7 +12,7 @@ from .biotables import (
     COMPLEMENTS,
 )
 
-from .io import load_record, write_record
+from .io import load_record, write_record, records_from_data_files
 
 from .matching import dna_pattern_to_regexpr, all_iupac_variants
 
@@ -24,6 +24,7 @@ from .record_operations import (
     annotate_record,
     sequence_to_biopython_record,
     record_with_different_sequence,
+    anonymized_record
 )
 
 from .modifications import (
@@ -49,6 +50,8 @@ __all__ = [
     "COMPLEMENTS",
     "load_record",
     "write_record",
+    "anonymized_record",
+    "records_from_data_files",
     "dna_pattern_to_regexpr",
     "all_iupac_variants",
     "random_dna_sequence",

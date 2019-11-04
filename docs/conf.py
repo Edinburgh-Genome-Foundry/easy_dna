@@ -50,6 +50,9 @@ templates_path = ["_templates"]
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 
+html_context = {
+    "github_link": "https://github.com/Edinburgh-Genome-Foundry/easy_dna"
+}
 
 # -- Options for HTML output -------------------------------------------------
 
