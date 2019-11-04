@@ -35,6 +35,7 @@ setup(
         "Biopython",
         "snapgene_reader",
         "flametree",
-        "pandas"
+        "pandas",
+        "crazydoc"
     ]
 )
