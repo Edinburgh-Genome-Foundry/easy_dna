@@ -101,11 +101,11 @@ def anonymized_record(
     new_record.id = new_record.name = record_id
     for i, feature in enumerate(new_record.features):
         label = None
-        if hasattr(label_generator, '__call__'):
+        if hasattr(label_generator, "__call__"):
             label = label_generator(i, feature)
         elif isinstance(label_generator, str):
             label = label_generator % i
         feature.qualifiers = {}
         if label is not None:
-            feature.qualifiers['label'] = label
+            feature.qualifiers["label"] = label
     return new_record
