@@ -39,6 +39,8 @@ from .modifications import (
     swap_segments,
 )
 
+from .extractor import extract_from_input
+
 __all__ = [
     "complement",
     "reverse_complement",
