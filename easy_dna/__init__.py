@@ -41,6 +41,8 @@ from .modifications import (
 
 from .extractor import extract_from_input
 
+from .version import __version__
+
 __all__ = [
     "complement",
     "reverse_complement",
