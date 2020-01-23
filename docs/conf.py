@@ -38,7 +38,6 @@ extensions = [
     "numpydoc",
     "sphinx.ext.githubpages",
     "sphinx.ext.autosummary",
-    "sphinxcontrib.mermaid",
     "recommonmark",
 ]
 

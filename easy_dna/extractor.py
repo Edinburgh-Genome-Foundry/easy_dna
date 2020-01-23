@@ -6,6 +6,23 @@ from .io import load_record, records_from_data_files, write_record
 def extract_from_input(
     file=None, directory=None, construct_list=None, direct_sense=False
 ):
+    """Extract features from input and save them in separate files.
+
+    Parameters
+    ==========
+
+    file
+      Input sequence file (Genbank).
+
+    directory
+      Directory name containing input sequence files.
+
+    construct_list
+      A list of SeqRecords.
+
+    direct_sense
+      If True: make antisense features into direct-sense in the exported files.
+    """
     if construct_list:
         records_dict = dict()
         for input_record in construct_list:
@@ -34,8 +51,8 @@ def extract_from_input(
 
 
 def run_extraction(file=None, directory=None, direct_sense=False):
-    """Runs extract_features() on a Genbank file or directory of files."""
-
+    """Run extract_features() on a Genbank file or directory of files.
+    """
     genbank_id_limit = 20  # GenBank format hard limit for name
     if file:
         input_record = load_record(
@@ -61,9 +78,9 @@ def run_extraction(file=None, directory=None, direct_sense=False):
 
 def compute_id(seq_feature):
     """Computes an id for extract_features().
+
     The id can be used as a SeqRecord/Genbank name or id.
     """
-
     label_fields = [
         "name",
         "gene",
@@ -88,8 +105,10 @@ def compute_id(seq_feature):
 
 
 def extract_features(seq_record, direct_sense=True):
-    """Extract all features into separate Genbank files."""
+    """Extract all features from a SeqRecord.
 
+    Return the features as a list of SeqRecords.
+    """
     all_features_in_direct_sense = direct_sense
     records = []
 
@@ -129,9 +148,8 @@ def extract_features(seq_record, direct_sense=True):
 
 
 def write_records(key, records_dict, add_prefix=True):
-    """Write a list of records (i.e. `SeqRecord`s) into Genbank files.
+    """Write a list of SeqRecords into Genbank files.
     """
-
     records = records_dict[key]
     root = flametree.file_tree(key)
     for j, record in enumerate(records):
@@ -152,10 +170,17 @@ def write_records(key, records_dict, add_prefix=True):
 
 def make_part_dict(records_dict, min_sequence_length=20):
     """Make a full part list and a report.
-    Uses records_dict by extractor_from_file() or extractor_from_batch(). 
-    Discards sequences shorter than 'n'.
-    """
 
+    Uses records_dict by extractor_from_file() or extractor_from_batch().
+
+    Parameters
+    ==========
+    records_dict
+      Dictionary of sequence name: list of features as SeqRecords. 
+
+    min_sequence_length
+      Discard sequences with length less than this integer.
+    """
     report_index = [
         "input_construct",
         "input_sequence",
@@ -217,10 +242,11 @@ def make_part_dict(records_dict, min_sequence_length=20):
 
 
 def process_report(report):
-    """Formats the report prepared by make_part_dict().
-    Finds common parts and identical sequences.
-    """
+    """Format the report prepared by make_part_dict().
 
+    Finds common parts within constructs and identical sequences between
+    constructs.
+    """
     all_shared_with = pd.Series()
     all_equal_to = pd.Series()
     for sequence in report.loc[report["has_copy"]]["sequence_string"]:
