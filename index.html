@@ -161,26 +161,20 @@ amino-acid (so it is deterministic but no codon-optimization is done).</p>
 <dt id="easy_dna.load_record">
 <code class="sig-prename descclassname">easy_dna.</code><code class="sig-name descname">load_record</code><span class="sig-paren">(</span><em class="sig-param">filename</em>, <em class="sig-param">record_id='auto'</em>, <em class="sig-param">upperize=False</em>, <em class="sig-param">id_cutoff=20</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/easy_dna/io.html#load_record"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easy_dna.load_record" title="Permalink to this definition">¶</a></dt>
 <dd><p>Load a Fasta/Genbank/Snapgen file as a biopython record.</p>
-<dl class="field-list">
+<dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>filename</strong></p>
-<blockquote>
-<div><p>Path to the file containing the record.</p>
-</div></blockquote>
-<p><strong>record_id</strong></p>
-<blockquote>
-<div><p>Id of the record (leave to “auto” to keep the record’s original Id, which
+<dd class="field-odd"><dl class="simple">
+<dt><strong>filename</strong></dt><dd><p>Path to the file containing the record.</p>
+</dd>
+<dt><strong>record_id</strong></dt><dd><p>Id of the record (leave to “auto” to keep the record’s original Id, which
 will default to the file name if the record has no Id).</p>
-</div></blockquote>
-<p><strong>upperize</strong></p>
-<blockquote>
-<div><p>If true, the record’s sequence will be upperized.</p>
-</div></blockquote>
-<p><strong>id_cutoff</strong></p>
-<blockquote>
-<div><p>If the Id is read from a filename, it will get truncated at this cutoff
+</dd>
+<dt><strong>upperize</strong></dt><dd><p>If true, the record’s sequence will be upperized.</p>
+</dd>
+<dt><strong>id_cutoff</strong></dt><dd><p>If the Id is read from a filename, it will get truncated at this cutoff
 to avoid errors at report write time.</p>
-</div></blockquote>
+</dd>
+</dl>
 </dd>
 </dl>
 </dd></dl>
@@ -196,21 +190,17 @@ to avoid errors at report write time.</p>
 <code class="sig-prename descclassname">easy_dna.</code><code class="sig-name descname">anonymized_record</code><span class="sig-paren">(</span><em class="sig-param">record</em>, <em class="sig-param">record_id='anonymized'</em>, <em class="sig-param">label_generator='feature_%d'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/easy_dna/record_operations.html#anonymized_record"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easy_dna.anonymized_record" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a record with removed annotations/keywords/features/etc.</p>
 <p>Warning: this does not change the record sequence!</p>
-<dl class="field-list">
+<dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>record</strong></p>
-<blockquote>
-<div><p>The record to be anonymized</p>
-</div></blockquote>
-<p><strong>record_id</strong></p>
-<blockquote>
-<div><p>Id of the new record</p>
-</div></blockquote>
-<p><strong>label_generator</strong></p>
-<blockquote>
-<div><p>Recipe to change feature labels. Either “feature_%d” or None (no label)
+<dd class="field-odd"><dl class="simple">
+<dt><strong>record</strong></dt><dd><p>The record to be anonymized</p>
+</dd>
+<dt><strong>record_id</strong></dt><dd><p>Id of the new record</p>
+</dd>
+<dt><strong>label_generator</strong></dt><dd><p>Recipe to change feature labels. Either “feature_%d” or None (no label)
 of a function (i, feature)=&gt;label</p>
-</div></blockquote>
+</dd>
+</dl>
 </dd>
 </dl>
 </dd></dl>
@@ -234,7 +224,7 @@ of a function (i, feature)=&gt;label</p>
 <code class="sig-prename descclassname">easy_dna.</code><code class="sig-name descname">all_iupac_variants</code><span class="sig-paren">(</span><em class="sig-param">iupac_sequence</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/easy_dna/matching.html#all_iupac_variants"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easy_dna.all_iupac_variants" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return all unambiguous possible versions of the given sequence.</p>
 <p class="rubric">Examples</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">all_iupac_variants</span><span class="p">(</span><span class="s1">&#39;ATN&#39;</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">all_iupac_variants</span><span class="p">(</span><span class="s1">&#39;ATN&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="s1">&#39;ATA&#39;</span><span class="p">,</span> <span class="s1">&#39;ATC&#39;</span><span class="p">,</span> <span class="s1">&#39;ATG&#39;</span><span class="p">,</span> <span class="s1">&#39;ATT&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
@@ -244,24 +234,20 @@ of a function (i, feature)=&gt;label</p>
 <dt id="easy_dna.random_dna_sequence">
 <code class="sig-prename descclassname">easy_dna.</code><code class="sig-name descname">random_dna_sequence</code><span class="sig-paren">(</span><em class="sig-param">length</em>, <em class="sig-param">gc_share=None</em>, <em class="sig-param">probas=None</em>, <em class="sig-param">seed=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/easy_dna/random_sequences.html#random_dna_sequence"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easy_dna.random_dna_sequence" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a random DNA sequence (“ATGGCGT…”) with the specified length.</p>
-<dl class="field-list">
+<dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>length</strong></p>
-<blockquote>
-<div><p>Length of the DNA sequence.</p>
-</div></blockquote>
-<p><strong>proba</strong></p>
-<blockquote>
-<div><p>Frequencies for the different nucleotides, for instance
+<dd class="field-odd"><dl class="simple">
+<dt><strong>length</strong></dt><dd><p>Length of the DNA sequence.</p>
+</dd>
+<dt><strong>proba</strong></dt><dd><p>Frequencies for the different nucleotides, for instance
 <code class="docutils literal notranslate"><span class="pre">probas={&quot;A&quot;:0.2,</span> <span class="pre">&quot;T&quot;:0.3,</span> <span class="pre">&quot;G&quot;:0.3,</span> <span class="pre">&quot;C&quot;:0.2}</span></code>.
 If not specified, all nucleotides are equiprobable (p=0.25).</p>
-</div></blockquote>
-<p><strong>seed</strong></p>
-<blockquote>
-<div><p>The seed to feed to the random number generator. When a seed is provided
+</dd>
+<dt><strong>seed</strong></dt><dd><p>The seed to feed to the random number generator. When a seed is provided
 the random results depend deterministically on the seed, thus enabling
 reproducibility</p>
-</div></blockquote>
+</dd>
+</dl>
 </dd>
 </dl>
 </dd></dl>
@@ -270,20 +256,18 @@ reproducibility</p>
 <dt id="easy_dna.random_protein_sequence">
 <code class="sig-prename descclassname">easy_dna.</code><code class="sig-name descname">random_protein_sequence</code><span class="sig-paren">(</span><em class="sig-param">length</em>, <em class="sig-param">seed=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/easy_dna/random_sequences.html#random_protein_sequence"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easy_dna.random_protein_sequence" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a random protein sequence “MNQTW…YL*” of the specified length.</p>
-<dl class="field-list">
+<dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>length</strong></p>
-<blockquote>
-<div><p>Length of the protein sequence (in number of amino-acids). Note that the
+<dd class="field-odd"><dl class="simple">
+<dt><strong>length</strong></dt><dd><p>Length of the protein sequence (in number of amino-acids). Note that the
 sequence will always start with <code class="docutils literal notranslate"><span class="pre">&quot;M&quot;</span></code> and end with a stop codon <code class="docutils literal notranslate"><span class="pre">&quot;*&quot;</span></code>
 with (length-2) random amino-acids in the middle</p>
-</div></blockquote>
-<p><strong>seed</strong></p>
-<blockquote>
-<div><p>The seed to feed to the random number generator. When a seed is provided
+</dd>
+<dt><strong>seed</strong></dt><dd><p>The seed to feed to the random number generator. When a seed is provided
 the random results depend deterministically on the seed, thus enabling
 reproducibility</p>
-</div></blockquote>
+</dd>
+</dl>
 </dd>
 </dl>
 </dd></dl>
@@ -292,26 +276,20 @@ reproducibility</p>
 <dt id="easy_dna.list_common_enzymes">
 <code class="sig-prename descclassname">easy_dna.</code><code class="sig-name descname">list_common_enzymes</code><span class="sig-paren">(</span><em class="sig-param">site_length=(6</em>, <em class="sig-param">)</em>, <em class="sig-param">opt_temp=(37</em>, <em class="sig-param">)</em>, <em class="sig-param">min_suppliers=1</em>, <em class="sig-param">site_unlike=()</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/easy_dna/enzymes.html#list_common_enzymes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easy_dna.list_common_enzymes" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a list of enzyme names with the given constraints.</p>
-<dl class="field-list">
+<dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>site_length</strong></p>
-<blockquote>
-<div><p>List of accepted site lengths (6, 4, …)</p>
-</div></blockquote>
-<p><strong>opt_temp</strong></p>
-<blockquote>
-<div><p>List of accepted optimal temperatures for the enzyme</p>
-</div></blockquote>
-<p><strong>min_suppliers</strong></p>
-<blockquote>
-<div><p>Minimal number registered suppliers in the Biopython data. A minimum
+<dd class="field-odd"><dl class="simple">
+<dt><strong>site_length</strong></dt><dd><p>List of accepted site lengths (6, 4, …)</p>
+</dd>
+<dt><strong>opt_temp</strong></dt><dd><p>List of accepted optimal temperatures for the enzyme</p>
+</dd>
+<dt><strong>min_suppliers</strong></dt><dd><p>Minimal number registered suppliers in the Biopython data. A minimum
 of 3 known suppliers returns the most common enzymes.</p>
-</div></blockquote>
-<p><strong>site_unlike</strong></p>
-<blockquote>
-<div><p>List of (ambiguous or unambiguous) DNA sequences that should NOT be
+</dd>
+<dt><strong>site_unlike</strong></dt><dd><p>List of (ambiguous or unambiguous) DNA sequences that should NOT be
 recognized by the selected enzymes.</p>
-</div></blockquote>
+</dd>
+</dl>
 </dd>
 </dl>
 </dd></dl>
@@ -320,28 +298,20 @@ recognized by the selected enzymes.</p>
 <dt id="easy_dna.annotate_record">
 <code class="sig-prename descclassname">easy_dna.</code><code class="sig-name descname">annotate_record</code><span class="sig-paren">(</span><em class="sig-param">seqrecord</em>, <em class="sig-param">location='full'</em>, <em class="sig-param">feature_type='misc_feature'</em>, <em class="sig-param">margin=0</em>, <em class="sig-param">**qualifiers</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/easy_dna/record_operations.html#annotate_record"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easy_dna.annotate_record" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add a feature to a Biopython SeqRecord.</p>
-<dl class="field-list">
+<dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>seqrecord</strong></p>
-<blockquote>
-<div><p>The biopython seqrecord to be annotated.</p>
-</div></blockquote>
-<p><strong>location</strong></p>
-<blockquote>
-<div><p>Either (start, end) or (start, end, strand). (strand defaults to +1)</p>
-</div></blockquote>
-<p><strong>feature_type</strong></p>
-<blockquote>
-<div><p>The type associated with the feature</p>
-</div></blockquote>
-<p><strong>margin</strong></p>
-<blockquote>
-<div><p>Number of extra bases added on each side of the given location.</p>
-</div></blockquote>
-<p><strong>qualifiers</strong></p>
-<blockquote>
-<div><p>Dictionnary that will be the Biopython feature’s <cite>qualifiers</cite> attribute.</p>
-</div></blockquote>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>seqrecord</strong></dt><dd><p>The biopython seqrecord to be annotated.</p>
+</dd>
+<dt><strong>location</strong></dt><dd><p>Either (start, end) or (start, end, strand). (strand defaults to +1)</p>
+</dd>
+<dt><strong>feature_type</strong></dt><dd><p>The type associated with the feature</p>
+</dd>
+<dt><strong>margin</strong></dt><dd><p>Number of extra bases added on each side of the given location.</p>
+</dd>
+<dt><strong>qualifiers</strong></dt><dd><p>Dictionnary that will be the Biopython feature’s <cite>qualifiers</cite> attribute.</p>
+</dd>
+</dl>
 </dd>
 </dl>
 </dd></dl>
@@ -408,6 +378,26 @@ starting in new_start.</p>
 <p>pos1, pos2 are both of the form (start1, end1), (start2, end2)</p>
 </dd></dl>
 
+<dl class="function">
+<dt id="easy_dna.extract_from_input">
+<code class="sig-prename descclassname">easy_dna.</code><code class="sig-name descname">extract_from_input</code><span class="sig-paren">(</span><em class="sig-param">file=None</em>, <em class="sig-param">directory=None</em>, <em class="sig-param">construct_list=None</em>, <em class="sig-param">direct_sense=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/easy_dna/extractor.html#extract_from_input"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easy_dna.extract_from_input" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract features from input and save them in separate files.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>file</strong></dt><dd><p>Input sequence file (Genbank).</p>
+</dd>
+<dt><strong>directory</strong></dt><dd><p>Directory name containing input sequence files.</p>
+</dd>
+<dt><strong>construct_list</strong></dt><dd><p>A list of SeqRecords.</p>
+</dd>
+<dt><strong>direct_sense</strong></dt><dd><p>If True: make antisense features into direct-sense in the exported files.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
 </div>
 
 
@@ -417,7 +407,7 @@ starting in new_start.</p>
 </ul><div class="footer" role="contentinfo">
       &#169; Copyright 2019, Edinburgh Genome Foundry.
     <br>
-    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.0 with <a href="https://github.com/schettino72/sphinx_press_theme">Press Theme</a>.
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.3.1 with <a href="https://github.com/schettino72/sphinx_press_theme">Press Theme</a>.
 </div>
             </div>
           </div>
