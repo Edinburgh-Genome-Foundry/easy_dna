@@ -3,7 +3,9 @@ import flametree
 from .io import load_record, records_from_data_files, write_record
 
 
-def extract_from_input(file=None, directory=None, construct_list=None, direct_sense=False):
+def extract_from_input(
+    file=None, directory=None, construct_list=None, direct_sense=False
+):
     if construct_list:
         records_dict = dict()
         for input_record in construct_list:
@@ -12,19 +14,21 @@ def extract_from_input(file=None, directory=None, construct_list=None, direct_se
             key = input_record.name[0:20]  # GenBank format hard limit for name
             records_dict[key] = records
     else:
-        records_dict = run_extraction(file=file, directory=directory, direct_sense=False)
+        records_dict = run_extraction(
+            file=file, directory=directory, direct_sense=False
+        )
 
     for k, v in records_dict.items():
         write_records(k, records_dict)
 
     parts_report = make_part_dict(records_dict)
     processed_report = process_report(parts_report[1])
-    
+
     common_parts_dict = parts_report[0]
     common_parts_write = dict()
-    common_parts_write['common_parts'] = list(common_parts_dict.values())
+    common_parts_write["common_parts"] = list(common_parts_dict.values())
 
-    write_records('common_parts', common_parts_write, add_prefix=False)
+    write_records("common_parts", common_parts_write, add_prefix=False)
 
     return processed_report
 
@@ -39,9 +43,7 @@ def run_extraction(file=None, directory=None, direct_sense=False):
         )
         all_input_records = [input_record]
     elif directory:
-        all_input_records = records_from_data_files(
-            filepaths=None, folder=directory
-        )
+        all_input_records = records_from_data_files(filepaths=None, folder=directory)
     else:
         raise TypeError("Specify one of 'file' or 'directory'.")
 
@@ -86,7 +88,7 @@ def compute_id(seq_feature):
 
 
 def extract_features(seq_record, direct_sense=True):
-    """Extracts all features into separate Genbank files."""
+    """Extract all features into separate Genbank files."""
 
     all_features_in_direct_sense = direct_sense
     records = []
@@ -127,30 +129,29 @@ def extract_features(seq_record, direct_sense=True):
 
 
 def write_records(key, records_dict, add_prefix=True):
-    """Writes a list of records (i.e. `SeqRecord`s) into Genbank files"""
+    """Write a list of records (i.e. `SeqRecord`s) into Genbank files.
+    """
 
     records = records_dict[key]
     root = flametree.file_tree(key)
     for j, record in enumerate(records):
 
         if add_prefix:
-            filename_prefix = "feature" + str(j) + "_"
+            filename_prefix = "feature_%s_" % j
         else:
             filename_prefix = ""
         record_name_alnum = "".join(x if x.isalnum() else "_" for x in record.name)
         record_filename = filename_prefix + record_name_alnum + ".gb"
 
         try:
-            write_record(
-                record, root._file(record_filename).open("w"), fmt="genbank"
-            )
+            write_record(record, root._file(record_filename).open("w"), fmt="genbank")
 
         except Exception as err:
             print("Error writing", record_filename, str(err))
 
 
 def make_part_dict(records_dict, min_sequence_length=20):
-    """Makes a full part list and a report.
+    """Make a full part list and a report.
     Uses records_dict by extractor_from_file() or extractor_from_batch(). 
     Discards sequences shorter than 'n'.
     """
