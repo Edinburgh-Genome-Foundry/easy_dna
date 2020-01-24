@@ -23,7 +23,9 @@ author = "Zulko"
 html_theme = "press"
 
 # The full version, including alpha/beta/rc tags
-release = "0.1.0"
+
+import easy_dna
+release = easy_dna.__version__
 
 
 # -- General configuration ---------------------------------------------------
