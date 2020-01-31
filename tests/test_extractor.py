@@ -22,5 +22,5 @@ def test_extract_from_input():
         construct_record.name = construct_record.id
         constructs.append(construct_record)
 
-    processed_report = dna.extract_from_input(construct_list=constructs)
-    assert sum(processed_report["has_copy"]) == 8
+    records_dict = dna.extract_from_input(construct_list=constructs)
+    assert sum(records_dict["processed_report"]["has_copy"]) == 8

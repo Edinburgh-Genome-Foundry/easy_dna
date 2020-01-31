@@ -4,7 +4,12 @@ from .io import load_record, records_from_data_files, write_record
 
 
 def extract_from_input(
-    file=None, directory=None, construct_list=None, direct_sense=False
+    file=None,
+    directory=None,
+    construct_list=None,
+    direct_sense=False,
+    output_path=None,
+    min_sequence_length=20,
 ):
     """Extract features from input and save them in separate files.
 
@@ -35,19 +40,38 @@ def extract_from_input(
             file=file, directory=directory, direct_sense=False
         )
 
-    for k, v in records_dict.items():
-        write_records(k, records_dict)
-
-    parts_report = make_part_dict(records_dict)
+    parts_report = make_part_dict(records_dict, min_sequence_length=min_sequence_length)
     processed_report = process_report(parts_report[1])
 
     common_parts_dict = parts_report[0]
-    common_parts_write = dict()
-    common_parts_write["common_parts"] = list(common_parts_dict.values())
+    records_dict["common_parts"] = list(common_parts_dict.values())
 
-    write_records("common_parts", common_parts_write, add_prefix=False)
+    if output_path is not None:
+        root = flametree.file_tree(output_path)
 
-    return processed_report
+        for key, v in records_dict.items():
+            records = records_dict[key]
+            record_dir = root._dir(key)
+            for j, record in enumerate(records):
+
+                record_name_alnum = "".join(
+                    x if x.isalnum() else "_" for x in record.name
+                )
+                record_filename = record_name_alnum + ".gb"
+                print(record_filename)
+                record_file_path = record_dir._file(record_filename)
+
+                try:
+                    write_record(record, record_file_path, fmt="genbank")
+
+                except Exception as err:
+                    print("Error writing", record_filename, str(err))
+
+        processed_report.to_csv(root._file("report.csv").open("w"))
+
+    records_dict["processed_report"] = processed_report
+
+    return records_dict
 
 
 def run_extraction(file=None, directory=None, direct_sense=False):
