@@ -239,6 +239,7 @@ def make_part_dict(records_dict, min_sequence_length=20):
                     remove += 1
 
                     s["note"] = "renamed"
+                record.id = record.name
 
                 s["input_sequence"] = record.name  # update name in record
                 all_parts_dict[sequence_as_key] = record
