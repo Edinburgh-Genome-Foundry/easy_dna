@@ -7,7 +7,7 @@ def extract_from_input(
     file=None,
     directory=None,
     construct_list=None,
-    direct_sense=False,
+    direct_sense=True,
     output_path=None,
     min_sequence_length=20,
 ):
@@ -38,13 +38,13 @@ def extract_from_input(
     if construct_list:
         records_dict = dict()
         for input_record in construct_list:
-            records = extract_features(input_record)
+            records = extract_features(input_record, direct_sense)
             # potential clash if names are shared:
             key = input_record.name[0:20]  # GenBank format hard limit for name
             records_dict[key] = records
     else:
         records_dict = run_extraction(
-            file=file, directory=directory, direct_sense=False
+            file=file, directory=directory, direct_sense=direct_sense
         )
 
     parts_report = make_part_dict(records_dict, min_sequence_length=min_sequence_length)
@@ -81,7 +81,7 @@ def extract_from_input(
     return records_dict
 
 
-def run_extraction(file=None, directory=None, direct_sense=False):
+def run_extraction(file=None, directory=None, direct_sense=True):
     """Run extract_features() on a Genbank file or directory of files.
     """
     genbank_id_limit = 20  # GenBank format hard limit for name
@@ -98,7 +98,7 @@ def run_extraction(file=None, directory=None, direct_sense=False):
     records_dict = dict()
 
     for input_record in all_input_records:
-        records = extract_features(input_record)
+        records = extract_features(input_record, direct_sense)
 
         # potential clash if names are shared:
         key = input_record.name[0:genbank_id_limit]
