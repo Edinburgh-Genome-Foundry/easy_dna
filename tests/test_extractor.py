@@ -1,8 +1,9 @@
+import os
 import numpy as np
 import easy_dna as dna
 
 
-def test_extract_from_input():
+def test_extract_from_input(tmpdir):
     parts = []
     for i in range(10):
         part_id = "part_%s" % ("ABCDEFGHAB"[i])  # id is nonunique on purpose
@@ -16,11 +17,15 @@ def test_extract_from_input():
 
     constructs = []
     for position_of_last_part in [8, 10]:
-        # 8: parts A-H; 10: parts A-H and AB again
+        # 8: parts A-H; 10: parts A--H and A, B again
         construct_record = sum(parts[1:position_of_last_part], parts[0])
         construct_record.id = "construct_%02d" % (position_of_last_part)
         construct_record.name = construct_record.id
         constructs.append(construct_record)
 
-    records_dict = dna.extract_from_input(construct_list=constructs)
+    target_dir = os.path.join(str(tmpdir), "test_dir")
+
+    records_dict = dna.extract_from_input(
+        construct_list=constructs, output_path=target_dir
+    )
     assert sum(records_dict["processed_report"]["has_copy"]) == 8
