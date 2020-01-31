@@ -11,11 +11,12 @@ def extract_from_input(
     output_path=None,
     min_sequence_length=20,
 ):
-    """Extract features from input and save them in separate files.
+    """Extract features from input and return in a dictionary.
+    
+    Optionally save the features in separate files.
 
     Parameters
     ==========
-
     file
       Input sequence file (Genbank).
 
@@ -27,6 +28,12 @@ def extract_from_input(
 
     direct_sense
       If True: make antisense features into direct-sense in the exported files.
+
+    output_path
+      Path for the exported feature and report files.
+
+    min_sequence_length
+      Discard sequences with length less than this integer.
     """
     if construct_list:
         records_dict = dict()
@@ -43,8 +50,8 @@ def extract_from_input(
     parts_report = make_part_dict(records_dict, min_sequence_length=min_sequence_length)
     processed_report = process_report(parts_report[1])
 
-    common_parts_dict = parts_report[0]
-    records_dict["common_parts"] = list(common_parts_dict.values())
+    all_parts_dict = parts_report[0]
+    records_dict["all_parts"] = list(all_parts_dict.values())
 
     if output_path is not None:
         root = flametree.file_tree(output_path)
@@ -171,31 +178,10 @@ def extract_features(seq_record, direct_sense=True):
     return records
 
 
-def write_records(key, records_dict, add_prefix=True):
-    """Write a list of SeqRecords into Genbank files.
-    """
-    records = records_dict[key]
-    root = flametree.file_tree(key)
-    for j, record in enumerate(records):
-
-        if add_prefix:
-            filename_prefix = "feature_%s_" % j
-        else:
-            filename_prefix = ""
-        record_name_alnum = "".join(x if x.isalnum() else "_" for x in record.name)
-        record_filename = filename_prefix + record_name_alnum + ".gb"
-
-        try:
-            write_record(record, root._file(record_filename).open("w"), fmt="genbank")
-
-        except Exception as err:
-            print("Error writing", record_filename, str(err))
-
-
 def make_part_dict(records_dict, min_sequence_length=20):
     """Make a full part list and a report.
 
-    Uses records_dict by extractor_from_file() or extractor_from_batch().
+    Uses records_dict made by run_extraction().
 
     Parameters
     ==========
@@ -219,7 +205,7 @@ def make_part_dict(records_dict, min_sequence_length=20):
     report = pd.DataFrame(
         data=None, index=report_index, columns=None, dtype=str, copy=False
     )
-    common_parts_dict = dict()
+    all_parts_dict = dict()
 
     # This part is complex because it does two things, and will be simplified.
     # It makes a dictionary of all parts and a dataframe of part properties.
@@ -243,7 +229,7 @@ def make_part_dict(records_dict, min_sequence_length=20):
             sequence_as_key = str(record.seq.lower())
             s["sequence_string"] = sequence_as_key
 
-            if sequence_as_key in common_parts_dict.keys():
+            if sequence_as_key in all_parts_dict.keys():
                 s["has_copy"] = True
             else:
                 remove = 1
@@ -255,21 +241,21 @@ def make_part_dict(records_dict, min_sequence_length=20):
                     s["note"] = "renamed"
 
                 s["input_sequence"] = record.name  # update name in record
-                common_parts_dict[sequence_as_key] = record
+                all_parts_dict[sequence_as_key] = record
 
             series_name = str(i) + "_" + str(j)
             report[series_name] = s
 
     report = report.T
 
-    return (common_parts_dict, report)
+    return (all_parts_dict, report)
 
 
 def process_report(report):
     """Format the report prepared by make_part_dict().
 
-    Finds common parts within constructs and identical sequences between
-    constructs.
+    The function finds common parts within constructs and identical sequences 
+    between constructs.
     """
     all_shared_with = pd.Series()
     all_equal_to = pd.Series()
