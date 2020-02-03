@@ -4,7 +4,7 @@ from .io import load_record, records_from_data_files, write_record
 
 
 def extract_from_input(
-    file=None,
+    filename=None,
     directory=None,
     construct_list=None,
     direct_sense=True,
@@ -35,26 +35,34 @@ def extract_from_input(
     min_sequence_length
       Discard sequences with length less than this integer.
     """
+    genbank_id_limit = 20  # GenBank format hard limit for name
     if construct_list:
-        records_dict = dict()
-        recordname_list = []
-        for input_record in construct_list:
-            records = extract_features(input_record, direct_sense)
-            record_name = input_record.name[0:20]  # GenBank format hard limit for name
-            # This part makes the key unique by appending a copynumber
-            number_of_name_occurrences = recordname_list.count(record_name)
-            if number_of_name_occurrences:
-                key = "%s_%s" % (record_name, number_of_name_occurrences + 1)
-            else:
-                key = record_name
-
-            recordname_list.append(record_name)
-
-            records_dict[key] = records
-    else:
-        records_dict = run_extraction(
-            file=file, directory=directory, direct_sense=direct_sense
+        pass
+    elif filename:
+        input_record = load_record(
+            filename, record_id="auto", upperize=False, id_cutoff=genbank_id_limit
         )
+        construct_list = [input_record]
+    elif directory:
+        construct_list = records_from_data_files(filepaths=None, folder=directory)
+    else:
+        raise TypeError("Specify one of 'construct_list', 'filename' or 'directory'.")
+
+    records_dict = dict()
+    recordname_list = []
+    for input_record in construct_list:
+        records = extract_features(input_record, direct_sense)
+        record_name = input_record.name[0:genbank_id_limit]
+        # This part makes the key (used as dir name) unique by appending a copynumber:
+        number_of_name_occurrences = recordname_list.count(record_name)
+        if number_of_name_occurrences:
+            key = "%s_%s" % (record_name, number_of_name_occurrences + 1)
+        else:
+            key = record_name
+
+        recordname_list.append(record_name)
+
+        records_dict[key] = records
 
     parts_report = make_part_dict(records_dict, min_sequence_length=min_sequence_length)
     processed_report = process_report(parts_report[1])
@@ -76,7 +84,7 @@ def extract_from_input(
                 record_name_alnum = "".join(
                     x if x.isalnum() else "_" for x in record.name
                 )
-                # This part makes the filename unique by appending a copynumber
+                # This part makes the filename unique by appending a copynumber:
                 number_of_occurrences = record_name_alnum_list.count(record_name_alnum)
                 if number_of_occurrences:
                     record_filename = "%s_%s.gb" % (
@@ -99,41 +107,6 @@ def extract_from_input(
         processed_report.to_csv(root._file("report.csv").open("w"))
 
     records_dict["processed_report"] = processed_report
-
-    return records_dict
-
-
-def run_extraction(file=None, directory=None, direct_sense=True):
-    """Run extract_features() on a Genbank file or directory of files.
-    """
-    genbank_id_limit = 20  # GenBank format hard limit for name
-    if file:
-        input_record = load_record(
-            file, record_id="auto", upperize=False, id_cutoff=genbank_id_limit
-        )
-        all_input_records = [input_record]
-    elif directory:
-        all_input_records = records_from_data_files(filepaths=None, folder=directory)
-    else:
-        raise TypeError("Specify one of 'file' or 'directory'.")
-
-    records_dict = dict()
-
-    recordname_list = []
-    for input_record in all_input_records:
-        records = extract_features(input_record, direct_sense)
-
-        record_name = input_record.name[0:genbank_id_limit]
-        # This part makes the key unique by appending a copynumber
-        number_of_name_occurrences = recordname_list.count(record_name)
-        if number_of_name_occurrences:
-            key = "%s_%s" % (record_name, number_of_name_occurrences + 1)
-        else:
-            key = record_name
-
-        recordname_list.append(record_name)
-
-        records_dict[key] = records
 
     return records_dict
 
