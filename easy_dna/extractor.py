@@ -37,10 +37,19 @@ def extract_from_input(
     """
     if construct_list:
         records_dict = dict()
+        recordname_list = []
         for input_record in construct_list:
             records = extract_features(input_record, direct_sense)
-            # potential clash if names are shared:
-            key = input_record.name[0:20]  # GenBank format hard limit for name
+            record_name = input_record.name[0:20]  # GenBank format hard limit for name
+            # This part makes the key unique by appending a copynumber
+            number_of_name_occurrences = recordname_list.count(record_name)
+            if number_of_name_occurrences:
+                key = "%s_%s" % (record_name, number_of_name_occurrences + 1)
+            else:
+                key = record_name
+
+            recordname_list.append(record_name)
+
             records_dict[key] = records
     else:
         records_dict = run_extraction(
@@ -58,14 +67,27 @@ def extract_from_input(
 
         for key, v in records_dict.items():
             records = records_dict[key]
+
             record_dir = root._dir(key)
+
+            record_name_alnum_list = []
             for j, record in enumerate(records):
 
                 record_name_alnum = "".join(
                     x if x.isalnum() else "_" for x in record.name
                 )
-                record_filename = record_name_alnum + ".gb"
-                print(record_filename)
+                # This part makes the filename unique by appending a copynumber
+                number_of_occurrences = record_name_alnum_list.count(record_name_alnum)
+                if number_of_occurrences:
+                    record_filename = "%s_%s.gb" % (
+                        record_name_alnum,
+                        number_of_occurrences + 1,
+                    )
+                else:
+                    record_filename = record_name_alnum + ".gb"
+
+                record_name_alnum_list.append(record_name_alnum)
+
                 record_file_path = record_dir._file(record_filename)
 
                 try:
@@ -97,11 +119,20 @@ def run_extraction(file=None, directory=None, direct_sense=True):
 
     records_dict = dict()
 
+    recordname_list = []
     for input_record in all_input_records:
         records = extract_features(input_record, direct_sense)
 
-        # potential clash if names are shared:
-        key = input_record.name[0:genbank_id_limit]
+        record_name = input_record.name[0:genbank_id_limit]
+        # This part makes the key unique by appending a copynumber
+        number_of_name_occurrences = recordname_list.count(record_name)
+        if number_of_name_occurrences:
+            key = "%s_%s" % (record_name, number_of_name_occurrences + 1)
+        else:
+            key = record_name
+
+        recordname_list.append(record_name)
+
         records_dict[key] = records
 
     return records_dict
