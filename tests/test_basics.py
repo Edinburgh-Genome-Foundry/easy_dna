@@ -7,10 +7,6 @@ from easy_dna import (
 )
 
 
-def test_dna_pattern_to_regexpr():
-    assert dna_pattern_to_regexpr("ATW") == "AT[ATW]"
-
-
 def test_record_with_different_sequence():
     record = sequence_to_biopython_record("ATGCATGCATGC")
     annotate_record(record, (0, 5), label="my_label")
