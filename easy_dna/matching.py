@@ -31,7 +31,9 @@ def all_iupac_variants(iupac_sequence):
 
 
 def find_index(seq, pattern):
-    """Return the index of the first match of the pattern in seq
+    """Return the index of the first match of the pattern in seq.
+
+    Returns -1 if there is not match.
     """
     
     pattern = sequence_to_atgc_string(pattern)
@@ -45,14 +47,19 @@ def find_index(seq, pattern):
 def find_occurence(seq, pattern, strand="both"):
     if strand == 1:
         position = find_index(seq, pattern)
-        return (position, position + len(pattern), 1)
+        if position == -1:
+            return None
+        else:
+            return (position, position + len(pattern), 1)
     elif strand == -1:
         rev = reverse_complement(seq)
-        start, end, _ = find_occurence(rev, pattern, strand=1)
+        occurrence = find_occurence(rev, pattern, strand=1)
+        if occurrence == None:
+            return None
         L = len(seq)
-        return (L - end, L - start, -1)
+        return (L - occurrence[1], L - occurrence[0], -1)
     elif strand == "both":
-        result = find_occurence(seq, pattern, strand=1)
-        if result is None:
-            result = find_occurence(seq, pattern, strand=-1)
-        return result
+        occurrence = find_occurence(seq, pattern, strand=1)
+        if occurrence is None:
+            occurrence = find_occurence(seq, pattern, strand=-1)
+        return occurrence
