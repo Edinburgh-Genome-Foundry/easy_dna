@@ -73,13 +73,12 @@ def extract_from_input(
     if output_path is not None:
         root = flametree.file_tree(output_path)
 
-        for key, v in records_dict.items():
-            records = records_dict[key]
+        for key, records in records_dict.items():
 
             record_dir = root._dir(key)
 
             record_name_alnum_list = []
-            for j, record in enumerate(records):
+            for record in records:
 
                 record_name_alnum = "".join(
                     x if x.isalnum() else "_" for x in record.name
@@ -153,7 +152,7 @@ def extract_features(seq_record, direct_sense=True):
         end = seq_feature.location.end
 
         contained_feature = False
-        for j, other_seq in enumerate(
+        for other_seq in (
             seq_record.features[:i] + seq_record.features[(i + 1) :]
         ):  # exclude current feature
             if start in other_seq.location and end in other_seq.location:
