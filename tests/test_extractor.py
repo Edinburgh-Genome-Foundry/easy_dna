@@ -28,4 +28,4 @@ def test_extract_from_input(tmpdir):
     records_dict = dna.extract_from_input(
         construct_list=constructs, output_path=target_dir
     )
-    assert sum(records_dict["processed_report"]["has_copy"]) == 8
+    assert records_dict["processed_report"]["shared_with"].count() == 16

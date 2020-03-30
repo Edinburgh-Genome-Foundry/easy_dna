@@ -283,4 +283,6 @@ def process_report(report):
     report.loc[all_equal_to.index, "equal_to"] = all_equal_to.values
     report.loc[all_shared_with.index, "shared_with"] = all_shared_with.values
 
+    report.drop("has_copy", axis=1, inplace=True)
+
     return report
