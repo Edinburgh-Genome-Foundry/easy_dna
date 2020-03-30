@@ -197,12 +197,12 @@ def make_part_dict(records_dict, min_sequence_length=20):
     report_index = [
         "input_construct",
         "input_sequence",
-        "sequence_string",
         "shared_with",
         "equal_to",
         "has_copy",
         "too_short",
         "notes",
+        "sequence_string",
     ]
 
     report = pd.DataFrame(
