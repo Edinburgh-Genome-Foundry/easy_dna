@@ -12,10 +12,10 @@
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
 
       <!-- sphinx script_files -->
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
 
       
       <script src="_static/theme-vendors.js"></script>
@@ -331,31 +331,31 @@ recognized by the selected enzymes.</p>
 <dl class="function">
 <dt id="easy_dna.replace_segment">
 <code class="sig-prename descclassname">easy_dna.</code><code class="sig-name descname">replace_segment</code><span class="sig-paren">(</span><em class="sig-param">seq</em>, <em class="sig-param">start</em>, <em class="sig-param">end</em>, <em class="sig-param">replacement</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/easy_dna/modifications.html#replace_segment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easy_dna.replace_segment" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return the sequence with <code class="docutils literal notranslate"><span class="pre">seq[start:end]</span></code> replaced by <code class="docutils literal notranslate"><span class="pre">change</span></code></p>
+<dd><p>Return the sequence with <code class="docutils literal notranslate"><span class="pre">seq[start:end]</span></code> replaced by <code class="docutils literal notranslate"><span class="pre">replacement</span></code>.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="easy_dna.insert_segment">
 <code class="sig-prename descclassname">easy_dna.</code><code class="sig-name descname">insert_segment</code><span class="sig-paren">(</span><em class="sig-param">seq</em>, <em class="sig-param">pos</em>, <em class="sig-param">inserted</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/easy_dna/modifications.html#insert_segment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easy_dna.insert_segment" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return the sequence with <code class="docutils literal notranslate"><span class="pre">inserted</span></code> inserted, starting at index ‘pos’</p>
+<dd><p>Return the sequence with <code class="docutils literal notranslate"><span class="pre">inserted</span></code> inserted, starting at index ‘pos’.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="easy_dna.delete_segment">
 <code class="sig-prename descclassname">easy_dna.</code><code class="sig-name descname">delete_segment</code><span class="sig-paren">(</span><em class="sig-param">seq</em>, <em class="sig-param">start</em>, <em class="sig-param">end</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/easy_dna/modifications.html#delete_segment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easy_dna.delete_segment" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return the sequence with a n deletions from position pos.</p>
+<dd><p>Return the sequence with n deletions from position ‘pos’.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="easy_dna.delete_nucleotides">
 <code class="sig-prename descclassname">easy_dna.</code><code class="sig-name descname">delete_nucleotides</code><span class="sig-paren">(</span><em class="sig-param">seq</em>, <em class="sig-param">start</em>, <em class="sig-param">n</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/easy_dna/modifications.html#delete_nucleotides"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easy_dna.delete_nucleotides" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return the sequence with a n deletions from position pos.</p>
+<dd><p>Return the sequence with n deletions from position ‘pos’.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="easy_dna.reverse_segment">
 <code class="sig-prename descclassname">easy_dna.</code><code class="sig-name descname">reverse_segment</code><span class="sig-paren">(</span><em class="sig-param">seq</em>, <em class="sig-param">start</em>, <em class="sig-param">end</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/easy_dna/modifications.html#reverse_segment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easy_dna.reverse_segment" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return the sequence with segment seq[start:end] reverse-complemented.</p>
+<dd><p>Return the sequence with segment <code class="docutils literal notranslate"><span class="pre">seq[start:end]</span></code> reverse-complemented.</p>
 </dd></dl>
 
 <dl class="function">
@@ -375,13 +375,14 @@ starting in new_start.</p>
 <dt id="easy_dna.swap_segments">
 <code class="sig-prename descclassname">easy_dna.</code><code class="sig-name descname">swap_segments</code><span class="sig-paren">(</span><em class="sig-param">seq</em>, <em class="sig-param">pos1</em>, <em class="sig-param">pos2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/easy_dna/modifications.html#swap_segments"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easy_dna.swap_segments" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a new sequence with segments at position pos1 and pos2 swapped.</p>
-<p>pos1, pos2 are both of the form (start1, end1), (start2, end2)</p>
+<p>pos1, pos2 are both of the form (start1, end1), (start2, end2).</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="easy_dna.extract_from_input">
-<code class="sig-prename descclassname">easy_dna.</code><code class="sig-name descname">extract_from_input</code><span class="sig-paren">(</span><em class="sig-param">file=None</em>, <em class="sig-param">directory=None</em>, <em class="sig-param">construct_list=None</em>, <em class="sig-param">direct_sense=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/easy_dna/extractor.html#extract_from_input"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easy_dna.extract_from_input" title="Permalink to this definition">¶</a></dt>
-<dd><p>Extract features from input and save them in separate files.</p>
+<code class="sig-prename descclassname">easy_dna.</code><code class="sig-name descname">extract_from_input</code><span class="sig-paren">(</span><em class="sig-param">filename=None</em>, <em class="sig-param">directory=None</em>, <em class="sig-param">construct_list=None</em>, <em class="sig-param">direct_sense=True</em>, <em class="sig-param">output_path=None</em>, <em class="sig-param">min_sequence_length=20</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/easy_dna/extractor.html#extract_from_input"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easy_dna.extract_from_input" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract features from input and return in a dictionary.</p>
+<p>Optionally save the features in separate files.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
@@ -392,6 +393,10 @@ starting in new_start.</p>
 <dt><strong>construct_list</strong></dt><dd><p>A list of SeqRecords.</p>
 </dd>
 <dt><strong>direct_sense</strong></dt><dd><p>If True: make antisense features into direct-sense in the exported files.</p>
+</dd>
+<dt><strong>output_path</strong></dt><dd><p>Path for the exported feature and report files.</p>
+</dd>
+<dt><strong>min_sequence_length</strong></dt><dd><p>Discard sequences with length less than this integer.</p>
 </dd>
 </dl>
 </dd>
@@ -407,7 +412,7 @@ starting in new_start.</p>
 </ul><div class="footer" role="contentinfo">
       &#169; Copyright 2019, Edinburgh Genome Foundry.
     <br>
-    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.3.1 with <a href="https://github.com/schettino72/sphinx_press_theme">Press Theme</a>.
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4 with <a href="https://github.com/schettino72/sphinx_press_theme">Press Theme</a>.
 </div>
             </div>
           </div>
