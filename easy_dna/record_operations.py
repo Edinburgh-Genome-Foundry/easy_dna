@@ -25,6 +25,7 @@ def sequence_to_biopython_record(
         sequence = Seq(sequence)
 
     seqrecord = SeqRecord(sequence, id=id, name=name, features=list(features),)
+    seqrecord.annotations["molecule_type"] = "DNA"
 
     return seqrecord
 
