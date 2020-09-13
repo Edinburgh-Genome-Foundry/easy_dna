@@ -27,18 +27,14 @@ def sequence_to_atgc_string(sequence):
 
 
 def record_with_different_sequence(record, new_seq):
-    """Return a version of the record with the sequence set to new_seq"""
+    """Return a version of the record with the sequence set to new_seq."""
     new_record = deepcopy(record)
     new_record.seq = Seq(new_seq, alphabet=DNAAlphabet())
     return new_record
 
 
 def annotate_record(
-    seqrecord,
-    location="full",
-    feature_type="misc_feature",
-    margin=0,
-    **qualifiers
+    seqrecord, location="full", feature_type="misc_feature", margin=0, **qualifiers
 ):
     """Add a feature to a Biopython SeqRecord.
 
@@ -52,13 +48,13 @@ def annotate_record(
       Either (start, end) or (start, end, strand). (strand defaults to +1)
 
     feature_type
-      The type associated with the feature
+      The type associated with the feature.
 
     margin
       Number of extra bases added on each side of the given location.
 
     qualifiers
-      Dictionnary that will be the Biopython feature's `qualifiers` attribute.
+      Dictionary that will be the Biopython feature's `qualifiers` attribute.
     """
     if location == "full":
         location = (margin, len(seqrecord) - margin)
@@ -73,9 +69,7 @@ def annotate_record(
     )
 
 
-def anonymized_record(
-    record, record_id="anonymized", label_generator="feature_%d"
-):
+def anonymized_record(record, record_id="anonymized", label_generator="feature_%d"):
     """Return a record with removed annotations/keywords/features/etc.
 
     Warning: this does not change the record sequence!
@@ -83,14 +77,14 @@ def anonymized_record(
     Parameters
     ----------
     record
-      The record to be anonymized
+      The record to be anonymized.
 
     record_id
-      Id of the new record
+      Id of the new record.
 
     label_generator
       Recipe to change feature labels. Either "feature_%d" or None (no label)
-      of a function (i, feature)=>label
+      of a function (i, feature)=>label.
     """
     new_record = deepcopy(record)
     new_record.annotations = {

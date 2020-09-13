@@ -1,7 +1,6 @@
 import os
 import re
 from io import BytesIO, StringIO
-from base64 import b64decode
 from copy import deepcopy
 from Bio import SeqIO
 from Bio.Alphabet import DNAAlphabet
@@ -15,10 +14,9 @@ import crazydoc
 from .record_operations import sequence_to_biopython_record
 
 
-def load_record(filename, record_id="auto", upperize=False,
-                id_cutoff=20):
+def load_record(filename, record_id="auto", upperize=False, id_cutoff=20):
     """Load a Fasta/Genbank/Snapgen file as a biopython record.
-    
+
     Parameters
     ==========
     filename
@@ -27,15 +25,14 @@ def load_record(filename, record_id="auto", upperize=False,
     record_id
       Id of the record (leave to "auto" to keep the record's original Id, which
       will default to the file name if the record has no Id). 
-    
+
     upperize
       If true, the record's sequence will be upperized.
 
     id_cutoff
       If the Id is read from a filename, it will get truncated at this cutoff
       to avoid errors at report write time.
-      
-    """ 
+    """
     if filename.lower().endswith(("gb", "gbk")):
         record = SeqIO.read(filename, "genbank")
     elif filename.lower().endswith(("fa", "fasta")):
@@ -118,9 +115,7 @@ def records_from_zip_file(zip_file):
             except Exception:
                 content_stream = BytesIO(f.read("rb"))
                 try:
-                    record = snapgene_file_to_seqrecord(
-                        fileobject=content_stream
-                    )
+                    record = snapgene_file_to_seqrecord(fileobject=content_stream)
                     new_records, _ = [record], "snapgene"
                 except Exception:
                     try:
@@ -130,9 +125,7 @@ def records_from_zip_file(zip_file):
                         new_records = parser.parse_doc_file(content_stream)
                         # fmt = "doc"
                     except Exception:
-                        raise ValueError(
-                            "Format not recognized for file " + f._path
-                        )
+                        raise ValueError("Format not recognized for file " + f._path)
 
             single_record = len(new_records) == 1
             for i, record in enumerate(new_records):
@@ -176,23 +169,19 @@ def records_from_file(filepath):
                 try:
                     df = spreadsheet_file_to_dataframe(filepath, header=None)
                     records = [
-                        sequence_to_biopython_record(
-                            sequence=seq, id=name, name=name
-                        )
+                        sequence_to_biopython_record(sequence=seq, id=name, name=name)
                         for name, seq in df.values
                     ]
                     fmt = "spreadsheet"
                 except Exception:
-                    raise ValueError(
-                        "Format not recognized for file " + filepath
-                    )
+                    raise ValueError("Format not recognized for file " + filepath)
     if not isinstance(records, list):
         records = [records]
     return records, fmt
 
 
 def record_to_formated_string(record, fmt="genbank", remove_descr=False):
-    """Return a string with the content of a FASTA/GENBANK file"""
+    """Return a string with the content of a FASTA/GENBANK file."""
     if remove_descr:
         record = deepcopy(record)
         if isinstance(record, (list, tuple)):
