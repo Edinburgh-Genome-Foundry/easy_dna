@@ -1,7 +1,15 @@
 from copy import deepcopy
 from Bio.Seq import Seq
 from Bio.SeqRecord import SeqRecord
-from Bio.Alphabet import DNAAlphabet
+
+try:
+    # Biopython <1.78
+    from Bio.Alphabet import DNAAlphabet
+
+    has_dna_alphabet = True
+except ImportError:
+    # Biopython >=1.78
+    has_dna_alphabet = False
 from Bio.SeqFeature import SeqFeature, FeatureLocation
 
 
@@ -11,12 +19,14 @@ def sequence_to_biopython_record(
     """Return a SeqRecord of the sequence, ready to be Genbanked."""
     if hasattr(sequence, "seq"):
         return sequence
-    return SeqRecord(
-        Seq(sequence, alphabet=DNAAlphabet()),
-        id=id,
-        name=name,
-        features=list(features),
-    )
+    if has_dna_alphabet:  # Biopython <1.78
+        sequence = Seq(sequence, alphabet=DNAAlphabet())
+    else:
+        sequence = Seq(sequence)
+
+    seqrecord = SeqRecord(sequence, id=id, name=name, features=list(features),)
+
+    return seqrecord
 
 
 def sequence_to_atgc_string(sequence):
@@ -29,7 +39,13 @@ def sequence_to_atgc_string(sequence):
 def record_with_different_sequence(record, new_seq):
     """Return a version of the record with the sequence set to new_seq."""
     new_record = deepcopy(record)
-    new_record.seq = Seq(new_seq, alphabet=DNAAlphabet())
+    if has_dna_alphabet:  # Biopython <1.78
+        sequence = Seq(new_seq, alphabet=DNAAlphabet())
+    else:
+        sequence = Seq(new_seq)
+
+    new_record.seq = sequence
+
     return new_record
 
 

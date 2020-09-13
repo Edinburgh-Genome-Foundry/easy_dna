@@ -3,7 +3,16 @@ import re
 from io import BytesIO, StringIO
 from copy import deepcopy
 from Bio import SeqIO
-from Bio.Alphabet import DNAAlphabet
+
+try:
+    # Biopython <1.78
+    from Bio.Alphabet import DNAAlphabet
+
+    has_dna_alphabet = True
+except ImportError:
+    # Biopython >=1.78
+    has_dna_alphabet = False
+
 from snapgene_reader import snapgene_file_to_seqrecord
 import flametree
 import pandas
@@ -57,11 +66,14 @@ def load_record(filename, record_id="auto", upperize=False, id_cutoff=20):
 
 
 def write_record(record, target, fmt="genbank"):
-    """Write a record as genbank, fasta, etc. via Biopython, with fixes"""
+    """Write a record as genbank, fasta, etc. via Biopython, with fixes."""
     record = deepcopy(record)
     record.name = record.name[:20]
-    if str(record.seq.alphabet.__class__.__name__) != "DNAAlphabet":
-        record.seq.alphabet = DNAAlphabet()
+    if has_dna_alphabet:  # Biopython <1.78
+        if str(record.seq.alphabet.__class__.__name__) != "DNAAlphabet":
+            record.seq.alphabet = DNAAlphabet()
+    record.annotations["molecule_type"] = "DNA"
+
     if hasattr(target, "open"):
         target = target.open("w")
     SeqIO.write(record, target, fmt)
@@ -76,7 +88,14 @@ def string_to_record(string):
     # print("============", len(matches.groups()[0]), len(string))
     # print (matches.groups()[0] == string)
     if (matches is not None) and (matches.groups()[0] == string):
-        return SeqRecord(Seq(string, DNAAlphabet())), "ATGC"
+        if has_dna_alphabet:  # Biopython <1.78
+            sequence = Seq(string, alphabet=DNAAlphabet())
+        else:
+            sequence = Seq(string)
+        seqrecord = SeqRecord(sequence)
+        seqrecord.annotations["molecule_type"] = "DNA"
+
+        return seqrecord, "ATGC"
 
     for fmt in ("fasta", "genbank"):
         try:
@@ -220,7 +239,10 @@ def records_from_data_files(filepaths=None, folder=None):
                 "<unknown name>",
                 "Exported",
             ]
-            record.seq.alphabet = DNAAlphabet()
+            if has_dna_alphabet:  # Biopython <1.78
+                record.seq.alphabet = DNAAlphabet()
+            record.annotations["molecule_type"] = "DNA"
+
             # Sorry for this parts, it took a lot of "whatever works".
             # keep your part names under 20c and pointless, and everything
             # will be good
