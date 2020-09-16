@@ -24,7 +24,7 @@ from .record_operations import sequence_to_biopython_record
 
 
 def load_record(filename, record_id="auto", upperize=False, id_cutoff=20):
-    """Load a Fasta/Genbank/Snapgen file as a biopython record.
+    """Load a Fasta/Genbank/Snapgene file as a Biopython record.
 
     Parameters
     ==========
@@ -33,7 +33,7 @@ def load_record(filename, record_id="auto", upperize=False, id_cutoff=20):
 
     record_id
       Id of the record (leave to "auto" to keep the record's original Id, which
-      will default to the file name if the record has no Id). 
+      will default to the file name if the record has no Id).
 
     upperize
       If true, the record's sequence will be upperized.
@@ -123,7 +123,7 @@ def spreadsheet_file_to_dataframe(filepath, header="infer"):
 
 
 def records_from_zip_file(zip_file):
-    """Return all fasta/genbank/snapgene in a zip as biopython records."""
+    """Return all fasta/genbank/snapgene in a zip as Biopython records."""
     zip_file = flametree.file_tree(zip_file)
     records = []
     for f in zip_file._all_files:
@@ -167,7 +167,7 @@ def records_from_zip_file(zip_file):
 
 
 def records_from_file(filepath):
-    """Autodetect file format and load biopython records from it."""
+    """Autodetect file format and load Biopython records from it."""
 
     with open(filepath, "rb") as f:
         content = f.read()
@@ -214,7 +214,7 @@ def record_to_formated_string(record, fmt="genbank", remove_descr=False):
 
 
 def records_from_data_files(filepaths=None, folder=None):
-    """Automatically convert files or a folder's content to biopython records.
+    """Automatically convert files or a folder's content to Biopython records.
     """
     if folder is not None:
         filepaths = [f._path for f in flametree.file_tree(folder)._all_files]

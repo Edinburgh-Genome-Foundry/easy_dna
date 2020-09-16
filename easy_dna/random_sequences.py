@@ -24,8 +24,7 @@ def random_dna_sequence(length, gc_share=None, probas=None, seed=None):
     seed
       The seed to feed to the random number generator. When a seed is provided
       the random results depend deterministically on the seed, thus enabling
-      reproducibility
-
+      reproducibility.
     """
     if seed is not None:
         np.random.seed(seed)
@@ -50,13 +49,12 @@ def random_protein_sequence(length, seed=None):
     length
       Length of the protein sequence (in number of amino-acids). Note that the
       sequence will always start with ``"M"`` and end with a stop codon ``"*"``
-      with (length-2) random amino-acids in the middle
+      with (length-2) random amino-acids in the middle.
 
     seed
       The seed to feed to the random number generator. When a seed is provided
       the random results depend deterministically on the seed, thus enabling
-      reproducibility
-
+      reproducibility.
     """
     if seed is not None:
         np.random.seed(seed)

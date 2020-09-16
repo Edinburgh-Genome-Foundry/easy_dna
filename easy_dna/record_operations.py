@@ -59,10 +59,10 @@ def annotate_record(
     ----------
 
     seqrecord
-      The biopython seqrecord to be annotated.
+      The Biopython SeqRecord to be annotated.
 
     location
-      Either (start, end) or (start, end, strand). (strand defaults to +1)
+      Either (start, end) or (start, end, strand). (strand defaults to +1).
 
     feature_type
       The type associated with the feature.
@@ -97,7 +97,7 @@ def anonymized_record(record, record_id="anonymized", label_generator="feature_%
       The record to be anonymized.
 
     record_id
-      Id of the new record.
+      ID of the new record.
 
     label_generator
       Recipe to change feature labels. Either "feature_%d" or None (no label)
