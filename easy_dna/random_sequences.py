@@ -16,7 +16,11 @@ def random_dna_sequence(length, gc_share=None, probas=None, seed=None):
     length
       Length of the DNA sequence.
 
-    proba
+    gc_share
+      The GC content of the random sequence, as a fraction (for example,
+      0.3 for 30%). Overwrites `probas`.
+
+    probas
       Frequencies for the different nucleotides, for instance
       ``probas={"A":0.2, "T":0.3, "G":0.3, "C":0.2}``.
       If not specified, all nucleotides are equiprobable (p=0.25).

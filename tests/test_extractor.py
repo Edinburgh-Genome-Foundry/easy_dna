@@ -1,4 +1,5 @@
 import os
+import pytest
 import numpy as np
 import easy_dna as dna
 
@@ -29,3 +30,6 @@ def test_extract_from_input(tmpdir):
         construct_list=constructs, output_path=target_dir
     )
     assert records_dict["processed_report"]["shared_with"].count() == 16
+
+    with pytest.raises(TypeError):
+        dna.extract_from_input(output_path=target_dir)
