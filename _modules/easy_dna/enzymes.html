@@ -89,7 +89,7 @@
           <div class="content" role="main">
             
   <h1>Source code for easy_dna.enzymes</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;Methods for enzymes operations.&quot;&quot;&quot;</span>
+<span></span><span class="sd">&quot;&quot;&quot;Methods for enzyme operations.&quot;&quot;&quot;</span>
 
 <span class="kn">from</span> <span class="nn">.matching</span> <span class="kn">import</span> <span class="n">all_iupac_variants</span>
 <span class="kn">from</span> <span class="nn">Bio</span> <span class="kn">import</span> <span class="n">Restriction</span>
@@ -104,10 +104,10 @@
 <span class="sd">    ----------</span>
 
 <span class="sd">    site_length</span>
-<span class="sd">      List of accepted site lengths (6, 4, ...)</span>
+<span class="sd">      List of accepted site lengths (6, 4, ...).</span>
 
 <span class="sd">    opt_temp</span>
-<span class="sd">      List of accepted optimal temperatures for the enzyme</span>
+<span class="sd">      List of accepted optimal temperatures for the enzyme.</span>
 
 <span class="sd">    min_suppliers</span>
 <span class="sd">      Minimal number registered suppliers in the Biopython data. A minimum</span>
@@ -121,9 +121,7 @@
         <span class="p">[</span>
             <span class="n">variant</span>
             <span class="k">for</span> <span class="n">enzyme</span> <span class="ow">in</span> <span class="n">site_unlike</span>
-            <span class="k">for</span> <span class="n">variant</span> <span class="ow">in</span> <span class="n">all_iupac_variants</span><span class="p">(</span>
-                <span class="n">Restriction</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">enzyme</span><span class="p">]</span><span class="o">.</span><span class="n">site</span>
-            <span class="p">)</span>
+            <span class="k">for</span> <span class="n">variant</span> <span class="ow">in</span> <span class="n">all_iupac_variants</span><span class="p">(</span><span class="n">Restriction</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">enzyme</span><span class="p">]</span><span class="o">.</span><span class="n">site</span><span class="p">)</span>
         <span class="p">]</span>
     <span class="p">)</span>
 
@@ -133,10 +131,7 @@
             <span class="nb">len</span><span class="p">(</span><span class="n">enzyme</span><span class="o">.</span><span class="n">site</span><span class="p">)</span> <span class="ow">in</span> <span class="n">site_length</span>
             <span class="ow">and</span> <span class="n">enzyme</span><span class="o">.</span><span class="n">opt_temp</span> <span class="ow">in</span> <span class="n">opt_temp</span>
             <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">enzyme</span><span class="o">.</span><span class="n">supplier_list</span><span class="p">())</span> <span class="o">&gt;=</span> <span class="n">min_suppliers</span>
-            <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span>
-                <span class="nb">set</span><span class="p">(</span><span class="n">all_iupac_variants</span><span class="p">(</span><span class="n">enzyme</span><span class="o">.</span><span class="n">site</span><span class="p">))</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">site_unlike</span><span class="p">)</span>
-            <span class="p">)</span>
-            <span class="o">==</span> <span class="mi">0</span>
+            <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">all_iupac_variants</span><span class="p">(</span><span class="n">enzyme</span><span class="o">.</span><span class="n">site</span><span class="p">))</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">site_unlike</span><span class="p">))</span> <span class="o">==</span> <span class="mi">0</span>
         <span class="p">)</span>
 
     <span class="k">return</span> <span class="p">[</span>
@@ -152,7 +147,7 @@
 </ul><div class="footer" role="contentinfo">
       &#169; Copyright 2019, Edinburgh Genome Foundry.
     <br>
-    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4 with <a href="https://github.com/schettino72/sphinx_press_theme">Press Theme</a>.
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.2.1 with <a href="https://github.com/schettino72/sphinx_press_theme">Press Theme</a>.
 </div>
             </div>
           </div>

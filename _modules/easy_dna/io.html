@@ -92,10 +92,18 @@
 <span></span><span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">from</span> <span class="nn">io</span> <span class="kn">import</span> <span class="n">BytesIO</span><span class="p">,</span> <span class="n">StringIO</span>
-<span class="kn">from</span> <span class="nn">base64</span> <span class="kn">import</span> <span class="n">b64decode</span>
 <span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">deepcopy</span>
 <span class="kn">from</span> <span class="nn">Bio</span> <span class="kn">import</span> <span class="n">SeqIO</span>
-<span class="kn">from</span> <span class="nn">Bio.Alphabet</span> <span class="kn">import</span> <span class="n">DNAAlphabet</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="c1"># Biopython &lt;1.78</span>
+    <span class="kn">from</span> <span class="nn">Bio.Alphabet</span> <span class="kn">import</span> <span class="n">DNAAlphabet</span>
+
+    <span class="n">has_dna_alphabet</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="c1"># Biopython &gt;=1.78</span>
+    <span class="n">has_dna_alphabet</span> <span class="o">=</span> <span class="kc">False</span>
+
 <span class="kn">from</span> <span class="nn">snapgene_reader</span> <span class="kn">import</span> <span class="n">snapgene_file_to_seqrecord</span>
 <span class="kn">import</span> <span class="nn">flametree</span>
 <span class="kn">import</span> <span class="nn">pandas</span>
@@ -106,10 +114,9 @@
 <span class="kn">from</span> <span class="nn">.record_operations</span> <span class="kn">import</span> <span class="n">sequence_to_biopython_record</span>
 
 
-<div class="viewcode-block" id="load_record"><a class="viewcode-back" href="../../index.html#easy_dna.load_record">[docs]</a><span class="k">def</span> <span class="nf">load_record</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">record_id</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span> <span class="n">upperize</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-                <span class="n">id_cutoff</span><span class="o">=</span><span class="mi">20</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Load a Fasta/Genbank/Snapgen file as a biopython record.</span>
-<span class="sd">    </span>
+<div class="viewcode-block" id="load_record"><a class="viewcode-back" href="../../index.html#easy_dna.load_record">[docs]</a><span class="k">def</span> <span class="nf">load_record</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">record_id</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span> <span class="n">upperize</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">id_cutoff</span><span class="o">=</span><span class="mi">20</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Load a Fasta/Genbank/Snapgene file as a Biopython record.</span>
+
 <span class="sd">    Parameters</span>
 <span class="sd">    ==========</span>
 <span class="sd">    filename</span>
@@ -117,16 +124,15 @@
 
 <span class="sd">    record_id</span>
 <span class="sd">      Id of the record (leave to &quot;auto&quot; to keep the record&#39;s original Id, which</span>
-<span class="sd">      will default to the file name if the record has no Id). </span>
-<span class="sd">    </span>
+<span class="sd">      will default to the file name if the record has no Id).</span>
+
 <span class="sd">    upperize</span>
 <span class="sd">      If true, the record&#39;s sequence will be upperized.</span>
 
 <span class="sd">    id_cutoff</span>
 <span class="sd">      If the Id is read from a filename, it will get truncated at this cutoff</span>
 <span class="sd">      to avoid errors at report write time.</span>
-<span class="sd">      </span>
-<span class="sd">    &quot;&quot;&quot;</span> 
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">filename</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">endswith</span><span class="p">((</span><span class="s2">&quot;gb&quot;</span><span class="p">,</span> <span class="s2">&quot;gbk&quot;</span><span class="p">)):</span>
         <span class="n">record</span> <span class="o">=</span> <span class="n">SeqIO</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;genbank&quot;</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">filename</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">endswith</span><span class="p">((</span><span class="s2">&quot;fa&quot;</span><span class="p">,</span> <span class="s2">&quot;fasta&quot;</span><span class="p">)):</span>
@@ -151,11 +157,14 @@
 
 
 <div class="viewcode-block" id="write_record"><a class="viewcode-back" href="../../index.html#easy_dna.write_record">[docs]</a><span class="k">def</span> <span class="nf">write_record</span><span class="p">(</span><span class="n">record</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s2">&quot;genbank&quot;</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Write a record as genbank, fasta, etc. via Biopython, with fixes&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Write a record as genbank, fasta, etc. via Biopython, with fixes.&quot;&quot;&quot;</span>
     <span class="n">record</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">record</span><span class="p">)</span>
     <span class="n">record</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">record</span><span class="o">.</span><span class="n">name</span><span class="p">[:</span><span class="mi">20</span><span class="p">]</span>
-    <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">seq</span><span class="o">.</span><span class="n">alphabet</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span> <span class="o">!=</span> <span class="s2">&quot;DNAAlphabet&quot;</span><span class="p">:</span>
-        <span class="n">record</span><span class="o">.</span><span class="n">seq</span><span class="o">.</span><span class="n">alphabet</span> <span class="o">=</span> <span class="n">DNAAlphabet</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">has_dna_alphabet</span><span class="p">:</span>  <span class="c1"># Biopython &lt;1.78</span>
+        <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">seq</span><span class="o">.</span><span class="n">alphabet</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span> <span class="o">!=</span> <span class="s2">&quot;DNAAlphabet&quot;</span><span class="p">:</span>
+            <span class="n">record</span><span class="o">.</span><span class="n">seq</span><span class="o">.</span><span class="n">alphabet</span> <span class="o">=</span> <span class="n">DNAAlphabet</span><span class="p">()</span>
+    <span class="n">record</span><span class="o">.</span><span class="n">annotations</span><span class="p">[</span><span class="s2">&quot;molecule_type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;DNA&quot;</span>
+
     <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="s2">&quot;open&quot;</span><span class="p">):</span>
         <span class="n">target</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;w&quot;</span><span class="p">)</span>
     <span class="n">SeqIO</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">record</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">fmt</span><span class="p">)</span></div>
@@ -170,7 +179,14 @@
     <span class="c1"># print(&quot;============&quot;, len(matches.groups()[0]), len(string))</span>
     <span class="c1"># print (matches.groups()[0] == string)</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">matches</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">matches</span><span class="o">.</span><span class="n">groups</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">string</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">SeqRecord</span><span class="p">(</span><span class="n">Seq</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">DNAAlphabet</span><span class="p">())),</span> <span class="s2">&quot;ATGC&quot;</span>
+        <span class="k">if</span> <span class="n">has_dna_alphabet</span><span class="p">:</span>  <span class="c1"># Biopython &lt;1.78</span>
+            <span class="n">sequence</span> <span class="o">=</span> <span class="n">Seq</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">alphabet</span><span class="o">=</span><span class="n">DNAAlphabet</span><span class="p">())</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">sequence</span> <span class="o">=</span> <span class="n">Seq</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+        <span class="n">seqrecord</span> <span class="o">=</span> <span class="n">SeqRecord</span><span class="p">(</span><span class="n">sequence</span><span class="p">)</span>
+        <span class="n">seqrecord</span><span class="o">.</span><span class="n">annotations</span><span class="p">[</span><span class="s2">&quot;molecule_type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;DNA&quot;</span>
+
+        <span class="k">return</span> <span class="n">seqrecord</span><span class="p">,</span> <span class="s2">&quot;ATGC&quot;</span>
 
     <span class="k">for</span> <span class="n">fmt</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;fasta&quot;</span><span class="p">,</span> <span class="s2">&quot;genbank&quot;</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
@@ -198,7 +214,7 @@
 
 
 <span class="k">def</span> <span class="nf">records_from_zip_file</span><span class="p">(</span><span class="n">zip_file</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Return all fasta/genbank/snapgene in a zip as biopython records.&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Return all fasta/genbank/snapgene in a zip as Biopython records.&quot;&quot;&quot;</span>
     <span class="n">zip_file</span> <span class="o">=</span> <span class="n">flametree</span><span class="o">.</span><span class="n">file_tree</span><span class="p">(</span><span class="n">zip_file</span><span class="p">)</span>
     <span class="n">records</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">zip_file</span><span class="o">.</span><span class="n">_all_files</span><span class="p">:</span>
@@ -209,9 +225,7 @@
             <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
                 <span class="n">content_stream</span> <span class="o">=</span> <span class="n">BytesIO</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s2">&quot;rb&quot;</span><span class="p">))</span>
                 <span class="k">try</span><span class="p">:</span>
-                    <span class="n">record</span> <span class="o">=</span> <span class="n">snapgene_file_to_seqrecord</span><span class="p">(</span>
-                        <span class="n">fileobject</span><span class="o">=</span><span class="n">content_stream</span>
-                    <span class="p">)</span>
+                    <span class="n">record</span> <span class="o">=</span> <span class="n">snapgene_file_to_seqrecord</span><span class="p">(</span><span class="n">fileobject</span><span class="o">=</span><span class="n">content_stream</span><span class="p">)</span>
                     <span class="n">new_records</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="p">[</span><span class="n">record</span><span class="p">],</span> <span class="s2">&quot;snapgene&quot;</span>
                 <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
                     <span class="k">try</span><span class="p">:</span>
@@ -221,9 +235,7 @@
                         <span class="n">new_records</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_doc_file</span><span class="p">(</span><span class="n">content_stream</span><span class="p">)</span>
                         <span class="c1"># fmt = &quot;doc&quot;</span>
                     <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
-                        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                            <span class="s2">&quot;Format not recognized for file &quot;</span> <span class="o">+</span> <span class="n">f</span><span class="o">.</span><span class="n">_path</span>
-                        <span class="p">)</span>
+                        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Format not recognized for file &quot;</span> <span class="o">+</span> <span class="n">f</span><span class="o">.</span><span class="n">_path</span><span class="p">)</span>
 
             <span class="n">single_record</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">new_records</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
             <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">record</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">new_records</span><span class="p">):</span>
@@ -246,7 +258,7 @@
 
 
 <span class="k">def</span> <span class="nf">records_from_file</span><span class="p">(</span><span class="n">filepath</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Autodetect file format and load biopython records from it.&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Autodetect file format and load Biopython records from it.&quot;&quot;&quot;</span>
 
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
         <span class="n">content</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
@@ -267,23 +279,19 @@
                 <span class="k">try</span><span class="p">:</span>
                     <span class="n">df</span> <span class="o">=</span> <span class="n">spreadsheet_file_to_dataframe</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
                     <span class="n">records</span> <span class="o">=</span> <span class="p">[</span>
-                        <span class="n">sequence_to_biopython_record</span><span class="p">(</span>
-                            <span class="n">sequence</span><span class="o">=</span><span class="n">seq</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span>
-                        <span class="p">)</span>
+                        <span class="n">sequence_to_biopython_record</span><span class="p">(</span><span class="n">sequence</span><span class="o">=</span><span class="n">seq</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
                         <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">seq</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">values</span>
                     <span class="p">]</span>
                     <span class="n">fmt</span> <span class="o">=</span> <span class="s2">&quot;spreadsheet&quot;</span>
                 <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
-                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                        <span class="s2">&quot;Format not recognized for file &quot;</span> <span class="o">+</span> <span class="n">filepath</span>
-                    <span class="p">)</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Format not recognized for file &quot;</span> <span class="o">+</span> <span class="n">filepath</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">records</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
         <span class="n">records</span> <span class="o">=</span> <span class="p">[</span><span class="n">records</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">records</span><span class="p">,</span> <span class="n">fmt</span>
 
 
 <span class="k">def</span> <span class="nf">record_to_formated_string</span><span class="p">(</span><span class="n">record</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s2">&quot;genbank&quot;</span><span class="p">,</span> <span class="n">remove_descr</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Return a string with the content of a FASTA/GENBANK file&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Return a string with the content of a FASTA/GENBANK file.&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">remove_descr</span><span class="p">:</span>
         <span class="n">record</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">record</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">record</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
@@ -297,7 +305,7 @@
 
 
 <div class="viewcode-block" id="records_from_data_files"><a class="viewcode-back" href="../../index.html#easy_dna.records_from_data_files">[docs]</a><span class="k">def</span> <span class="nf">records_from_data_files</span><span class="p">(</span><span class="n">filepaths</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">folder</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Automatically convert files or a folder&#39;s content to biopython records.</span>
+    <span class="sd">&quot;&quot;&quot;Automatically convert files or a folder&#39;s content to Biopython records.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">folder</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">filepaths</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span><span class="o">.</span><span class="n">_path</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">flametree</span><span class="o">.</span><span class="n">file_tree</span><span class="p">(</span><span class="n">folder</span><span class="p">)</span><span class="o">.</span><span class="n">_all_files</span><span class="p">]</span>
@@ -322,7 +330,10 @@
                 <span class="s2">&quot;&lt;unknown name&gt;&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;Exported&quot;</span><span class="p">,</span>
             <span class="p">]</span>
-            <span class="n">record</span><span class="o">.</span><span class="n">seq</span><span class="o">.</span><span class="n">alphabet</span> <span class="o">=</span> <span class="n">DNAAlphabet</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">has_dna_alphabet</span><span class="p">:</span>  <span class="c1"># Biopython &lt;1.78</span>
+                <span class="n">record</span><span class="o">.</span><span class="n">seq</span><span class="o">.</span><span class="n">alphabet</span> <span class="o">=</span> <span class="n">DNAAlphabet</span><span class="p">()</span>
+            <span class="n">record</span><span class="o">.</span><span class="n">annotations</span><span class="p">[</span><span class="s2">&quot;molecule_type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;DNA&quot;</span>
+
             <span class="c1"># Sorry for this parts, it took a lot of &quot;whatever works&quot;.</span>
             <span class="c1"># keep your part names under 20c and pointless, and everything</span>
             <span class="c1"># will be good</span>
@@ -341,7 +352,7 @@
 </ul><div class="footer" role="contentinfo">
       &#169; Copyright 2019, Edinburgh Genome Foundry.
     <br>
-    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4 with <a href="https://github.com/schettino72/sphinx_press_theme">Press Theme</a>.
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.2.1 with <a href="https://github.com/schettino72/sphinx_press_theme">Press Theme</a>.
 </div>
             </div>
           </div>

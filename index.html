@@ -104,124 +104,27 @@ manufacturing.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">easy_dna</span>
 </pre></div>
 </div>
-<p>Alternatively, you can unzip the sources in a folder and type</p>
+<p>Alternatively, you can unzip the sources in a folder and type:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">install</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="license-mit">
 <h2>License = MIT<a class="headerlink" href="#license-mit" title="Permalink to this headline">¶</a></h2>
-<p>easy_dna is an open-source software originally written at the <a class="reference external" href="http://edinburgh-genome-foundry.github.io/home.html">Edinburgh Genome Foundry</a> by <a class="reference external" href="https://github.com/Zulko">Zulko</a>
-and <a class="reference external" href="https://github.com/Edinburgh-Genome-Foundry/easy_dna">released on Github</a> under the MIT licence (¢ Edinburg Genome Foundry). Everyone is welcome to contribute !</p>
+<p>Easy_dna is an open-source software originally written at the <a class="reference external" href="http://edinburgh-genome-foundry.github.io/home.html">Edinburgh Genome Foundry</a> by <a class="reference external" href="https://github.com/Zulko">Zulko</a>
+and <a class="reference external" href="https://github.com/Edinburgh-Genome-Foundry/easy_dna">released on Github</a> under the MIT licence (Copyright 2019 Edinburgh Genome Foundry). Everyone is welcome to contribute!</p>
 </div>
 <div class="section" id="more-biology-software">
 <h2>More biology software<a class="headerlink" href="#more-biology-software" title="Permalink to this headline">¶</a></h2>
 <a class="reference external image-reference" href="https://edinburgh-genome-foundry.github.io/"><img alt="https://raw.githubusercontent.com/Edinburgh-Genome-Foundry/Edinburgh-Genome-Foundry.github.io/master/static/imgs/logos/egf-codon-horizontal.png" src="https://raw.githubusercontent.com/Edinburgh-Genome-Foundry/Edinburgh-Genome-Foundry.github.io/master/static/imgs/logos/egf-codon-horizontal.png" /></a>
-<p>easy_dna is part of the <a class="reference external" href="https://edinburgh-genome-foundry.github.io/">EGF Codons</a> synthetic biology software suite for DNA design, manufacturing and validation.</p>
+<p>Easy_dna is part of the <a class="reference external" href="https://edinburgh-genome-foundry.github.io/">EGF Codons</a> synthetic biology software suite for DNA design, manufacturing and validation.</p>
 </div>
 </div>
 <div class="section" id="module-easy_dna">
 <span id="reference"></span><h1>Reference<a class="headerlink" href="#module-easy_dna" title="Permalink to this headline">¶</a></h1>
-<dl class="function">
-<dt id="easy_dna.complement">
-<code class="sig-prename descclassname">easy_dna.</code><code class="sig-name descname">complement</code><span class="sig-paren">(</span><em class="sig-param">dna_sequence</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/easy_dna/biological_operations.html#complement"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easy_dna.complement" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return the complement of the DNA sequence.</p>
-<p>For instance <code class="docutils literal notranslate"><span class="pre">complement(&quot;ATGCCG&quot;)</span></code> returns <code class="docutils literal notranslate"><span class="pre">&quot;TACGGC&quot;</span></code>.</p>
-<p>Uses BioPython for speed.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="easy_dna.reverse_complement">
-<code class="sig-prename descclassname">easy_dna.</code><code class="sig-name descname">reverse_complement</code><span class="sig-paren">(</span><em class="sig-param">dna_sequence</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/easy_dna/biological_operations.html#reverse_complement"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easy_dna.reverse_complement" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return the reverse-complement of the DNA sequence.</p>
-<p>For instance <code class="docutils literal notranslate"><span class="pre">complement(&quot;ATGCCG&quot;)</span></code> returns <code class="docutils literal notranslate"><span class="pre">&quot;GCCGTA&quot;</span></code>.</p>
-<p>Uses BioPython for speed.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="easy_dna.translate">
-<code class="sig-prename descclassname">easy_dna.</code><code class="sig-name descname">translate</code><span class="sig-paren">(</span><em class="sig-param">dna_sequence</em>, <em class="sig-param">translation_table='Bacterial'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/easy_dna/biological_operations.html#translate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easy_dna.translate" title="Permalink to this definition">¶</a></dt>
-<dd><p>Translate the DNA sequence into an amino-acids sequence “MLKYQT…”.
-If <code class="docutils literal notranslate"><span class="pre">translation_table</span></code> is the name or number of a NCBI genetic table,
-Biopython will be used. See here for options:</p>
-<p><a class="reference external" href="http://biopython.org/DIST/docs/tutorial/Tutorial.html#htoc25">http://biopython.org/DIST/docs/tutorial/Tutorial.html#htoc25</a></p>
-<p><code class="docutils literal notranslate"><span class="pre">translation_table</span></code> can also be a dictionnary of the form
-<code class="docutils literal notranslate"><span class="pre">{&quot;ATT&quot;:</span> <span class="pre">&quot;M&quot;,</span> <span class="pre">&quot;CTC&quot;:</span> <span class="pre">&quot;X&quot;,</span> <span class="pre">etc.}</span></code> for more exotic translation tables</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="easy_dna.reverse_translate">
-<code class="sig-prename descclassname">easy_dna.</code><code class="sig-name descname">reverse_translate</code><span class="sig-paren">(</span><em class="sig-param">protein_sequence</em>, <em class="sig-param">randomize_codons=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/easy_dna/biological_operations.html#reverse_translate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easy_dna.reverse_translate" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return a DNA sequence which translates to the provided protein sequence</p>
-<p>Note: at the moment, the first valid codon found is used for each
-amino-acid (so it is deterministic but no codon-optimization is done).</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="easy_dna.load_record">
-<code class="sig-prename descclassname">easy_dna.</code><code class="sig-name descname">load_record</code><span class="sig-paren">(</span><em class="sig-param">filename</em>, <em class="sig-param">record_id='auto'</em>, <em class="sig-param">upperize=False</em>, <em class="sig-param">id_cutoff=20</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/easy_dna/io.html#load_record"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easy_dna.load_record" title="Permalink to this definition">¶</a></dt>
-<dd><p>Load a Fasta/Genbank/Snapgen file as a biopython record.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><dl class="simple">
-<dt><strong>filename</strong></dt><dd><p>Path to the file containing the record.</p>
-</dd>
-<dt><strong>record_id</strong></dt><dd><p>Id of the record (leave to “auto” to keep the record’s original Id, which
-will default to the file name if the record has no Id).</p>
-</dd>
-<dt><strong>upperize</strong></dt><dd><p>If true, the record’s sequence will be upperized.</p>
-</dd>
-<dt><strong>id_cutoff</strong></dt><dd><p>If the Id is read from a filename, it will get truncated at this cutoff
-to avoid errors at report write time.</p>
-</dd>
-</dl>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="function">
-<dt id="easy_dna.write_record">
-<code class="sig-prename descclassname">easy_dna.</code><code class="sig-name descname">write_record</code><span class="sig-paren">(</span><em class="sig-param">record</em>, <em class="sig-param">target</em>, <em class="sig-param">fmt='genbank'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/easy_dna/io.html#write_record"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easy_dna.write_record" title="Permalink to this definition">¶</a></dt>
-<dd><p>Write a record as genbank, fasta, etc. via Biopython, with fixes</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="easy_dna.anonymized_record">
-<code class="sig-prename descclassname">easy_dna.</code><code class="sig-name descname">anonymized_record</code><span class="sig-paren">(</span><em class="sig-param">record</em>, <em class="sig-param">record_id='anonymized'</em>, <em class="sig-param">label_generator='feature_%d'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/easy_dna/record_operations.html#anonymized_record"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easy_dna.anonymized_record" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return a record with removed annotations/keywords/features/etc.</p>
-<p>Warning: this does not change the record sequence!</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><dl class="simple">
-<dt><strong>record</strong></dt><dd><p>The record to be anonymized</p>
-</dd>
-<dt><strong>record_id</strong></dt><dd><p>Id of the new record</p>
-</dd>
-<dt><strong>label_generator</strong></dt><dd><p>Recipe to change feature labels. Either “feature_%d” or None (no label)
-of a function (i, feature)=&gt;label</p>
-</dd>
-</dl>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="function">
-<dt id="easy_dna.records_from_data_files">
-<code class="sig-prename descclassname">easy_dna.</code><code class="sig-name descname">records_from_data_files</code><span class="sig-paren">(</span><em class="sig-param">filepaths=None</em>, <em class="sig-param">folder=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/easy_dna/io.html#records_from_data_files"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easy_dna.records_from_data_files" title="Permalink to this definition">¶</a></dt>
-<dd><p>Automatically convert files or a folder’s content to biopython records.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="easy_dna.dna_pattern_to_regexpr">
-<code class="sig-prename descclassname">easy_dna.</code><code class="sig-name descname">dna_pattern_to_regexpr</code><span class="sig-paren">(</span><em class="sig-param">dna_pattern</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/easy_dna/matching.html#dna_pattern_to_regexpr"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easy_dna.dna_pattern_to_regexpr" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return a regular expression pattern for the provided DNA pattern</p>
-<p>For instance <code class="docutils literal notranslate"><span class="pre">dna_pattern_to_regexpr('ATTNN')</span></code> returns
-<code class="docutils literal notranslate"><span class="pre">&quot;ATT[A|T|G|C][A|T|G|C]&quot;</span></code>.</p>
-</dd></dl>
-
-<dl class="function">
+<dl class="py function">
 <dt id="easy_dna.all_iupac_variants">
-<code class="sig-prename descclassname">easy_dna.</code><code class="sig-name descname">all_iupac_variants</code><span class="sig-paren">(</span><em class="sig-param">iupac_sequence</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/easy_dna/matching.html#all_iupac_variants"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easy_dna.all_iupac_variants" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">easy_dna.</code><code class="sig-name descname">all_iupac_variants</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iupac_sequence</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/easy_dna/matching.html#all_iupac_variants"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easy_dna.all_iupac_variants" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return all unambiguous possible versions of the given sequence.</p>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">all_iupac_variants</span><span class="p">(</span><span class="s1">&#39;ATN&#39;</span><span class="p">)</span>
@@ -230,157 +133,92 @@ of a function (i, feature)=&gt;label</p>
 </div>
 </dd></dl>
 
-<dl class="function">
-<dt id="easy_dna.random_dna_sequence">
-<code class="sig-prename descclassname">easy_dna.</code><code class="sig-name descname">random_dna_sequence</code><span class="sig-paren">(</span><em class="sig-param">length</em>, <em class="sig-param">gc_share=None</em>, <em class="sig-param">probas=None</em>, <em class="sig-param">seed=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/easy_dna/random_sequences.html#random_dna_sequence"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easy_dna.random_dna_sequence" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return a random DNA sequence (“ATGGCGT…”) with the specified length.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><dl class="simple">
-<dt><strong>length</strong></dt><dd><p>Length of the DNA sequence.</p>
-</dd>
-<dt><strong>proba</strong></dt><dd><p>Frequencies for the different nucleotides, for instance
-<code class="docutils literal notranslate"><span class="pre">probas={&quot;A&quot;:0.2,</span> <span class="pre">&quot;T&quot;:0.3,</span> <span class="pre">&quot;G&quot;:0.3,</span> <span class="pre">&quot;C&quot;:0.2}</span></code>.
-If not specified, all nucleotides are equiprobable (p=0.25).</p>
-</dd>
-<dt><strong>seed</strong></dt><dd><p>The seed to feed to the random number generator. When a seed is provided
-the random results depend deterministically on the seed, thus enabling
-reproducibility</p>
-</dd>
-</dl>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="function">
-<dt id="easy_dna.random_protein_sequence">
-<code class="sig-prename descclassname">easy_dna.</code><code class="sig-name descname">random_protein_sequence</code><span class="sig-paren">(</span><em class="sig-param">length</em>, <em class="sig-param">seed=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/easy_dna/random_sequences.html#random_protein_sequence"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easy_dna.random_protein_sequence" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return a random protein sequence “MNQTW…YL*” of the specified length.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><dl class="simple">
-<dt><strong>length</strong></dt><dd><p>Length of the protein sequence (in number of amino-acids). Note that the
-sequence will always start with <code class="docutils literal notranslate"><span class="pre">&quot;M&quot;</span></code> and end with a stop codon <code class="docutils literal notranslate"><span class="pre">&quot;*&quot;</span></code>
-with (length-2) random amino-acids in the middle</p>
-</dd>
-<dt><strong>seed</strong></dt><dd><p>The seed to feed to the random number generator. When a seed is provided
-the random results depend deterministically on the seed, thus enabling
-reproducibility</p>
-</dd>
-</dl>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="function">
-<dt id="easy_dna.list_common_enzymes">
-<code class="sig-prename descclassname">easy_dna.</code><code class="sig-name descname">list_common_enzymes</code><span class="sig-paren">(</span><em class="sig-param">site_length=(6</em>, <em class="sig-param">)</em>, <em class="sig-param">opt_temp=(37</em>, <em class="sig-param">)</em>, <em class="sig-param">min_suppliers=1</em>, <em class="sig-param">site_unlike=()</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/easy_dna/enzymes.html#list_common_enzymes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easy_dna.list_common_enzymes" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return a list of enzyme names with the given constraints.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><dl class="simple">
-<dt><strong>site_length</strong></dt><dd><p>List of accepted site lengths (6, 4, …)</p>
-</dd>
-<dt><strong>opt_temp</strong></dt><dd><p>List of accepted optimal temperatures for the enzyme</p>
-</dd>
-<dt><strong>min_suppliers</strong></dt><dd><p>Minimal number registered suppliers in the Biopython data. A minimum
-of 3 known suppliers returns the most common enzymes.</p>
-</dd>
-<dt><strong>site_unlike</strong></dt><dd><p>List of (ambiguous or unambiguous) DNA sequences that should NOT be
-recognized by the selected enzymes.</p>
-</dd>
-</dl>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="function">
+<dl class="py function">
 <dt id="easy_dna.annotate_record">
-<code class="sig-prename descclassname">easy_dna.</code><code class="sig-name descname">annotate_record</code><span class="sig-paren">(</span><em class="sig-param">seqrecord</em>, <em class="sig-param">location='full'</em>, <em class="sig-param">feature_type='misc_feature'</em>, <em class="sig-param">margin=0</em>, <em class="sig-param">**qualifiers</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/easy_dna/record_operations.html#annotate_record"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easy_dna.annotate_record" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">easy_dna.</code><code class="sig-name descname">annotate_record</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">seqrecord</span></em>, <em class="sig-param"><span class="n">location</span><span class="o">=</span><span class="default_value">'full'</span></em>, <em class="sig-param"><span class="n">feature_type</span><span class="o">=</span><span class="default_value">'misc_feature'</span></em>, <em class="sig-param"><span class="n">margin</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">qualifiers</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/easy_dna/record_operations.html#annotate_record"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easy_dna.annotate_record" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add a feature to a Biopython SeqRecord.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>seqrecord</strong></dt><dd><p>The biopython seqrecord to be annotated.</p>
+<dt><strong>seqrecord</strong></dt><dd><p>The Biopython SeqRecord to be annotated.</p>
 </dd>
-<dt><strong>location</strong></dt><dd><p>Either (start, end) or (start, end, strand). (strand defaults to +1)</p>
+<dt><strong>location</strong></dt><dd><p>Either (start, end) or (start, end, strand). (strand defaults to +1).</p>
 </dd>
-<dt><strong>feature_type</strong></dt><dd><p>The type associated with the feature</p>
+<dt><strong>feature_type</strong></dt><dd><p>The type associated with the feature.</p>
 </dd>
 <dt><strong>margin</strong></dt><dd><p>Number of extra bases added on each side of the given location.</p>
 </dd>
-<dt><strong>qualifiers</strong></dt><dd><p>Dictionnary that will be the Biopython feature’s <cite>qualifiers</cite> attribute.</p>
+<dt><strong>qualifiers</strong></dt><dd><p>Dictionary that will be the Biopython feature’s <cite>qualifiers</cite> attribute.</p>
 </dd>
 </dl>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="function">
-<dt id="easy_dna.sequence_to_biopython_record">
-<code class="sig-prename descclassname">easy_dna.</code><code class="sig-name descname">sequence_to_biopython_record</code><span class="sig-paren">(</span><em class="sig-param">sequence</em>, <em class="sig-param">id='&lt;unknown id&gt;'</em>, <em class="sig-param">name='&lt;unknown name&gt;'</em>, <em class="sig-param">features=()</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/easy_dna/record_operations.html#sequence_to_biopython_record"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easy_dna.sequence_to_biopython_record" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return a SeqRecord of the sequence, ready to be Genbanked.</p>
+<dl class="py function">
+<dt id="easy_dna.anonymized_record">
+<code class="sig-prename descclassname">easy_dna.</code><code class="sig-name descname">anonymized_record</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">record</span></em>, <em class="sig-param"><span class="n">record_id</span><span class="o">=</span><span class="default_value">'anonymized'</span></em>, <em class="sig-param"><span class="n">label_generator</span><span class="o">=</span><span class="default_value">'feature_%d'</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/easy_dna/record_operations.html#anonymized_record"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easy_dna.anonymized_record" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a record with removed annotations/keywords/features/etc.</p>
+<p>Warning: this does not change the record sequence!</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>record</strong></dt><dd><p>The record to be anonymized.</p>
+</dd>
+<dt><strong>record_id</strong></dt><dd><p>ID of the new record.</p>
+</dd>
+<dt><strong>label_generator</strong></dt><dd><p>Recipe to change feature labels. Either “feature_%d” or None (no label)
+of a function (i, feature)=&gt;label.</p>
+</dd>
+</dl>
+</dd>
+</dl>
 </dd></dl>
 
-<dl class="function">
-<dt id="easy_dna.record_with_different_sequence">
-<code class="sig-prename descclassname">easy_dna.</code><code class="sig-name descname">record_with_different_sequence</code><span class="sig-paren">(</span><em class="sig-param">record</em>, <em class="sig-param">new_seq</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/easy_dna/record_operations.html#record_with_different_sequence"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easy_dna.record_with_different_sequence" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return a version of the record with the sequence set to new_seq</p>
+<dl class="py function">
+<dt id="easy_dna.complement">
+<code class="sig-prename descclassname">easy_dna.</code><code class="sig-name descname">complement</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dna_sequence</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/easy_dna/biological_operations.html#complement"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easy_dna.complement" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the complement of the DNA sequence.</p>
+<p>For instance <code class="docutils literal notranslate"><span class="pre">complement(&quot;ATGCCG&quot;)</span></code> returns <code class="docutils literal notranslate"><span class="pre">&quot;TACGGC&quot;</span></code>.</p>
+<p>Uses BioPython for speed.</p>
 </dd></dl>
 
-<dl class="function">
-<dt id="easy_dna.replace_segment">
-<code class="sig-prename descclassname">easy_dna.</code><code class="sig-name descname">replace_segment</code><span class="sig-paren">(</span><em class="sig-param">seq</em>, <em class="sig-param">start</em>, <em class="sig-param">end</em>, <em class="sig-param">replacement</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/easy_dna/modifications.html#replace_segment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easy_dna.replace_segment" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return the sequence with <code class="docutils literal notranslate"><span class="pre">seq[start:end]</span></code> replaced by <code class="docutils literal notranslate"><span class="pre">replacement</span></code>.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="easy_dna.insert_segment">
-<code class="sig-prename descclassname">easy_dna.</code><code class="sig-name descname">insert_segment</code><span class="sig-paren">(</span><em class="sig-param">seq</em>, <em class="sig-param">pos</em>, <em class="sig-param">inserted</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/easy_dna/modifications.html#insert_segment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easy_dna.insert_segment" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return the sequence with <code class="docutils literal notranslate"><span class="pre">inserted</span></code> inserted, starting at index ‘pos’.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="easy_dna.delete_segment">
-<code class="sig-prename descclassname">easy_dna.</code><code class="sig-name descname">delete_segment</code><span class="sig-paren">(</span><em class="sig-param">seq</em>, <em class="sig-param">start</em>, <em class="sig-param">end</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/easy_dna/modifications.html#delete_segment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easy_dna.delete_segment" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return the sequence with n deletions from position ‘pos’.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="easy_dna.delete_nucleotides">
-<code class="sig-prename descclassname">easy_dna.</code><code class="sig-name descname">delete_nucleotides</code><span class="sig-paren">(</span><em class="sig-param">seq</em>, <em class="sig-param">start</em>, <em class="sig-param">n</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/easy_dna/modifications.html#delete_nucleotides"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easy_dna.delete_nucleotides" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return the sequence with n deletions from position ‘pos’.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="easy_dna.reverse_segment">
-<code class="sig-prename descclassname">easy_dna.</code><code class="sig-name descname">reverse_segment</code><span class="sig-paren">(</span><em class="sig-param">seq</em>, <em class="sig-param">start</em>, <em class="sig-param">end</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/easy_dna/modifications.html#reverse_segment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easy_dna.reverse_segment" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return the sequence with segment <code class="docutils literal notranslate"><span class="pre">seq[start:end]</span></code> reverse-complemented.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="easy_dna.cut_and_paste_segment">
-<code class="sig-prename descclassname">easy_dna.</code><code class="sig-name descname">cut_and_paste_segment</code><span class="sig-paren">(</span><em class="sig-param">seq</em>, <em class="sig-param">start</em>, <em class="sig-param">end</em>, <em class="sig-param">new_start</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/easy_dna/modifications.html#cut_and_paste_segment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easy_dna.cut_and_paste_segment" title="Permalink to this definition">¶</a></dt>
-<dd><p>Move a subsequence by “diff” nucleotides the left or the right.</p>
-</dd></dl>
-
-<dl class="function">
+<dl class="py function">
 <dt id="easy_dna.copy_and_paste_segment">
-<code class="sig-prename descclassname">easy_dna.</code><code class="sig-name descname">copy_and_paste_segment</code><span class="sig-paren">(</span><em class="sig-param">seq</em>, <em class="sig-param">start</em>, <em class="sig-param">end</em>, <em class="sig-param">new_start</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/easy_dna/modifications.html#copy_and_paste_segment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easy_dna.copy_and_paste_segment" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">easy_dna.</code><code class="sig-name descname">copy_and_paste_segment</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">seq</span></em>, <em class="sig-param"><span class="n">start</span></em>, <em class="sig-param"><span class="n">end</span></em>, <em class="sig-param"><span class="n">new_start</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/easy_dna/modifications.html#copy_and_paste_segment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easy_dna.copy_and_paste_segment" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the sequence with segment [start, end] also copied elsewhere,
 starting in new_start.</p>
 </dd></dl>
 
-<dl class="function">
-<dt id="easy_dna.swap_segments">
-<code class="sig-prename descclassname">easy_dna.</code><code class="sig-name descname">swap_segments</code><span class="sig-paren">(</span><em class="sig-param">seq</em>, <em class="sig-param">pos1</em>, <em class="sig-param">pos2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/easy_dna/modifications.html#swap_segments"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easy_dna.swap_segments" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return a new sequence with segments at position pos1 and pos2 swapped.</p>
-<p>pos1, pos2 are both of the form (start1, end1), (start2, end2).</p>
+<dl class="py function">
+<dt id="easy_dna.cut_and_paste_segment">
+<code class="sig-prename descclassname">easy_dna.</code><code class="sig-name descname">cut_and_paste_segment</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">seq</span></em>, <em class="sig-param"><span class="n">start</span></em>, <em class="sig-param"><span class="n">end</span></em>, <em class="sig-param"><span class="n">new_start</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/easy_dna/modifications.html#cut_and_paste_segment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easy_dna.cut_and_paste_segment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Move a subsequence by “diff” nucleotides the left or the right.</p>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
+<dt id="easy_dna.delete_nucleotides">
+<code class="sig-prename descclassname">easy_dna.</code><code class="sig-name descname">delete_nucleotides</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">seq</span></em>, <em class="sig-param"><span class="n">start</span></em>, <em class="sig-param"><span class="n">n</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/easy_dna/modifications.html#delete_nucleotides"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easy_dna.delete_nucleotides" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the sequence with n deletions from position ‘pos’.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="easy_dna.delete_segment">
+<code class="sig-prename descclassname">easy_dna.</code><code class="sig-name descname">delete_segment</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">seq</span></em>, <em class="sig-param"><span class="n">start</span></em>, <em class="sig-param"><span class="n">end</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/easy_dna/modifications.html#delete_segment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easy_dna.delete_segment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the sequence with n deletions from position ‘pos’.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="easy_dna.dna_pattern_to_regexpr">
+<code class="sig-prename descclassname">easy_dna.</code><code class="sig-name descname">dna_pattern_to_regexpr</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dna_pattern</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/easy_dna/matching.html#dna_pattern_to_regexpr"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easy_dna.dna_pattern_to_regexpr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a regular expression pattern for the provided DNA pattern</p>
+<p>For instance <code class="docutils literal notranslate"><span class="pre">dna_pattern_to_regexpr('ATTNN')</span></code> returns
+<code class="docutils literal notranslate"><span class="pre">&quot;ATT[A|T|G|C][A|T|G|C]&quot;</span></code>.</p>
+</dd></dl>
+
+<dl class="py function">
 <dt id="easy_dna.extract_from_input">
-<code class="sig-prename descclassname">easy_dna.</code><code class="sig-name descname">extract_from_input</code><span class="sig-paren">(</span><em class="sig-param">filename=None</em>, <em class="sig-param">directory=None</em>, <em class="sig-param">construct_list=None</em>, <em class="sig-param">direct_sense=True</em>, <em class="sig-param">output_path=None</em>, <em class="sig-param">min_sequence_length=20</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/easy_dna/extractor.html#extract_from_input"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easy_dna.extract_from_input" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">easy_dna.</code><code class="sig-name descname">extract_from_input</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filename</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">directory</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">construct_list</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">direct_sense</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">output_path</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">min_sequence_length</span><span class="o">=</span><span class="default_value">20</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/easy_dna/extractor.html#extract_from_input"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easy_dna.extract_from_input" title="Permalink to this definition">¶</a></dt>
 <dd><p>Extract features from input and return in a dictionary.</p>
 <p>Optionally save the features in separate files.</p>
 <dl class="field-list simple">
@@ -403,6 +241,171 @@ starting in new_start.</p>
 </dl>
 </dd></dl>
 
+<dl class="py function">
+<dt id="easy_dna.insert_segment">
+<code class="sig-prename descclassname">easy_dna.</code><code class="sig-name descname">insert_segment</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">seq</span></em>, <em class="sig-param"><span class="n">pos</span></em>, <em class="sig-param"><span class="n">inserted</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/easy_dna/modifications.html#insert_segment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easy_dna.insert_segment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the sequence with <code class="docutils literal notranslate"><span class="pre">inserted</span></code> inserted, starting at index ‘pos’.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="easy_dna.list_common_enzymes">
+<code class="sig-prename descclassname">easy_dna.</code><code class="sig-name descname">list_common_enzymes</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">site_length</span><span class="o">=</span><span class="default_value">6</span></em>, <em class="sig-param"><span class="n">opt_temp</span><span class="o">=</span><span class="default_value">37</span></em>, <em class="sig-param"><span class="n">min_suppliers</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">site_unlike</span><span class="o">=</span><span class="default_value">()</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/easy_dna/enzymes.html#list_common_enzymes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easy_dna.list_common_enzymes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a list of enzyme names with the given constraints.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>site_length</strong></dt><dd><p>List of accepted site lengths (6, 4, …).</p>
+</dd>
+<dt><strong>opt_temp</strong></dt><dd><p>List of accepted optimal temperatures for the enzyme.</p>
+</dd>
+<dt><strong>min_suppliers</strong></dt><dd><p>Minimal number registered suppliers in the Biopython data. A minimum
+of 3 known suppliers returns the most common enzymes.</p>
+</dd>
+<dt><strong>site_unlike</strong></dt><dd><p>List of (ambiguous or unambiguous) DNA sequences that should NOT be
+recognized by the selected enzymes.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="easy_dna.load_record">
+<code class="sig-prename descclassname">easy_dna.</code><code class="sig-name descname">load_record</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filename</span></em>, <em class="sig-param"><span class="n">record_id</span><span class="o">=</span><span class="default_value">'auto'</span></em>, <em class="sig-param"><span class="n">upperize</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">id_cutoff</span><span class="o">=</span><span class="default_value">20</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/easy_dna/io.html#load_record"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easy_dna.load_record" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load a Fasta/Genbank/Snapgene file as a Biopython record.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>filename</strong></dt><dd><p>Path to the file containing the record.</p>
+</dd>
+<dt><strong>record_id</strong></dt><dd><p>Id of the record (leave to “auto” to keep the record’s original Id, which
+will default to the file name if the record has no Id).</p>
+</dd>
+<dt><strong>upperize</strong></dt><dd><p>If true, the record’s sequence will be upperized.</p>
+</dd>
+<dt><strong>id_cutoff</strong></dt><dd><p>If the Id is read from a filename, it will get truncated at this cutoff
+to avoid errors at report write time.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="easy_dna.random_dna_sequence">
+<code class="sig-prename descclassname">easy_dna.</code><code class="sig-name descname">random_dna_sequence</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">length</span></em>, <em class="sig-param"><span class="n">gc_share</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">probas</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/easy_dna/random_sequences.html#random_dna_sequence"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easy_dna.random_dna_sequence" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a random DNA sequence (“ATGGCGT…”) with the specified length.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>length</strong></dt><dd><p>Length of the DNA sequence.</p>
+</dd>
+<dt><strong>gc_share</strong></dt><dd><p>The GC content of the random sequence, as a fraction (for example,
+0.3 for 30%). Overwrites <cite>probas</cite>.</p>
+</dd>
+<dt><strong>probas</strong></dt><dd><p>Frequencies for the different nucleotides, for instance
+<code class="docutils literal notranslate"><span class="pre">probas={&quot;A&quot;:0.2,</span> <span class="pre">&quot;T&quot;:0.3,</span> <span class="pre">&quot;G&quot;:0.3,</span> <span class="pre">&quot;C&quot;:0.2}</span></code>.
+If not specified, all nucleotides are equiprobable (p=0.25).</p>
+</dd>
+<dt><strong>seed</strong></dt><dd><p>The seed to feed to the random number generator. When a seed is provided
+the random results depend deterministically on the seed, thus enabling
+reproducibility.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="easy_dna.random_protein_sequence">
+<code class="sig-prename descclassname">easy_dna.</code><code class="sig-name descname">random_protein_sequence</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">length</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/easy_dna/random_sequences.html#random_protein_sequence"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easy_dna.random_protein_sequence" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a random protein sequence “MNQTW…YL*” of the specified length.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>length</strong></dt><dd><p>Length of the protein sequence (in number of amino-acids). Note that the
+sequence will always start with <code class="docutils literal notranslate"><span class="pre">&quot;M&quot;</span></code> and end with a stop codon <code class="docutils literal notranslate"><span class="pre">&quot;*&quot;</span></code>
+with (length-2) random amino-acids in the middle.</p>
+</dd>
+<dt><strong>seed</strong></dt><dd><p>The seed to feed to the random number generator. When a seed is provided
+the random results depend deterministically on the seed, thus enabling
+reproducibility.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="easy_dna.record_with_different_sequence">
+<code class="sig-prename descclassname">easy_dna.</code><code class="sig-name descname">record_with_different_sequence</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">record</span></em>, <em class="sig-param"><span class="n">new_seq</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/easy_dna/record_operations.html#record_with_different_sequence"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easy_dna.record_with_different_sequence" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a version of the record with the sequence set to new_seq.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="easy_dna.records_from_data_files">
+<code class="sig-prename descclassname">easy_dna.</code><code class="sig-name descname">records_from_data_files</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filepaths</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">folder</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/easy_dna/io.html#records_from_data_files"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easy_dna.records_from_data_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>Automatically convert files or a folder’s content to Biopython records.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="easy_dna.replace_segment">
+<code class="sig-prename descclassname">easy_dna.</code><code class="sig-name descname">replace_segment</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">seq</span></em>, <em class="sig-param"><span class="n">start</span></em>, <em class="sig-param"><span class="n">end</span></em>, <em class="sig-param"><span class="n">replacement</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/easy_dna/modifications.html#replace_segment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easy_dna.replace_segment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the sequence with <code class="docutils literal notranslate"><span class="pre">seq[start:end]</span></code> replaced by <code class="docutils literal notranslate"><span class="pre">replacement</span></code>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="easy_dna.reverse_complement">
+<code class="sig-prename descclassname">easy_dna.</code><code class="sig-name descname">reverse_complement</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dna_sequence</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/easy_dna/biological_operations.html#reverse_complement"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easy_dna.reverse_complement" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the reverse-complement of the DNA sequence.</p>
+<p>For instance <code class="docutils literal notranslate"><span class="pre">complement(&quot;ATGCCG&quot;)</span></code> returns <code class="docutils literal notranslate"><span class="pre">&quot;GCCGTA&quot;</span></code>.</p>
+<p>Uses BioPython for speed.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="easy_dna.reverse_segment">
+<code class="sig-prename descclassname">easy_dna.</code><code class="sig-name descname">reverse_segment</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">seq</span></em>, <em class="sig-param"><span class="n">start</span></em>, <em class="sig-param"><span class="n">end</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/easy_dna/modifications.html#reverse_segment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easy_dna.reverse_segment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the sequence with segment <code class="docutils literal notranslate"><span class="pre">seq[start:end]</span></code> reverse-complemented.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="easy_dna.reverse_translate">
+<code class="sig-prename descclassname">easy_dna.</code><code class="sig-name descname">reverse_translate</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">protein_sequence</span></em>, <em class="sig-param"><span class="n">randomize_codons</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/easy_dna/biological_operations.html#reverse_translate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easy_dna.reverse_translate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a DNA sequence which translates to the provided protein sequence.</p>
+<p>Note: at the moment, the first valid codon found is used for each
+amino-acid (so it is deterministic but no codon-optimization is done).</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="easy_dna.sequence_to_biopython_record">
+<code class="sig-prename descclassname">easy_dna.</code><code class="sig-name descname">sequence_to_biopython_record</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">sequence</span></em>, <em class="sig-param"><span class="n">id</span><span class="o">=</span><span class="default_value">'&lt;unknown id&gt;'</span></em>, <em class="sig-param"><span class="n">name</span><span class="o">=</span><span class="default_value">'&lt;unknown name&gt;'</span></em>, <em class="sig-param"><span class="n">features</span><span class="o">=</span><span class="default_value">()</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/easy_dna/record_operations.html#sequence_to_biopython_record"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easy_dna.sequence_to_biopython_record" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a SeqRecord of the sequence, ready to be Genbanked.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="easy_dna.swap_segments">
+<code class="sig-prename descclassname">easy_dna.</code><code class="sig-name descname">swap_segments</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">seq</span></em>, <em class="sig-param"><span class="n">pos1</span></em>, <em class="sig-param"><span class="n">pos2</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/easy_dna/modifications.html#swap_segments"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easy_dna.swap_segments" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a new sequence with segments at position pos1 and pos2 swapped.</p>
+<p>pos1, pos2 are both of the form (start1, end1), (start2, end2).</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="easy_dna.translate">
+<code class="sig-prename descclassname">easy_dna.</code><code class="sig-name descname">translate</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dna_sequence</span></em>, <em class="sig-param"><span class="n">translation_table</span><span class="o">=</span><span class="default_value">'Bacterial'</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/easy_dna/biological_operations.html#translate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easy_dna.translate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Translate the DNA sequence into an amino-acids sequence “MLKYQT…”.
+If <code class="docutils literal notranslate"><span class="pre">translation_table</span></code> is the name or number of a NCBI genetic table,
+Biopython will be used. See here for options:</p>
+<p><a class="reference external" href="http://biopython.org/DIST/docs/tutorial/Tutorial.html#sec26">http://biopython.org/DIST/docs/tutorial/Tutorial.html#sec26</a></p>
+<p><code class="docutils literal notranslate"><span class="pre">translation_table</span></code> can also be a dictionary of the form
+<code class="docutils literal notranslate"><span class="pre">{&quot;ATT&quot;:</span> <span class="pre">&quot;M&quot;,</span> <span class="pre">&quot;CTC&quot;:</span> <span class="pre">&quot;X&quot;,</span> <span class="pre">etc.}</span></code> for more exotic translation tables.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="easy_dna.write_record">
+<code class="sig-prename descclassname">easy_dna.</code><code class="sig-name descname">write_record</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">record</span></em>, <em class="sig-param"><span class="n">target</span></em>, <em class="sig-param"><span class="n">fmt</span><span class="o">=</span><span class="default_value">'genbank'</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/easy_dna/io.html#write_record"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easy_dna.write_record" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write a record as genbank, fasta, etc. via Biopython, with fixes.</p>
+</dd></dl>
+
 </div>
 
 
@@ -412,7 +415,7 @@ starting in new_start.</p>
 </ul><div class="footer" role="contentinfo">
       &#169; Copyright 2019, Edinburgh Genome Foundry.
     <br>
-    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4 with <a href="https://github.com/schettino72/sphinx_press_theme">Press Theme</a>.
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.2.1 with <a href="https://github.com/schettino72/sphinx_press_theme">Press Theme</a>.
 </div>
             </div>
           </div>

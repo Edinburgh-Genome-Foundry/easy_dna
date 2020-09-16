@@ -103,11 +103,12 @@
     <span class="n">min_sequence_length</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
 <span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Extract features from input and return in a dictionary.</span>
-<span class="sd">    </span>
+
 <span class="sd">    Optionally save the features in separate files.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ==========</span>
+
 <span class="sd">    file</span>
 <span class="sd">      Input sequence file (Genbank).</span>
 
@@ -202,9 +203,9 @@
 
 
 <span class="k">def</span> <span class="nf">compute_id</span><span class="p">(</span><span class="n">seq_feature</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Computes an id for extract_features().</span>
+    <span class="sd">&quot;&quot;&quot;Computes an ID for extract_features().</span>
 
-<span class="sd">    The id can be used as a SeqRecord/Genbank name or id.</span>
+<span class="sd">    The ID can be used as a SeqRecord/Genbank name or id attribute.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">label_fields</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s2">&quot;name&quot;</span><span class="p">,</span>
@@ -279,8 +280,9 @@
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ==========</span>
+
 <span class="sd">    records_dict</span>
-<span class="sd">      Dictionary of sequence name: list of features as SeqRecords. </span>
+<span class="sd">      Dictionary of sequence name: list of features as SeqRecords.</span>
 
 <span class="sd">    min_sequence_length</span>
 <span class="sd">      Discard sequences with length less than this integer.</span>
@@ -301,7 +303,7 @@
     <span class="p">)</span>
     <span class="n">all_parts_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
 
-    <span class="c1"># This part is complex because it does two things, and will be simplified.</span>
+    <span class="c1"># This part is complex because it does two things, and could be simplified.</span>
     <span class="c1"># It makes a dictionary of all parts and a dataframe of part properties.</span>
     <span class="c1"># It also checks for a number of constraints and cases: sequence length,</span>
     <span class="c1"># shared sequences, shared names.</span>
@@ -349,7 +351,7 @@
 <span class="k">def</span> <span class="nf">process_report</span><span class="p">(</span><span class="n">report</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Format the report prepared by make_part_dict().</span>
 
-<span class="sd">    The function finds common parts within constructs and identical sequences </span>
+<span class="sd">    The function finds common parts within constructs and identical sequences</span>
 <span class="sd">    between constructs.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">all_shared_with</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">()</span>
@@ -385,7 +387,7 @@
 </ul><div class="footer" role="contentinfo">
       &#169; Copyright 2019, Edinburgh Genome Foundry.
     <br>
-    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4 with <a href="https://github.com/schettino72/sphinx_press_theme">Press Theme</a>.
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.2.1 with <a href="https://github.com/schettino72/sphinx_press_theme">Press Theme</a>.
 </div>
             </div>
           </div>

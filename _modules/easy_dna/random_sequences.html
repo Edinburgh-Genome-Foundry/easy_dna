@@ -107,7 +107,11 @@
 <span class="sd">    length</span>
 <span class="sd">      Length of the DNA sequence.</span>
 
-<span class="sd">    proba</span>
+<span class="sd">    gc_share</span>
+<span class="sd">      The GC content of the random sequence, as a fraction (for example,</span>
+<span class="sd">      0.3 for 30%). Overwrites `probas`.</span>
+
+<span class="sd">    probas</span>
 <span class="sd">      Frequencies for the different nucleotides, for instance</span>
 <span class="sd">      ``probas={&quot;A&quot;:0.2, &quot;T&quot;:0.3, &quot;G&quot;:0.3, &quot;C&quot;:0.2}``.</span>
 <span class="sd">      If not specified, all nucleotides are equiprobable (p=0.25).</span>
@@ -115,8 +119,7 @@
 <span class="sd">    seed</span>
 <span class="sd">      The seed to feed to the random number generator. When a seed is provided</span>
 <span class="sd">      the random results depend deterministically on the seed, thus enabling</span>
-<span class="sd">      reproducibility</span>
-
+<span class="sd">      reproducibility.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">seed</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
@@ -141,13 +144,12 @@
 <span class="sd">    length</span>
 <span class="sd">      Length of the protein sequence (in number of amino-acids). Note that the</span>
 <span class="sd">      sequence will always start with ``&quot;M&quot;`` and end with a stop codon ``&quot;*&quot;``</span>
-<span class="sd">      with (length-2) random amino-acids in the middle</span>
+<span class="sd">      with (length-2) random amino-acids in the middle.</span>
 
 <span class="sd">    seed</span>
 <span class="sd">      The seed to feed to the random number generator. When a seed is provided</span>
 <span class="sd">      the random results depend deterministically on the seed, thus enabling</span>
-<span class="sd">      reproducibility</span>
-
+<span class="sd">      reproducibility.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">seed</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
@@ -163,7 +165,7 @@
 </ul><div class="footer" role="contentinfo">
       &#169; Copyright 2019, Edinburgh Genome Foundry.
     <br>
-    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4 with <a href="https://github.com/schettino72/sphinx_press_theme">Press Theme</a>.
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.2.1 with <a href="https://github.com/schettino72/sphinx_press_theme">Press Theme</a>.
 </div>
             </div>
           </div>

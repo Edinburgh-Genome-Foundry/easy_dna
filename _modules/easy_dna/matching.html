@@ -106,7 +106,7 @@
 
 <div class="viewcode-block" id="all_iupac_variants"><a class="viewcode-back" href="../../index.html#easy_dna.all_iupac_variants">[docs]</a><span class="k">def</span> <span class="nf">all_iupac_variants</span><span class="p">(</span><span class="n">iupac_sequence</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Return all unambiguous possible versions of the given sequence.</span>
-<span class="sd">    </span>
+
 <span class="sd">    Examples</span>
 <span class="sd">    ========</span>
 
@@ -124,9 +124,9 @@
 <span class="k">def</span> <span class="nf">find_index</span><span class="p">(</span><span class="n">seq</span><span class="p">,</span> <span class="n">pattern</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Return the index of the first match of the pattern in seq.</span>
 
-<span class="sd">    Returns -1 if there is not match.</span>
+<span class="sd">    Returns -1 if there is no match.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    
+
     <span class="n">pattern</span> <span class="o">=</span> <span class="n">sequence_to_atgc_string</span><span class="p">(</span><span class="n">pattern</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">seq</span><span class="p">,</span> <span class="s2">&quot;seq&quot;</span><span class="p">):</span>
         <span class="c1"># Seq is a SeqRecord</span>
@@ -162,7 +162,7 @@
 </ul><div class="footer" role="contentinfo">
       &#169; Copyright 2019, Edinburgh Genome Foundry.
     <br>
-    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4 with <a href="https://github.com/schettino72/sphinx_press_theme">Press Theme</a>.
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.2.1 with <a href="https://github.com/schettino72/sphinx_press_theme">Press Theme</a>.
 </div>
             </div>
           </div>
