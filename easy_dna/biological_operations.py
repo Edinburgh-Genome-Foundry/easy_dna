@@ -31,7 +31,7 @@ def reverse_complement(dna_sequence):
 
 
 def reverse_translate(protein_sequence, randomize_codons=False):
-    """Return a DNA sequence which translates to the provided protein sequence
+    """Return a DNA sequence which translates to the provided protein sequence.
 
     Note: at the moment, the first valid codon found is used for each
     amino-acid (so it is deterministic but no codon-optimization is done).
@@ -52,10 +52,10 @@ def translate(dna_sequence, translation_table="Bacterial"):
     If ``translation_table`` is the name or number of a NCBI genetic table,
     Biopython will be used. See here for options:
 
-    http://biopython.org/DIST/docs/tutorial/Tutorial.html#htoc25
+    http://biopython.org/DIST/docs/tutorial/Tutorial.html#sec26
 
-    ``translation_table`` can also be a dictionnary of the form
-    ``{"ATT": "M", "CTC": "X", etc.}`` for more exotic translation tables
+    ``translation_table`` can also be a dictionary of the form
+    ``{"ATT": "M", "CTC": "X", etc.}`` for more exotic translation tables.
 
 
     """

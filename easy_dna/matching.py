@@ -15,7 +15,7 @@ def dna_pattern_to_regexpr(dna_pattern):
 
 def all_iupac_variants(iupac_sequence):
     """Return all unambiguous possible versions of the given sequence.
-    
+
     Examples
     ========
 
@@ -33,9 +33,9 @@ def all_iupac_variants(iupac_sequence):
 def find_index(seq, pattern):
     """Return the index of the first match of the pattern in seq.
 
-    Returns -1 if there is not match.
+    Returns -1 if there is no match.
     """
-    
+
     pattern = sequence_to_atgc_string(pattern)
     if hasattr(seq, "seq"):
         # Seq is a SeqRecord

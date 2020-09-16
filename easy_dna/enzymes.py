@@ -1,4 +1,4 @@
-"""Methods for enzymes operations."""
+"""Methods for enzyme operations."""
 
 from .matching import all_iupac_variants
 from Bio import Restriction
@@ -13,10 +13,10 @@ def list_common_enzymes(
     ----------
 
     site_length
-      List of accepted site lengths (6, 4, ...)
+      List of accepted site lengths (6, 4, ...).
 
     opt_temp
-      List of accepted optimal temperatures for the enzyme
+      List of accepted optimal temperatures for the enzyme.
 
     min_suppliers
       Minimal number registered suppliers in the Biopython data. A minimum
@@ -30,9 +30,7 @@ def list_common_enzymes(
         [
             variant
             for enzyme in site_unlike
-            for variant in all_iupac_variants(
-                Restriction.__dict__[enzyme].site
-            )
+            for variant in all_iupac_variants(Restriction.__dict__[enzyme].site)
         ]
     )
 
@@ -42,10 +40,7 @@ def list_common_enzymes(
             len(enzyme.site) in site_length
             and enzyme.opt_temp in opt_temp
             and len(enzyme.supplier_list()) >= min_suppliers
-            and len(
-                set(all_iupac_variants(enzyme.site)).intersection(site_unlike)
-            )
-            == 0
+            and len(set(all_iupac_variants(enzyme.site)).intersection(site_unlike)) == 0
         )
 
     return [

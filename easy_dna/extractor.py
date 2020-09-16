@@ -12,11 +12,12 @@ def extract_from_input(
     min_sequence_length=20,
 ):
     """Extract features from input and return in a dictionary.
-    
+
     Optionally save the features in separate files.
 
     Parameters
     ==========
+
     file
       Input sequence file (Genbank).
 
@@ -111,9 +112,9 @@ def extract_from_input(
 
 
 def compute_id(seq_feature):
-    """Computes an id for extract_features().
+    """Computes an ID for extract_features().
 
-    The id can be used as a SeqRecord/Genbank name or id.
+    The ID can be used as a SeqRecord/Genbank name or id attribute.
     """
     label_fields = [
         "name",
@@ -188,8 +189,9 @@ def make_part_dict(records_dict, min_sequence_length=20):
 
     Parameters
     ==========
+
     records_dict
-      Dictionary of sequence name: list of features as SeqRecords. 
+      Dictionary of sequence name: list of features as SeqRecords.
 
     min_sequence_length
       Discard sequences with length less than this integer.
@@ -210,7 +212,7 @@ def make_part_dict(records_dict, min_sequence_length=20):
     )
     all_parts_dict = dict()
 
-    # This part is complex because it does two things, and will be simplified.
+    # This part is complex because it does two things, and could be simplified.
     # It makes a dictionary of all parts and a dataframe of part properties.
     # It also checks for a number of constraints and cases: sequence length,
     # shared sequences, shared names.
@@ -258,7 +260,7 @@ def make_part_dict(records_dict, min_sequence_length=20):
 def process_report(report):
     """Format the report prepared by make_part_dict().
 
-    The function finds common parts within constructs and identical sequences 
+    The function finds common parts within constructs and identical sequences
     between constructs.
     """
     all_shared_with = pd.Series()

@@ -1,10 +1,18 @@
 import os
 import re
 from io import BytesIO, StringIO
-from base64 import b64decode
 from copy import deepcopy
 from Bio import SeqIO
-from Bio.Alphabet import DNAAlphabet
+
+try:
+    # Biopython <1.78
+    from Bio.Alphabet import DNAAlphabet
+
+    has_dna_alphabet = True
+except ImportError:
+    # Biopython >=1.78
+    has_dna_alphabet = False
+
 from snapgene_reader import snapgene_file_to_seqrecord
 import flametree
 import pandas
@@ -15,10 +23,9 @@ import crazydoc
 from .record_operations import sequence_to_biopython_record
 
 
-def load_record(filename, record_id="auto", upperize=False,
-                id_cutoff=20):
-    """Load a Fasta/Genbank/Snapgen file as a biopython record.
-    
+def load_record(filename, record_id="auto", upperize=False, id_cutoff=20):
+    """Load a Fasta/Genbank/Snapgene file as a Biopython record.
+
     Parameters
     ==========
     filename
@@ -26,16 +33,15 @@ def load_record(filename, record_id="auto", upperize=False,
 
     record_id
       Id of the record (leave to "auto" to keep the record's original Id, which
-      will default to the file name if the record has no Id). 
-    
+      will default to the file name if the record has no Id).
+
     upperize
       If true, the record's sequence will be upperized.
 
     id_cutoff
       If the Id is read from a filename, it will get truncated at this cutoff
       to avoid errors at report write time.
-      
-    """ 
+    """
     if filename.lower().endswith(("gb", "gbk")):
         record = SeqIO.read(filename, "genbank")
     elif filename.lower().endswith(("fa", "fasta")):
@@ -60,11 +66,14 @@ def load_record(filename, record_id="auto", upperize=False,
 
 
 def write_record(record, target, fmt="genbank"):
-    """Write a record as genbank, fasta, etc. via Biopython, with fixes"""
+    """Write a record as genbank, fasta, etc. via Biopython, with fixes."""
     record = deepcopy(record)
     record.name = record.name[:20]
-    if str(record.seq.alphabet.__class__.__name__) != "DNAAlphabet":
-        record.seq.alphabet = DNAAlphabet()
+    if has_dna_alphabet:  # Biopython <1.78
+        if str(record.seq.alphabet.__class__.__name__) != "DNAAlphabet":
+            record.seq.alphabet = DNAAlphabet()
+    record.annotations["molecule_type"] = "DNA"
+
     if hasattr(target, "open"):
         target = target.open("w")
     SeqIO.write(record, target, fmt)
@@ -79,7 +88,14 @@ def string_to_record(string):
     # print("============", len(matches.groups()[0]), len(string))
     # print (matches.groups()[0] == string)
     if (matches is not None) and (matches.groups()[0] == string):
-        return SeqRecord(Seq(string, DNAAlphabet())), "ATGC"
+        if has_dna_alphabet:  # Biopython <1.78
+            sequence = Seq(string, alphabet=DNAAlphabet())
+        else:
+            sequence = Seq(string)
+        seqrecord = SeqRecord(sequence)
+        seqrecord.annotations["molecule_type"] = "DNA"
+
+        return seqrecord, "ATGC"
 
     for fmt in ("fasta", "genbank"):
         try:
@@ -107,7 +123,7 @@ def spreadsheet_file_to_dataframe(filepath, header="infer"):
 
 
 def records_from_zip_file(zip_file):
-    """Return all fasta/genbank/snapgene in a zip as biopython records."""
+    """Return all fasta/genbank/snapgene in a zip as Biopython records."""
     zip_file = flametree.file_tree(zip_file)
     records = []
     for f in zip_file._all_files:
@@ -118,9 +134,7 @@ def records_from_zip_file(zip_file):
             except Exception:
                 content_stream = BytesIO(f.read("rb"))
                 try:
-                    record = snapgene_file_to_seqrecord(
-                        fileobject=content_stream
-                    )
+                    record = snapgene_file_to_seqrecord(fileobject=content_stream)
                     new_records, _ = [record], "snapgene"
                 except Exception:
                     try:
@@ -130,9 +144,7 @@ def records_from_zip_file(zip_file):
                         new_records = parser.parse_doc_file(content_stream)
                         # fmt = "doc"
                     except Exception:
-                        raise ValueError(
-                            "Format not recognized for file " + f._path
-                        )
+                        raise ValueError("Format not recognized for file " + f._path)
 
             single_record = len(new_records) == 1
             for i, record in enumerate(new_records):
@@ -155,7 +167,7 @@ def records_from_zip_file(zip_file):
 
 
 def records_from_file(filepath):
-    """Autodetect file format and load biopython records from it."""
+    """Autodetect file format and load Biopython records from it."""
 
     with open(filepath, "rb") as f:
         content = f.read()
@@ -176,23 +188,19 @@ def records_from_file(filepath):
                 try:
                     df = spreadsheet_file_to_dataframe(filepath, header=None)
                     records = [
-                        sequence_to_biopython_record(
-                            sequence=seq, id=name, name=name
-                        )
+                        sequence_to_biopython_record(sequence=seq, id=name, name=name)
                         for name, seq in df.values
                     ]
                     fmt = "spreadsheet"
                 except Exception:
-                    raise ValueError(
-                        "Format not recognized for file " + filepath
-                    )
+                    raise ValueError("Format not recognized for file " + filepath)
     if not isinstance(records, list):
         records = [records]
     return records, fmt
 
 
 def record_to_formated_string(record, fmt="genbank", remove_descr=False):
-    """Return a string with the content of a FASTA/GENBANK file"""
+    """Return a string with the content of a FASTA/GENBANK file."""
     if remove_descr:
         record = deepcopy(record)
         if isinstance(record, (list, tuple)):
@@ -206,7 +214,7 @@ def record_to_formated_string(record, fmt="genbank", remove_descr=False):
 
 
 def records_from_data_files(filepaths=None, folder=None):
-    """Automatically convert files or a folder's content to biopython records.
+    """Automatically convert files or a folder's content to Biopython records.
     """
     if folder is not None:
         filepaths = [f._path for f in flametree.file_tree(folder)._all_files]
@@ -231,7 +239,10 @@ def records_from_data_files(filepaths=None, folder=None):
                 "<unknown name>",
                 "Exported",
             ]
-            record.seq.alphabet = DNAAlphabet()
+            if has_dna_alphabet:  # Biopython <1.78
+                record.seq.alphabet = DNAAlphabet()
+            record.annotations["molecule_type"] = "DNA"
+
             # Sorry for this parts, it took a lot of "whatever works".
             # keep your part names under 20c and pointless, and everything
             # will be good
