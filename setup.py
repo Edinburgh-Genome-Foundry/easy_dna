@@ -1,7 +1,7 @@
 # This will try to import setuptools. If not here, it will reach for the embedded
 # ez_setup (or the ez_setup package). If none, it fails with a message
 try:
-    from setuptools import setup
+    from setuptools import setup, find_packages
 except ImportError:
     try:
         import ez_setup
@@ -15,13 +15,13 @@ except ImportError:
             "([sudo] pip install ez_setup) and try again."
         )
 
-from setuptools import setup, find_packages
-
-exec(open("easy_dna/version.py").read())  # loads __version__
+version = {}
+with open("easy_dna/version.py") as fp:
+    exec(fp.read(), version)
 
 setup(
     name="easy_dna",
-    version=__version__,
+    version=version["__version__"],
     author="Zulko",
     description="Methods for DNA sequence reading, writing and editing.",
     long_description=open("pypi-readme.rst").read(),
@@ -36,6 +36,6 @@ setup(
         "snapgene_reader",
         "flametree",
         "pandas",
-        "crazydoc"
-    ]
+        "crazydoc",
+    ],
 )

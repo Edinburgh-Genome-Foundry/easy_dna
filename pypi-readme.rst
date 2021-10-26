@@ -1,5 +1,5 @@
 Easy DNA
-==========
+========
 
 Easy_dna is a Python library implementing useful routines for manipulating DNA
 sequences, either as "ATGC" strings or Biopython records. It aims at providing
@@ -12,8 +12,9 @@ design and genbank generation.
 
 **License:** MIT, Copyright Edinburgh Genome Foundry
 
+
 More biology software
------------------------
+---------------------
 
 .. image:: https://raw.githubusercontent.com/Edinburgh-Genome-Foundry/Edinburgh-Genome-Foundry.github.io/master/static/imgs/logos/egf-codon-horizontal.png
   :target: https://edinburgh-genome-foundry.github.io/
