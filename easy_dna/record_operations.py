@@ -12,6 +12,8 @@ except ImportError:
     has_dna_alphabet = False
 from Bio.SeqFeature import SeqFeature, FeatureLocation
 
+from .random_sequences import random_dna_sequence
+
 
 def sequence_to_biopython_record(
     sequence, id="<unknown id>", name="<unknown name>", features=()
@@ -120,3 +122,31 @@ def anonymized_record(record, record_id="anonymized", label_generator="feature_%
         if label is not None:
             feature.qualifiers["label"] = label
     return new_record
+
+
+def censor_record(record, record_id="censored", label_generator="feature_%d"):
+    """Return a record with random sequence and censored annotations/features.
+
+
+    Parameters
+    ----------
+
+    record
+      The record to be anonymized.
+
+    record_id
+      ID of the new record.
+
+    label_generator
+      Recipe to change feature labels. Either "feature_%d" or None (no label)
+      of a function (i, feature)=>label.
+    """
+    new_record = anonymized_record(
+        record, record_id=record_id, label_generator=label_generator
+    )
+    new_seq = random_dna_sequence(
+        len(new_record), gc_share=None, probas=None, seed=None
+    )
+    censored_record = record_with_different_sequence(new_record, new_seq)
+
+    return censored_record

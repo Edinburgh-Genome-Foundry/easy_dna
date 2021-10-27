@@ -24,7 +24,8 @@ from .record_operations import (
     annotate_record,
     sequence_to_biopython_record,
     record_with_different_sequence,
-    anonymized_record
+    anonymized_record,
+    censor_record,
 )
 
 from .modifications import (
@@ -55,6 +56,7 @@ __all__ = [
     "load_record",
     "write_record",
     "anonymized_record",
+    "censor_record",
     "records_from_data_files",
     "dna_pattern_to_regexpr",
     "all_iupac_variants",
@@ -73,5 +75,5 @@ __all__ = [
     "cut_and_paste_segment",
     "copy_and_paste_segment",
     "swap_segments",
-    "extract_from_input"
+    "extract_from_input",
 ]
