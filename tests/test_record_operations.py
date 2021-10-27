@@ -1,10 +1,16 @@
+import os
+import pytest
+
 from easy_dna import (
     annotate_record,
     sequence_to_biopython_record,
     record_with_different_sequence,
     anonymized_record,
     censor_record,
+    censor_genbank,
 )
+
+RECORDS_FOLDER = os.path.join("tests", "data")
 
 
 def test_anonymized_record():
@@ -31,3 +37,10 @@ def test_censor_record():
     assert record.name == "censored"
     assert record.features[0].qualifiers["label"] == "feature_0"
     assert "CGTCTC" in record.seq
+
+
+def test_censor_genbank(tmpdir):
+    filename = os.path.join(RECORDS_FOLDER, "test.gb")
+    target = os.path.join(tmpdir, "censored.gb")
+    censor_genbank(filename, target)
+    assert os.path.isfile(target)

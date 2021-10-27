@@ -1,0 +1,44 @@
+LOCUS       Exported                 324 bp ds-DNA     linear   UNK 27-OCT-2021
+DEFINITION  natural linear DNA.
+ACCESSION   test
+VERSION     .
+KEYWORDS    .
+SOURCE      natural DNA sequence
+  ORGANISM  unspecified
+REFERENCE   1  (bases 1 to 324)
+  TITLE     Direct Submission
+  JOURNAL   Exported Wednesday, Oct 27, 2021
+REFERENCE   2  (bases 1 to 324)
+  AUTHORS   .
+  TITLE     Direct Submission
+  JOURNAL   Exported Wednesday, Oct 27, 2021
+FEATURES             Location/Qualifiers
+     source          1..324
+                     /organism="unspecified"
+                     /mol_type="genomic DNA"
+     misc_feature    1..6
+                     /label=Enzyme site
+                     /label=Enzyme_site
+                     /label=nonstandard type:  feature
+     misc_feature    12..237
+                     /label=Annotation XYZ
+                     /label=Annotation_XYZ
+     promoter        12..237
+                     /label=Overlapping feature
+                     /label=Overlapping_feature
+     misc_feature    12..237
+                     /label=Example
+                     /label=Example
+     CDS             238..246
+                     /label=Important segment
+                     /label=Important_segment
+     CDS             247..311
+                     /label=feature_7
+ORIGIN
+        1 cgtctcacag ctggccggcc gaaagaaagt aaaacagggg ggtcaggtta tcgttgactg
+       61 taggcgttag acagatgttt ctgcactggt cctgcattct catgctcatt agacattcgg
+      121 ctaagcaaac atgacgttca tagattactg gccttttttt agtcgacggt ctctgggctg
+      181 cgcggcggac gaatcgacgc cagttatggt gatgacttcg tcacctcagg ttgtgatgtg
+      241 tagttcagcg tttgtaaacg ctaaatgttg gtcgttccta cacgctgcaa ctgtatcatc
+      301 tgagggtcag cggaggctga gacg
+//

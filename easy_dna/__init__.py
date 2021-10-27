@@ -26,6 +26,7 @@ from .record_operations import (
     record_with_different_sequence,
     anonymized_record,
     censor_record,
+    censor_genbank,
 )
 
 from .modifications import (

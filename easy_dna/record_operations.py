@@ -156,7 +156,7 @@ def censor_record(
       Whether to keep the record topology or not.
 
     anonymise_features
-      Whether to replace feature labels or not.
+      Whether to replace feature labels and ID/name, or not.
 
     preserve_sites
       List of enzyme sites to keep. Example: ``["BsmBI", "BsaI"]``. Preserves the
@@ -227,3 +227,24 @@ def censor_record(
     censored_record = record_with_different_sequence(new_record, new_seq)
 
     return censored_record
+
+
+def censor_genbank(filename, target, **censor_params):
+    """Load Genbank file and write censored version.
+
+
+    Parameters
+    ----------
+
+    filename
+      Path to the file containing the record.
+
+    target
+      Path to output genbank file.
+
+    censor_params
+      Optional parameters. See ``censor_record()`` for details.
+    """
+    record = easy_dna.load_record(filename)
+    censored = easy_dna.censor_record(record, **censor_params)
+    easy_dna.write_record(censored, target)
