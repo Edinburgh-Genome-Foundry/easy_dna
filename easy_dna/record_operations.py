@@ -125,7 +125,11 @@ def anonymized_record(record, record_id="anonymized", label_generator="feature_%
 
 
 def censor_record(
-    record, record_id="censored", label_generator="feature_%d", keep_topology=False
+    record,
+    record_id="censored",
+    label_generator="feature_%d",
+    keep_topology=False,
+    anonymise_features=True,
 ):
     """Return a record with random sequence and censored annotations/features.
 
@@ -145,15 +149,25 @@ def censor_record(
 
     keep_topology
       Whether to keep the record topology or not.
+
+    anonymise_features
+      Whether to replace feature labels or not.
     """
-    new_record = anonymized_record(
-        record, record_id=record_id, label_generator=label_generator
-    )
+    # Anonymise
+    if anonymise_features:
+        new_record = anonymized_record(
+            record, record_id=record_id, label_generator=label_generator
+        )
+    else:
+        new_record = deepcopy(record)
+
     if keep_topology:
         try:
             new_record.annotations["topology"] = record.annotations["topology"]
         except KeyError:  # input may not have topology set
             pass
+
+    # Randomise
     new_seq = random_dna_sequence(
         len(new_record), gc_share=None, probas=None, seed=None
     )
