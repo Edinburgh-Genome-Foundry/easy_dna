@@ -1,6 +1,8 @@
 from copy import deepcopy
 from Bio.Seq import Seq
 from Bio.SeqRecord import SeqRecord
+from Bio.SeqFeature import SeqFeature, FeatureLocation
+from Bio.Restriction import Restriction
 
 try:
     # Biopython <1.78
@@ -10,9 +12,9 @@ try:
 except ImportError:
     # Biopython >=1.78
     has_dna_alphabet = False
-from Bio.SeqFeature import SeqFeature, FeatureLocation
 
 from .random_sequences import random_dna_sequence
+import easy_dna
 
 
 def sequence_to_biopython_record(
@@ -130,8 +132,11 @@ def censor_record(
     label_generator="feature_%d",
     keep_topology=False,
     anonymise_features=True,
+    preserve_sites=None,
 ):
     """Return a record with random sequence and censored annotations/features.
+
+    Useful for creating example files or anonymising sequences for bug reports.
 
 
     Parameters
@@ -152,6 +157,10 @@ def censor_record(
 
     anonymise_features
       Whether to replace feature labels or not.
+
+    preserve_sites
+      List of enzyme sites to keep. Example: ``["BsmBI", "BsaI"]``. Preserves the
+      sequence around cut sites of the specified enzymes.
     """
     # Anonymise
     if anonymise_features:
@@ -171,6 +180,50 @@ def censor_record(
     new_seq = random_dna_sequence(
         len(new_record), gc_share=None, probas=None, seed=None
     )
+
+    if preserve_sites:
+        restriction_batch = Restriction.RestrictionBatch(preserve_sites)
+        # Destroy random new enzyme sites:
+        analysis = Restriction.Analysis(restriction_batch, sequence=Seq(new_seq))
+        analysis_results = analysis.full()
+        for enzyme, hits in analysis_results.items():
+            for hit in hits:
+                # 10 bp up- and downstream destroys the site whichever strand it is on:
+                if hit - 10 < 0:  # handle edge cases
+                    start = 0
+                    upstream = "A" * hit
+                else:
+                    start = hit - 10
+                    upstream = "A" * 10
+                if hit + 10 > len(new_seq):
+                    end = len(new_seq)
+                    downstream = "A" * (len(new_seq) - hit)
+                else:
+                    end = hit + 10
+                    downstream = "A" * 10
+                replacement = upstream + downstream
+                new_seq = easy_dna.replace_segment(new_seq, start, end, replacement)
+
+        # Add original sites:
+        analysis = Restriction.Analysis(restriction_batch, sequence=record.seq)
+        analysis_results = analysis.full()
+        original_seq = str(record.seq)
+        for enzyme, hits in analysis_results.items():
+            for hit in hits:
+                # keep 12 bp surrounding the cut site, to capture enzyme site:
+                if hit - 12 < 0:  # handle edge cases
+                    start = 0
+                else:
+                    start = hit - 12
+                if hit + 12 > len(new_seq):
+                    end = len(new_seq)
+                else:
+                    end = hit + 12
+                original_segment = original_seq[start:end]
+                new_seq = easy_dna.replace_segment(
+                    new_seq, start, end, original_segment
+                )
+
     censored_record = record_with_different_sequence(new_record, new_seq)
 
     return censored_record
