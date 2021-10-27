@@ -24,7 +24,7 @@ def test_censor_record():
         "ACGTGCGATGGGATTATTTCCAAC", id="test id", name="test name"
     )
     annotate_record(record, location="full", feature_type="test_feature")
-    record = censor_record(record)
+    record = censor_record(record, keep_topology=True)
     assert record.seq != "ACGTGCGATGGGATTATTTCCAAC"
     assert record.id == "censored"
     assert record.name == "censored"
