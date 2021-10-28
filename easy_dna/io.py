@@ -1,8 +1,9 @@
+from copy import deepcopy
+from io import BytesIO, StringIO
 import os
 import re
-from io import BytesIO, StringIO
-from copy import deepcopy
-from Bio import SeqIO
+
+import pandas
 
 try:
     # Biopython <1.78
@@ -12,13 +13,13 @@ try:
 except ImportError:
     # Biopython >=1.78
     has_dna_alphabet = False
-
-from snapgene_reader import snapgene_file_to_seqrecord
-import flametree
-import pandas
+from Bio import SeqIO
 from Bio.Seq import Seq
 from Bio.SeqRecord import SeqRecord
+
 import crazydoc
+import flametree
+from snapgene_reader import snapgene_file_to_seqrecord
 
 from .record_operations import sequence_to_biopython_record
 

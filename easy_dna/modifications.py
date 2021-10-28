@@ -8,17 +8,17 @@ def replace_segment(seq, start, end, replacement):
 
 
 def insert_segment(seq, pos, inserted):
-    """Return the sequence with ``inserted`` inserted, starting at index 'pos'."""
+    """Return the sequence with ``inserted`` inserted, starting at index ``pos``."""
     return seq[:pos] + inserted + seq[pos:]
 
 
 def delete_segment(seq, start, end):
-    """Return the sequence with n deletions from position 'pos'."""
+    """Return the sequence with deleted segment from ``start`` to ``end``."""
     return seq[:start] + seq[end:]
 
 
 def delete_nucleotides(seq, start, n):
-    """Return the sequence with n deletions from position 'pos'."""
+    """Return the sequence with ``n`` deletions from position ``start``."""
     return seq[:start] + seq[start + n :]
 
 
@@ -56,9 +56,9 @@ def replace_occurence(seq, pattern, replacement, strand="both"):
 
 
 def swap_segments(seq, pos1, pos2):
-    """Return a new sequence with segments at position pos1 and pos2 swapped.
+    """Return a new sequence with segments at position ``pos1`` and ``pos2`` swapped.
 
-    pos1, pos2 are both of the form (start1, end1), (start2, end2).
+    ``pos1``, ``pos2`` are both of the form (start1, end1), (start2, end2).
     """
     (start1, end1), (start2, end2) = sorted([pos1, pos2])
     return (
@@ -71,6 +71,6 @@ def swap_segments(seq, pos1, pos2):
 
 
 def copy_and_paste_segment(seq, start, end, new_start):
-    """Return the sequence with segment [start, end] also copied elsewhere,
-    starting in new_start."""
+    """Return the sequence with segment ``[start, end]`` also copied elsewhere,
+    starting in ``new_start`."""
     return insert_segment(seq, new_start, seq[start:end])

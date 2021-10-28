@@ -58,6 +58,7 @@ __all__ = [
     "write_record",
     "anonymized_record",
     "censor_record",
+    "censor_genbank",
     "records_from_data_files",
     "dna_pattern_to_regexpr",
     "all_iupac_variants",

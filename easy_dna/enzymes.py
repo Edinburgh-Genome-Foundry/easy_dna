@@ -1,7 +1,7 @@
 """Methods for enzyme operations."""
+from Bio import Restriction
 
 from .matching import all_iupac_variants
-from Bio import Restriction
 
 
 def list_common_enzymes(

@@ -5,7 +5,7 @@ from .record_operations import sequence_to_atgc_string
 
 
 def dna_pattern_to_regexpr(dna_pattern):
-    """Return a regular expression pattern for the provided DNA pattern
+    """Return a regular expression pattern for the provided DNA pattern.
 
     For instance ``dna_pattern_to_regexpr('ATTNN')`` returns
     ``"ATT[A|T|G|C][A|T|G|C]"``.
@@ -54,7 +54,7 @@ def find_occurence(seq, pattern, strand="both"):
     elif strand == -1:
         rev = reverse_complement(seq)
         occurrence = find_occurence(rev, pattern, strand=1)
-        if occurrence == None:
+        if occurrence is None:
             return None
         L = len(seq)
         return (L - occurrence[1], L - occurrence[0], -1)

@@ -1,4 +1,5 @@
 from copy import deepcopy
+
 from Bio.Seq import Seq
 from Bio.SeqRecord import SeqRecord
 from Bio.SeqFeature import SeqFeature, FeatureLocation
@@ -59,6 +60,7 @@ def annotate_record(
 ):
     """Add a feature to a Biopython SeqRecord.
 
+
     Parameters
     ----------
 
@@ -95,6 +97,7 @@ def anonymized_record(record, record_id="anonymized", label_generator="feature_%
 
     Warning: this does not change the record sequence!
 
+
     Parameters
     ----------
     record
@@ -104,7 +107,7 @@ def anonymized_record(record, record_id="anonymized", label_generator="feature_%
       ID of the new record.
 
     label_generator
-      Recipe to change feature labels. Either "feature_%d" or None (no label)
+      Recipe to change feature labels. Either ``"feature_%d"`` or ``None`` (no label)
       of a function (i, feature)=>label.
     """
     new_record = deepcopy(record)
@@ -149,7 +152,7 @@ def censor_record(
       ID of the new record.
 
     label_generator
-      Recipe to change feature labels. Either "feature_%d" or None (no label)
+      Recipe to change feature labels. Either ``"feature_%d"`` or ``None`` (no label)
       of a function (i, feature)=>label.
 
     keep_topology

@@ -1,6 +1,8 @@
-from Bio.Seq import Seq
-from .biotables import COMPLEMENTS, CODONS_SEQUENCES
 import numpy as np
+
+from Bio.Seq import Seq
+
+from .biotables import COMPLEMENTS, CODONS_SEQUENCES
 
 
 def complement(dna_sequence):
@@ -8,7 +10,7 @@ def complement(dna_sequence):
 
     For instance ``complement("ATGCCG")`` returns ``"TACGGC"``.
 
-    Uses BioPython for speed.
+    Uses Biopython for speed.
     """
     if hasattr(dna_sequence, "complement"):
         return dna_sequence.complement()
@@ -21,9 +23,9 @@ def complement(dna_sequence):
 def reverse_complement(dna_sequence):
     """Return the reverse-complement of the DNA sequence.
 
-    For instance ``complement("ATGCCG")`` returns ``"GCCGTA"``.
+    For instance ``reverse_complement("ATGCCG")`` returns ``"CGGCAT"``.
 
-    Uses BioPython for speed.
+    Uses Biopython for speed.
     """
     if hasattr(dna_sequence, "reverse_complement"):
         return dna_sequence.reverse_complement()
@@ -40,15 +42,16 @@ def reverse_translate(protein_sequence, randomize_codons=False):
         random_indices = np.random.randint(0, 1000, len(protein_sequence))
         return "".join(
             [
-                CODONS_SEQUENCES[aa][random_indice % len(CODONS_SEQUENCES[aa])]
-                for aa, random_indice in zip(protein_sequence, random_indices)
+                CODONS_SEQUENCES[aa][random_index % len(CODONS_SEQUENCES[aa])]
+                for aa, random_index in zip(protein_sequence, random_indices)
             ]
         )
     return "".join([CODONS_SEQUENCES[aa][0] for aa in protein_sequence])
 
 
 def translate(dna_sequence, translation_table="Bacterial"):
-    """Translate the DNA sequence into an amino-acids sequence "MLKYQT...".
+    """Translate the DNA sequence into an amino-acid sequence "MLKYQT...".
+
     If ``translation_table`` is the name or number of a NCBI genetic table,
     Biopython will be used. See here for options:
 
@@ -56,8 +59,6 @@ def translate(dna_sequence, translation_table="Bacterial"):
 
     ``translation_table`` can also be a dictionary of the form
     ``{"ATT": "M", "CTC": "X", etc.}`` for more exotic translation tables.
-
-
     """
     if isinstance(translation_table, dict):
         return "".join(
