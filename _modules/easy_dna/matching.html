@@ -96,7 +96,7 @@
 
 
 <div class="viewcode-block" id="dna_pattern_to_regexpr"><a class="viewcode-back" href="../../index.html#easy_dna.dna_pattern_to_regexpr">[docs]</a><span class="k">def</span> <span class="nf">dna_pattern_to_regexpr</span><span class="p">(</span><span class="n">dna_pattern</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Return a regular expression pattern for the provided DNA pattern</span>
+    <span class="sd">&quot;&quot;&quot;Return a regular expression pattern for the provided DNA pattern.</span>
 
 <span class="sd">    For instance ``dna_pattern_to_regexpr(&#39;ATTNN&#39;)`` returns</span>
 <span class="sd">    ``&quot;ATT[A|T|G|C][A|T|G|C]&quot;``.</span>
@@ -145,7 +145,7 @@
     <span class="k">elif</span> <span class="n">strand</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
         <span class="n">rev</span> <span class="o">=</span> <span class="n">reverse_complement</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span>
         <span class="n">occurrence</span> <span class="o">=</span> <span class="n">find_occurence</span><span class="p">(</span><span class="n">rev</span><span class="p">,</span> <span class="n">pattern</span><span class="p">,</span> <span class="n">strand</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">occurrence</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">occurrence</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>
         <span class="n">L</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span>
         <span class="k">return</span> <span class="p">(</span><span class="n">L</span> <span class="o">-</span> <span class="n">occurrence</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">L</span> <span class="o">-</span> <span class="n">occurrence</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>

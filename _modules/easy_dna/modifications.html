@@ -99,17 +99,17 @@
 
 
 <div class="viewcode-block" id="insert_segment"><a class="viewcode-back" href="../../index.html#easy_dna.insert_segment">[docs]</a><span class="k">def</span> <span class="nf">insert_segment</span><span class="p">(</span><span class="n">seq</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">inserted</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Return the sequence with ``inserted`` inserted, starting at index &#39;pos&#39;.&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Return the sequence with ``inserted`` inserted, starting at index ``pos``.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">seq</span><span class="p">[:</span><span class="n">pos</span><span class="p">]</span> <span class="o">+</span> <span class="n">inserted</span> <span class="o">+</span> <span class="n">seq</span><span class="p">[</span><span class="n">pos</span><span class="p">:]</span></div>
 
 
 <div class="viewcode-block" id="delete_segment"><a class="viewcode-back" href="../../index.html#easy_dna.delete_segment">[docs]</a><span class="k">def</span> <span class="nf">delete_segment</span><span class="p">(</span><span class="n">seq</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Return the sequence with n deletions from position &#39;pos&#39;.&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Return the sequence with deleted segment from ``start`` to ``end``.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">seq</span><span class="p">[:</span><span class="n">start</span><span class="p">]</span> <span class="o">+</span> <span class="n">seq</span><span class="p">[</span><span class="n">end</span><span class="p">:]</span></div>
 
 
 <div class="viewcode-block" id="delete_nucleotides"><a class="viewcode-back" href="../../index.html#easy_dna.delete_nucleotides">[docs]</a><span class="k">def</span> <span class="nf">delete_nucleotides</span><span class="p">(</span><span class="n">seq</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Return the sequence with n deletions from position &#39;pos&#39;.&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Return the sequence with ``n`` deletions from position ``start``.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">seq</span><span class="p">[:</span><span class="n">start</span><span class="p">]</span> <span class="o">+</span> <span class="n">seq</span><span class="p">[</span><span class="n">start</span> <span class="o">+</span> <span class="n">n</span> <span class="p">:]</span></div>
 
 
@@ -147,9 +147,9 @@
 
 
 <div class="viewcode-block" id="swap_segments"><a class="viewcode-back" href="../../index.html#easy_dna.swap_segments">[docs]</a><span class="k">def</span> <span class="nf">swap_segments</span><span class="p">(</span><span class="n">seq</span><span class="p">,</span> <span class="n">pos1</span><span class="p">,</span> <span class="n">pos2</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Return a new sequence with segments at position pos1 and pos2 swapped.</span>
+    <span class="sd">&quot;&quot;&quot;Return a new sequence with segments at position ``pos1`` and ``pos2`` swapped.</span>
 
-<span class="sd">    pos1, pos2 are both of the form (start1, end1), (start2, end2).</span>
+<span class="sd">    ``pos1``, ``pos2`` are both of the form (start1, end1), (start2, end2).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="p">(</span><span class="n">start1</span><span class="p">,</span> <span class="n">end1</span><span class="p">),</span> <span class="p">(</span><span class="n">start2</span><span class="p">,</span> <span class="n">end2</span><span class="p">)</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">([</span><span class="n">pos1</span><span class="p">,</span> <span class="n">pos2</span><span class="p">])</span>
     <span class="k">return</span> <span class="p">(</span>
@@ -162,8 +162,8 @@
 
 
 <div class="viewcode-block" id="copy_and_paste_segment"><a class="viewcode-back" href="../../index.html#easy_dna.copy_and_paste_segment">[docs]</a><span class="k">def</span> <span class="nf">copy_and_paste_segment</span><span class="p">(</span><span class="n">seq</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">new_start</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Return the sequence with segment [start, end] also copied elsewhere,</span>
-<span class="sd">    starting in new_start.&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Return the sequence with segment ``[start, end]`` also copied elsewhere,</span>
+<span class="sd">    starting in ``new_start`.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">insert_segment</span><span class="p">(</span><span class="n">seq</span><span class="p">,</span> <span class="n">new_start</span><span class="p">,</span> <span class="n">seq</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">end</span><span class="p">])</span></div>
 </pre></div>
 
