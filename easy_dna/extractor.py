@@ -218,7 +218,7 @@ def make_part_dict(records_dict, min_sequence_length=20):
     # shared sequences, shared names.
     for i, (key, record_list) in enumerate(records_dict.items()):
         for j, record in enumerate(record_list):
-            s = pd.Series(None, index=report_index, name=i)
+            s = pd.Series(None, index=report_index, name=i, dtype="float64")
             s["input_construct"] = key
             s["input_sequence"] = record.name
             s["has_copy"] = False  # default
@@ -263,8 +263,8 @@ def process_report(report):
     The function finds common parts within constructs and identical sequences
     between constructs.
     """
-    all_shared_with = pd.Series()
-    all_equal_to = pd.Series()
+    all_shared_with = pd.Series(dtype="float64")
+    all_equal_to = pd.Series(dtype="float64")
     for sequence in report.loc[report["has_copy"]]["sequence_string"]:
         constructs = report.loc[report["sequence_string"] == sequence][
             "input_construct"
