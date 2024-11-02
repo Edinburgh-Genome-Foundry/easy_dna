@@ -18,18 +18,24 @@ from .random_sequences import random_dna_sequence
 import easy_dna
 
 
+# See io.py for an explanation of the approach regarding record operations.
 def sequence_to_biopython_record(
-    sequence, id="<unknown id>", name="<unknown name>", features=()
+    sequence, id="<unknown id>", name="Exported", features=()
 ):
-    """Return a SeqRecord of the sequence, ready to be Genbanked."""
-    if hasattr(sequence, "seq"):
+    """Return a SeqRecord of a DNA sequence, ready to be Genbanked."""
+    if hasattr(sequence, "seq"):  # already a SeqRecord()
         return sequence
     if has_dna_alphabet:  # Biopython <1.78
         sequence = Seq(sequence, alphabet=DNAAlphabet())
     else:
         sequence = Seq(sequence)
 
-    seqrecord = SeqRecord(sequence, id=id, name=name, features=list(features),)
+    seqrecord = SeqRecord(
+        sequence,
+        id=id,
+        name=name,
+        features=list(features),
+    )
     seqrecord.annotations["molecule_type"] = "DNA"
 
     return seqrecord
@@ -116,7 +122,8 @@ def anonymized_record(record, record_id="anonymized", label_generator="feature_%
         "data_file_division": "   ",
         "keywords": [],
     }
-    new_record.id = new_record.name = record_id
+    new_record.id = record_id
+    new_record.name = "Exported"  # in case it hasn't been set before
     for i, feature in enumerate(new_record.features):
         label = None
         if hasattr(label_generator, "__call__"):

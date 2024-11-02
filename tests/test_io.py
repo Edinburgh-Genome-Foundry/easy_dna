@@ -52,7 +52,7 @@ def test_record_to_formated_string():
         "ACGTGCGATGGGATTATTTCCAAC", id="test id", name="test name"
     )
 
-    record_string = record_to_formated_string(record, fmt="fasta", remove_descr=True)
+    record_string = record_to_formated_string(record, remove_descr=True)
     assert isinstance(record_string, bytes)
 
 

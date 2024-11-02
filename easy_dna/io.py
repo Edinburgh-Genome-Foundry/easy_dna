@@ -24,64 +24,115 @@ from snapgene_reader import snapgene_file_to_seqrecord
 from .record_operations import sequence_to_biopython_record
 
 
-def load_record(filename, record_id="auto", upperize=False, id_cutoff=20):
-    """Load a Fasta/Genbank/Snapgene file as a Biopython record.
+# Guidelines:
+# Use only alphanumeric and underscore characters in the sequence name.
+# Sequence names must be maximum 20 character long.
+# Set SeqRecord.id to the sequence name, and .name="Exported" (this is used in exports).
+# Genbank format must be: LOCUS = Exported, filename = sequence name.
+def load_record(
+    filename, record_id="filename", adapt_id=True, upperize=False, id_cutoff=20
+):
+    """Load a FASTA/Genbank/Snapgene file as a Biopython record.
 
     Parameters
     ==========
+
     filename
-      Path to the file containing the record.
+      Path to the sequence file.
 
     record_id
-      Id of the record (leave to "auto" to keep the record's original Id, which
-      will default to the file name if the record has no Id).
+      ID of the record ("filename": use the file name; "original": keep the record's
+      original ID (defaults to file name if the record has no ID).
+
+    adapt_id
+       If True, convert ID to alphanumeric and underscore.
 
     upperize
       If true, the record's sequence will be upperized.
 
     id_cutoff
-      If the Id is read from a filename, it will get truncated at this cutoff
-      to avoid errors at report write time.
+      If the ID is longer than this value, it will get truncated at this cutoff to
+      conform to guidelines and Genbank name limit. Use `None` for no cutoff.
     """
-    if filename.lower().endswith(("gb", "gbk")):
+    # FILEFORMAT
+    if filename.lower().endswith((".gb", ".gbk")):
         record = SeqIO.read(filename, "genbank")
-    elif filename.lower().endswith(("fa", "fasta")):
+    elif filename.lower().endswith((".fa", ".fasta")):
         record = SeqIO.read(filename, "fasta")
     elif filename.lower().endswith(".dna"):
         record = snapgene_file_to_seqrecord(filename)
     else:
         raise ValueError("Unknown format for file: %s" % filename)
+    # LETTERCASE
     if upperize:
         record = record.upper()
-    if record_id == "auto":
-        record_id = record.id
-        if record_id in [None, "", "<unknown id>", ".", " "]:
-            record_id = os.path.splitext(os.path.basename(filename))[0]
-            record.id = record_id
-            record.name = record_id.replace(" ", "_")[:id_cutoff]
-        record.id = record_id
-    elif record_id is not None:
-        record.id = record_id
-        record.name = record_id.replace(" ", "_")[:id_cutoff]
+    # NAME
+    record.name = "Exported"
+    if record_id == "original":
+        if record.id in [None, "", "<unknown id>", ".", " "]:
+            record.id = os.path.splitext(os.path.basename(filename))[0]
+    elif record_id == "filename":
+        record.id = os.path.splitext(os.path.basename(filename))[0]
+    else:  # to catch if a deprecated specification is used
+        ValueError("`record_id` must be one of `filename` or `original`!")
+    # LENGTH
+    if id_cutoff is not None:
+        record.id = record.id[:id_cutoff]
+    # CHARACTERS
+    if adapt_id:
+        record.id = "".join([char if char.isalnum() else "_" for char in record.id])
+
     return record
 
 
-def write_record(record, target, fmt="genbank"):
-    """Write a record as genbank, fasta, etc. via Biopython, with fixes."""
+def write_record(record, target, id_cutoff=20, adapt_id=True):
+    """Write a DNA record as Genbank or FASTA via Biopython, with fixes.
+
+    Parameters
+    ==========
+
+    record
+      Biopython SeqRecord.
+
+    target
+      Filepath, string or StringIO instance. Desired sequence format is inferred from
+      ending. If it's a directory, it uses the ID as filename and exports Genbank.
+
+    id_cutoff
+      If the ID is longer than this value, it will get truncated at this cutoff to
+      conform to guidelines and Genbank name limit. Use `None` for no cutoff.
+
+    adapt_id
+      If True, convert ID to alphanumeric and underscore.
+    """
     record = deepcopy(record)
-    record.name = record.name[:20]
-    if has_dna_alphabet:  # Biopython <1.78
+    record.name = "Exported"  # This is used as LOCUS
+    if id_cutoff is not None:
+        record.id = record.id[:id_cutoff]
+    if adapt_id:
+        record.id = "".join([char if char.isalnum() else "_" for char in record.id])
+    if has_dna_alphabet:  # for Biopython <1.78
         if str(record.seq.alphabet.__class__.__name__) != "DNAAlphabet":
             record.seq.alphabet = DNAAlphabet()
     record.annotations["molecule_type"] = "DNA"
 
     if hasattr(target, "open"):
         target = target.open("w")
+    else:
+        if type(target) is StringIO:
+            fmt = "genbank"
+        elif target.lower().endswith((".gb", ".gbk")):
+            fmt = "genbank"
+        elif target.lower().endswith((".fa", ".fasta")):
+            fmt = "fasta"
+        else:  # directory
+            target = os.path.join(target, record.id + ".gb")
+            fmt = "genbank"
     SeqIO.write(record, target, fmt)
 
 
 def string_to_record(string):
-    """Convert a string of a fasta, genbank... into a simple ATGC string.
+    """Convert a string of a FASTA, Genbank... into a simple ATGC string.
 
     Can also be used to detect a format.
     """
@@ -200,8 +251,8 @@ def records_from_file(filepath):
     return records, fmt
 
 
-def record_to_formated_string(record, fmt="genbank", remove_descr=False):
-    """Return a string with the content of a FASTA/GENBANK file."""
+def record_to_formated_string(record, remove_descr=False):
+    """Return a string with the content of a Genbank file."""
     if remove_descr:
         record = deepcopy(record)
         if isinstance(record, (list, tuple)):
@@ -210,13 +261,13 @@ def record_to_formated_string(record, fmt="genbank", remove_descr=False):
         else:
             record.description = ""
     fileobject = StringIO()
-    write_record(record, fileobject, fmt)
+    write_record(record=record, target=fileobject)
+
     return fileobject.getvalue().encode("utf-8")
 
 
 def records_from_data_files(filepaths=None, folder=None):
-    """Automatically convert files or a folder's content to Biopython records.
-    """
+    """Automatically convert files or a folder's content to Biopython records."""
     if folder is not None:
         filepaths = [f._path for f in flametree.file_tree(folder)._all_files]
     records = []

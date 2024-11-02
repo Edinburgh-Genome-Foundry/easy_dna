@@ -1,10 +1,8 @@
 import os
-import pytest
 
 from easy_dna import (
     annotate_record,
     sequence_to_biopython_record,
-    record_with_different_sequence,
     anonymized_record,
     censor_record,
     censor_genbank,
@@ -21,7 +19,7 @@ def test_anonymized_record():
     record = anonymized_record(record)
     assert record.seq == "ACGTGCGATGGGATTATTTCCAAC"
     assert record.id == "anonymized"
-    assert record.name == "anonymized"
+    assert record.name == "Exported"
     assert record.features[0].qualifiers["label"] == "feature_0"
 
 
@@ -34,7 +32,7 @@ def test_censor_record():
     )
     assert record.seq != sequence
     assert record.id == "censored"
-    assert record.name == "censored"
+    assert record.name == "Exported"
     assert record.features[0].qualifiers["label"] == "feature_0"
     assert "CGTCTC" in record.seq
 
