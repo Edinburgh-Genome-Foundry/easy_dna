@@ -12,7 +12,7 @@ from .biotables import (
     COMPLEMENTS,
 )
 
-from .io import load_record, write_record, records_from_data_files
+from .io import load_record, write_record, records_from_data_files, is_genbank_standard
 
 from .matching import dna_pattern_to_regexpr, all_iupac_variants
 
@@ -60,6 +60,7 @@ __all__ = [
     "censor_record",
     "censor_genbank",
     "records_from_data_files",
+    "is_genbank_standard",
     "dna_pattern_to_regexpr",
     "all_iupac_variants",
     "random_dna_sequence",

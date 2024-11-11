@@ -24,6 +24,44 @@ from snapgene_reader import snapgene_file_to_seqrecord
 from .record_operations import sequence_to_biopython_record
 
 
+genbank_reference = {
+    # From the Genbank file format definition (release 260).
+    # 0-based slicing indices below.
+    # name: (start, end, [options])
+    "locus": (0, 5, ["LOCUS"]),
+    "name": (12, 28, None),
+    "length": (29, 40, None),
+    "bp": (41, 43, ["bp"]),
+    "strandedness": (44, 47, ["   ", "ss-", "ds-", "ms-"]),
+    "moleculetype": (
+        47,
+        53,
+        [
+            "NA    ",
+            "DNA   ",
+            "RNA   ",
+            "tRNA  ",
+            "rRNA  ",
+            "mRNA  ",
+            "uRNA  ",
+            "cRNA  ",
+        ],
+    ),
+    # No topology info (spaces) also allowed, for flexibility:
+    "moleculetopology": (55, 63, ["linear  ", "circular", "        "]),
+    "divisioncode": (64, 67, None),
+    "updatedate": (68, 79, None),
+    # Spaces:
+    "space1": (5, 12, "       "),
+    "space2": (28, 29, " "),
+    "space3": (40, 41, " "),
+    "space4": (43, 44, " "),
+    "space5": (53, 55, "  "),
+    "space6": (63, 64, " "),
+    "space7": (67, 68, " "),
+}
+
+
 # Guidelines:
 # Use only alphanumeric and underscore characters in the sequence name.
 # Sequence names must be maximum 20 character long.
@@ -305,3 +343,21 @@ def records_from_data_files(filepaths=None, folder=None):
             record.file_name = name_no_extension
         records += recs
     return records
+
+
+def is_genbank_standard(filepath):
+    """Check the LOCUS line of a Genbank file."""
+    with open(filepath) as genbank:
+        first_line = genbank.readline().strip("\n")
+    is_correct = True
+    for key, value in genbank_reference.items():
+        if value[2] is not None:
+            if first_line[value[0] : value[1]] not in value[2]:
+                print(first_line[value[0] : value[1]])
+                print("Error:", key)
+                is_correct = False
+    if not is_correct:
+        entries = re.split(" +", first_line)
+        print(entries)
+
+    return is_correct
