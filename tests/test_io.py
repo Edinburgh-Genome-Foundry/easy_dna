@@ -12,6 +12,7 @@ from easy_dna.io import (
     records_from_file,
     record_to_formated_string,
     records_from_data_files,
+    is_genbank_standard,
 )
 
 RECORDS_FOLDER = os.path.join("tests", "data")
@@ -60,3 +61,7 @@ def test_records_from_data_files():
     records = records_from_data_files(folder=RECORDS_FOLDER)
     for record in records:
         assert isinstance(record, SeqRecord)
+
+
+def test_is_genbank_standard():
+    assert is_genbank_standard(os.path.join(RECORDS_FOLDER, "test.gb")) == True
