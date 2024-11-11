@@ -362,15 +362,17 @@ def is_genbank_standard(filepath):
         is_correct = False
         return is_correct
 
-    print(len(first_line))
     for key, value in genbank_reference.items():
         if value[2] is not None:
             if first_line[value[0] : value[1]] not in value[2]:
                 print(first_line[value[0] : value[1]])
                 print("Error:", key)
                 is_correct = False
+    entries = re.split(" +", first_line)
+    if not entries[2].isnumeric():  # entry is length as per Genbank definition
+        is_correct = False
+        print("Error: non-numeric characters in length:", entries[2])
     if not is_correct:
-        entries = re.split(" +", first_line)
         print(entries)
 
     return is_correct
