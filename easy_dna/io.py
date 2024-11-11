@@ -350,6 +350,19 @@ def is_genbank_standard(filepath):
     with open(filepath) as genbank:
         first_line = genbank.readline().strip("\n")
     is_correct = True
+    std_locus_line_len = 79  # as per Genbank definition
+    if len(first_line) != std_locus_line_len:
+        print(
+            "Error: LOCUS line is %d characters long! (standard length = %d)"
+            % (
+                len(first_line),
+                std_locus_line_len,
+            )
+        )
+        is_correct = False
+        return is_correct
+
+    print(len(first_line))
     for key, value in genbank_reference.items():
         if value[2] is not None:
             if first_line[value[0] : value[1]] not in value[2]:
