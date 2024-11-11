@@ -61,6 +61,21 @@ genbank_reference = {
     "space7": (67, 68, " "),
 }
 
+genbank_months = [
+    "JAN",
+    "FEB",
+    "MAR",
+    "APR",
+    "MAY",
+    "JUN",
+    "JUL",
+    "AUG",
+    "SEP",
+    "OCT",
+    "NOV",
+    "DEC",
+]
+
 
 # Guidelines:
 # Use only alphanumeric and underscore characters in the sequence name.
@@ -372,6 +387,18 @@ def is_genbank_standard(filepath):
     if not entries[2].isnumeric():  # entry is length as per Genbank definition
         is_correct = False
         print("Error: non-numeric characters in length:", entries[2])
+    # Last entry is dd-MM-yyyy: (Note that topology entry may be whitespace only)
+    date_values = entries[-1].split("-")
+    if not date_values[0].isnumeric():  # ignore non-valid day number (e.g. 00)
+        is_correct = False
+        print("Error: non-numeric characters in day:", date_values[0])
+    if date_values[1] not in genbank_months:
+        is_correct = False
+        print("Error: invalid month:", date_values[1])
+    if not date_values[2].isnumeric():  # ignore non-valid year number
+        is_correct = False
+        print("Error: non-numeric characters in year:", date_values[2])
+
     if not is_correct:
         print(entries)
 
