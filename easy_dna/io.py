@@ -1,5 +1,6 @@
 from copy import deepcopy
 from io import BytesIO, StringIO
+import itertools
 import os
 import re
 
@@ -23,6 +24,21 @@ from snapgene_reader import snapgene_file_to_seqrecord
 
 from .record_operations import sequence_to_biopython_record
 
+strands = ["   ", "ss-", "ds-", "ms-"]
+moleculetypes = [
+    "NA    ",
+    "DNA   ",
+    "RNA   ",
+    "tRNA  ",
+    "rRNA  ",
+    "mRNA  ",
+    "uRNA  ",
+    "cRNA  ",
+]
+
+strand_molecules = [
+    "".join(entry).strip(" ") for entry in itertools.product(strands, moleculetypes)
+]
 
 genbank_reference = {
     # From the Genbank file format definition (release 260).
@@ -32,20 +48,11 @@ genbank_reference = {
     "name": (12, 28, None),
     "length": (29, 40, None),
     "bp": (41, 43, ["bp"]),
-    "strandedness": (44, 47, ["   ", "ss-", "ds-", "ms-"]),
+    "strandedness": (44, 47, strands),
     "moleculetype": (
         47,
         53,
-        [
-            "NA    ",
-            "DNA   ",
-            "RNA   ",
-            "tRNA  ",
-            "rRNA  ",
-            "mRNA  ",
-            "uRNA  ",
-            "cRNA  ",
-        ],
+        moleculetypes,
     ),
     # No topology info (spaces) also allowed, for flexibility:
     "moleculetopology": (55, 63, ["linear  ", "circular", "        "]),
@@ -76,12 +83,16 @@ genbank_months = [
     "DEC",
 ]
 
+locus_guide = """+---+       +--------------+ +---------+ +- +--+----+  +------+ +-- +---------+
+1   5       13            28 30       40 42 45 48  53  56    63 65  69       79"""
+
 
 # Guidelines:
 # Use only alphanumeric and underscore characters in the sequence name.
 # Sequence names must be maximum 20 character long.
 # Set SeqRecord.id to the sequence name, and .name="Exported" (this is used in exports).
 # Genbank format must be: LOCUS = Exported, filename = sequence name.
+# 'Exported' as name is within required length and also used by other software.
 def load_record(
     filename, record_id="filename", adapt_id=True, upperize=False, id_cutoff=20
 ):
@@ -120,7 +131,7 @@ def load_record(
     if upperize:
         record = record.upper()
     # NAME
-    record.name = "Exported"
+    record.name = "Exported"  # see guidelines above
     if record_id == "original":
         if record.id in [None, "", "<unknown id>", ".", " "]:
             record.id = os.path.splitext(os.path.basename(filename))[0]
@@ -362,11 +373,47 @@ def records_from_data_files(filepaths=None, folder=None):
 
 def is_genbank_standard(filepath):
     """Check the LOCUS line of a Genbank file."""
+    std_locus_line_len = 79  # as per Genbank definition
+    is_correct = True
+    expected_entries = 8  # expected, as per Genbank definition
+    # Strandedness and Molecule Type is handled as one entry.
+
     with open(filepath) as genbank:
         first_line = genbank.readline().strip("\n")
-    is_correct = True
-    std_locus_line_len = 79  # as per Genbank definition
-    if len(first_line) != std_locus_line_len:
+
+    entries = re.split(" +", first_line)
+    if len(entries) == expected_entries:
+        topology = entries[-3]
+    # Topology can be empty (spaces), in that case we expect one fewer column:
+    elif len(entries) == expected_entries - 1:
+        topology = "        "
+    else:  # bad first line, quit
+        print("Error: malformatted locus line: missing or too many entries")
+        print(first_line, locus_guide, sep="\n")
+        is_correct = False
+
+        return is_correct
+
+    entry_dict = {
+        "locus": entries[0],
+        "name": entries[1],
+        "length": entries[2],
+        "bp": entries[3],
+        "strand_molecules": entries[4],
+        "moleculetopology": topology,
+        "divisioncode": entries[-2],
+        "updatedate": entries[-1],
+    }
+
+    if len(first_line) == std_locus_line_len:
+        # Look up each entry:
+        for key, value in genbank_reference.items():
+            if value[2] is not None:
+                if first_line[value[0] : value[1]] not in value[2]:
+                    print("Error:", key, "=", first_line[value[0] : value[1]])
+                    print("       It should be one of ", value[2])
+                    is_correct = False
+    else:  # incorrect length, but we try and parse using whitespace
         print(
             "Error: LOCUS line is %d characters long! (standard length = %d)"
             % (
@@ -375,31 +422,40 @@ def is_genbank_standard(filepath):
             )
         )
         is_correct = False
-        return is_correct
 
-    for key, value in genbank_reference.items():
-        if value[2] is not None:
-            if first_line[value[0] : value[1]] not in value[2]:
-                print(first_line[value[0] : value[1]])
-                print("Error:", key)
-                is_correct = False
-    entries = re.split(" +", first_line)
-    if not entries[2].isnumeric():  # entry is length as per Genbank definition
+        # This checks the same as the block above, except on whitespace-split entries:
+        for entry, value in entry_dict.items():
+            if entry in genbank_reference.keys():
+                if genbank_reference[entry][2] is not None:
+                    if value not in genbank_reference[entry][2]:
+                        print("Error:", entry, "=", value)
+                        print(
+                            "       It should be one of ", genbank_reference[entry][2]
+                        )
+        # We split by whitespace, therefore this entry won't be in the Genbank ref
+        if entry_dict["strand_molecules"] not in strand_molecules:
+            print(
+                "Error: incorrect strandness+molecule type = ",
+                entry_dict["strand_molecules"],
+            )
+
+    # Inspecting entries in detail:
+    if not entry_dict["length"].isnumeric():
         is_correct = False
         print("Error: non-numeric characters in length:", entries[2])
-    # Last entry is dd-MM-yyyy: (Note that topology entry may be whitespace only)
-    date_values = entries[-1].split("-")
-    if not date_values[0].isnumeric():  # ignore non-valid day number (e.g. 00)
+    # Date should be dd-MMM-yyyy (15-NOV-2024)
+    date_values = entry_dict["updatedate"].split("-")
+    if not date_values[0].isnumeric():  # ignores non-valid day number (e.g. 00)
         is_correct = False
         print("Error: non-numeric characters in day:", date_values[0])
     if date_values[1] not in genbank_months:
         is_correct = False
         print("Error: invalid month:", date_values[1])
-    if not date_values[2].isnumeric():  # ignore non-valid year number
+    if not date_values[2].isnumeric():  # ignores non-valid year number
         is_correct = False
         print("Error: non-numeric characters in year:", date_values[2])
 
     if not is_correct:
-        print(entries)
+        print(first_line, locus_guide, sep="\n")
 
     return is_correct
