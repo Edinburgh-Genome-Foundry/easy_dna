@@ -5,9 +5,6 @@ easy_dna
     :target: https://app.travis-ci.com/Edinburgh-Genome-Foundry/easy_dna
     :alt: Travis CI build status
 
-.. image:: https://coveralls.io/repos/github/Edinburgh-Genome-Foundry/easy_dna/badge.svg?branch=master
-    :target: https://coveralls.io/github/Edinburgh-Genome-Foundry/easy_dna?branch=master
-
 Easy_dna is a Python library implementing useful routines for manipulating DNA
 sequences, either as "ATGC" strings or Biopython records. It aims at providing
 a simpler interface than Biopython for common operations related to DNA sequence

@@ -6,11 +6,11 @@ sequences, either as "ATGC" strings or Biopython records. It aims at providing
 a simpler interface than Biopython for common operations related to DNA sequence
 design and genbank generation.
 
-**Github Page**
+**Github Page**: `<https://github.com/Edinburgh-Genome-Foundry/easy_dna>`_
 
-`<https://github.com/Edinburgh-Genome-Foundry/easy_dna>`_
+**License:** MIT
 
-**License:** MIT, Copyright Edinburgh Genome Foundry
+Copyright 2019, 2020, 2021, 2024 Edinburgh Genome Foundry, University of Edinburgh
 
 
 More biology software
