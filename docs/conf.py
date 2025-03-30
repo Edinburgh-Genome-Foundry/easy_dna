@@ -10,22 +10,26 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
-# import os
-# import sys
-# sys.path.insert(0, os.path.abspath('.'))
+import os
+import sys
+
+sys.path.insert(0, os.path.abspath("../easy_dna/"))
 
 
 # -- Project information -----------------------------------------------------
 
 project = "Easy DNA"
-copyright = "2019, Edinburgh Genome Foundry"
+copyright = (
+    "Copyright 2019, 2020, 2021, 2024 Edinburgh Genome Foundry, University of Edinburgh"
+)
 author = "Zulko"
 html_theme = "press"
 
 # The full version, including alpha/beta/rc tags
 
-import easy_dna
-release = easy_dna.__version__
+# import easy_dna
+
+# release = easy_dna.__version__
 
 
 # -- General configuration ---------------------------------------------------
@@ -35,13 +39,15 @@ release = easy_dna.__version__
 # ones.
 extensions = [
     "sphinx.ext.autodoc",
+    "sphinx.ext.napoleon",
     "sphinx.ext.todo",
     "sphinx.ext.viewcode",
-    "numpydoc",
+    # "numpydoc",
     "sphinx.ext.githubpages",
     "sphinx.ext.autosummary",
-    "recommonmark",
 ]
+
+napoleon_numpy_docstring = True
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["_templates"]
@@ -51,9 +57,7 @@ templates_path = ["_templates"]
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 
-html_context = {
-    "github_link": "https://github.com/Edinburgh-Genome-Foundry/easy_dna"
-}
+html_context = {"github_link": "https://github.com/Edinburgh-Genome-Foundry/easy_dna"}
 
 # -- Options for HTML output -------------------------------------------------
 
@@ -65,4 +69,3 @@ html_context = {
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ["_static"]
-

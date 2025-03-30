@@ -1,4 +1,5 @@
 """Methods for enzyme operations."""
+
 from Bio import Restriction
 
 from .matching import all_iupac_variants
@@ -11,20 +12,16 @@ def list_common_enzymes(
 
     Parameters
     ----------
-
-    site_length
-      List of accepted site lengths (6, 4, ...).
-
-    opt_temp
-      List of accepted optimal temperatures for the enzyme.
-
-    min_suppliers
-      Minimal number registered suppliers in the Biopython data. A minimum
-      of 3 known suppliers returns the most common enzymes.
-
-    site_unlike
-      List of (ambiguous or unambiguous) DNA sequences that should NOT be
-      recognized by the selected enzymes.
+    site_length : list of int
+        List of accepted site lengths (6, 4, ...).
+    opt_temp : list of int
+        List of accepted optimal temperatures for the enzyme.
+    min_suppliers : int
+        Minimal number of registered suppliers in the Biopython data. A minimum
+        of 3 known suppliers returns the most common enzymes.
+    site_unlike : list of str
+        List of (ambiguous or unambiguous) DNA sequences that should NOT be
+        recognized by the selected enzymes.
     """
     site_unlike = set(
         [

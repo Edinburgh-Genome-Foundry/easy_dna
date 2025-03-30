@@ -1,5 +1,5 @@
 To install dependencies:
 
 ```
-pip install recommonmark sphinx-press-theme numpydoc
+pip install sphinx-press-theme # recommonmark numpydoc
 ```
