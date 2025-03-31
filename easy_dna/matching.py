@@ -17,10 +17,9 @@ def all_iupac_variants(iupac_sequence):
     """Return all unambiguous possible versions of the given sequence.
 
     Examples
-    ========
-
+    --------
     >>> all_iupac_variants('ATN')
-    >>> ['ATA', 'ATC', 'ATG', 'ATT']
+    ['ATA', 'ATC', 'ATG', 'ATT']
     """
     return [
         "".join(nucleotides)

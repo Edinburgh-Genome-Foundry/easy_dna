@@ -1,6 +1,8 @@
 
 .. include:: ../README.rst
 
+---
+
 Reference
 =========
 

@@ -99,24 +99,19 @@ def load_record(
     """Load a FASTA/Genbank/Snapgene file as a Biopython record.
 
     Parameters
-    ==========
-
-    filename
-      Path to the sequence file.
-
-    record_id
-      ID of the record ("filename": use the file name; "original": keep the record's
-      original ID (defaults to file name if the record has no ID).
-
-    adapt_id
-       If True, convert ID to alphanumeric and underscore.
-
-    upperize
-      If true, the record's sequence will be upperized.
-
-    id_cutoff
-      If the ID is longer than this value, it will get truncated at this cutoff to
-      conform to guidelines and Genbank name limit. Use `None` for no cutoff.
+    ----------
+    filename : str
+        Path to the sequence file.
+    record_id : str
+        ID of the record ("filename": use the file name; "original": keep the record's
+        original ID (defaults to file name if the record has no ID).
+    adapt_id : bool
+        If True, convert ID to alphanumeric and underscore.
+    upperize : bool
+        If True, the record's sequence will converted to uppercase.
+    id_cutoff : int, optional
+        If the ID is longer than this value, it will get truncated at this cutoff to
+        conform to guidelines and Genbank name limit. Use `None` for no cutoff.
     """
     # FILEFORMAT
     if filename.lower().endswith((".gb", ".gbk")):
@@ -153,21 +148,17 @@ def write_record(record, target, id_cutoff=20, adapt_id=True):
     """Write a DNA record as Genbank or FASTA via Biopython, with fixes.
 
     Parameters
-    ==========
-
-    record
-      Biopython SeqRecord.
-
-    target
-      Filepath, string or StringIO instance. Desired sequence format is inferred from
-      ending. If it's a directory, it uses the ID as filename and exports Genbank.
-
-    id_cutoff
-      If the ID is longer than this value, it will get truncated at this cutoff to
-      conform to guidelines and Genbank name limit. Use `None` for no cutoff.
-
-    adapt_id
-      If True, convert ID to alphanumeric and underscore.
+    ----------
+    record : SeqRecord
+        Biopython SeqRecord.
+    target : str or StringIO
+        Filepath, string, or StringIO instance. Desired sequence format is inferred from
+        the ending. If it's a directory, it uses the ID as filename and exports Genbank.
+    id_cutoff : int, optional
+        If the ID is longer than this value, it will get truncated at this cutoff to
+        conform to guidelines and Genbank name limit. Use `None` for no cutoff.
+    adapt_id : bool
+        If True, convert ID to alphanumeric and underscore.
     """
     record = deepcopy(record)
     record.name = "Exported"  # This is used as LOCUS

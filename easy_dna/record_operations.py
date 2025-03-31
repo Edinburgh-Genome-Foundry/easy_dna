@@ -66,24 +66,18 @@ def annotate_record(
 ):
     """Add a feature to a Biopython SeqRecord.
 
-
     Parameters
     ----------
-
-    seqrecord
-      The Biopython SeqRecord to be annotated.
-
-    location
-      Either (start, end) or (start, end, strand). (strand defaults to +1).
-
-    feature_type
-      The type associated with the feature.
-
-    margin
-      Number of extra bases added on each side of the given location.
-
-    qualifiers
-      Dictionary that will be the Biopython feature's `qualifiers` attribute.
+    seqrecord : SeqRecord
+        The Biopython SeqRecord to be annotated.
+    location : FeatureLocation
+        Either (start, end) or (start, end, strand). (strand defaults to +1).
+    feature_type : str
+        The type associated with the feature.
+    margin : int
+        Number of extra bases added on each side of the given location.
+    qualifiers : dict
+        Dictionary that will be the Biopython feature's `qualifiers` attribute.
     """
     if location == "full":
         location = (margin, len(seqrecord) - margin)
@@ -103,18 +97,15 @@ def anonymized_record(record, record_id="anonymized", label_generator="feature_%
 
     Warning: this does not change the record sequence!
 
-
     Parameters
     ----------
-    record
-      The record to be anonymized.
-
-    record_id
-      ID of the new record.
-
-    label_generator
-      Recipe to change feature labels. Either ``"feature_%d"`` or ``None`` (no label)
-      of a function (i, feature)=>label.
+    record : SeqRecord
+        The record to be anonymized.
+    record_id : str
+        ID of the new record.
+    label_generator : str or function
+        Recipe to change feature labels. Either "feature_%d" or "None" (no label)
+        or a function (i, feature) => label.
     """
     new_record = deepcopy(record)
     new_record.annotations = {
@@ -146,31 +137,22 @@ def censor_record(
 ):
     """Return a record with random sequence and censored annotations/features.
 
-    Useful for creating example files or anonymising sequences for bug reports.
-
+    Useful for creating example files or anonymizing sequences for bug reports.
 
     Parameters
     ----------
-
-    record
-      The record to be anonymized.
-
-    record_id
-      ID of the new record.
-
-    label_generator
-      Recipe to change feature labels. Either ``"feature_%d"`` or ``None`` (no label)
-      of a function (i, feature)=>label.
-
-    keep_topology
-      Whether to keep the record topology or not.
-
-    anonymise_features
-      Whether to replace feature labels and ID/name, or not.
-
-    preserve_sites
-      List of enzyme sites to keep. Example: ``["BsmBI", "BsaI"]``. Preserves the
-      sequence around cut sites of the specified enzymes.
+    record : SeqRecord
+        The record to be anonymized.
+    record_id : str
+        ID of the new record.
+    label_generator : str or function
+        Recipe to change feature labels. Either "feature_%d" or "None" (no label) or a function (i, feature) => label.
+    keep_topology : bool
+        Whether to keep the record topology or not.
+    anonymise_features : bool
+        Whether to replace feature labels and ID/name, or not.
+    preserve_sites : list of str
+        List of enzyme sites to keep. Example: ["BsmBI", "BsaI"]. Preserves the sequence around cut sites of the specified enzymes.
     """
     # Anonymise
     if anonymise_features:
@@ -242,18 +224,14 @@ def censor_record(
 def censor_genbank(filename, target, **censor_params):
     """Load Genbank file and write censored version.
 
-
     Parameters
     ----------
-
-    filename
-      Path to the file containing the record.
-
-    target
-      Path to output genbank file.
-
-    censor_params
-      Optional parameters. See ``censor_record()`` for details.
+    filename : str
+        Path to the file containing the record.
+    target : str
+        Path to output Genbank file.
+    censor_params : dict, optional
+        Optional parameters. See `censor_record()` for details.
     """
     record = easy_dna.load_record(filename)
     censored = easy_dna.censor_record(record, **censor_params)

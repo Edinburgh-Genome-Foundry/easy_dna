@@ -16,25 +16,19 @@ def extract_from_input(
     Optionally save the features in separate files.
 
     Parameters
-    ==========
-
-    file
-      Input sequence file (Genbank).
-
-    directory
-      Directory name containing input sequence files.
-
-    construct_list
-      A list of SeqRecords.
-
-    direct_sense
-      If True: make antisense features into direct-sense in the exported files.
-
-    output_path
-      Path for the exported feature and report files.
-
-    min_sequence_length
-      Discard sequences with length less than this integer.
+    ----------
+    filename : str
+        Input sequence file path (e.g. Genbank).
+    directory : str
+        Directory name containing input sequence files.
+    construct_list : list of SeqRecord
+        A list of SeqRecords.
+    direct_sense : bool
+        If True, make antisense features into direct-sense in the exported files.
+    output_path : str
+        Path for the exported feature and report files.
+    min_sequence_length : int
+        Discard sequences with length less than this integer.
     """
     genbank_id_limit = 20  # GenBank format hard limit for name
     if construct_list:
@@ -188,13 +182,11 @@ def make_part_dict(records_dict, min_sequence_length=20):
     Uses records_dict made by run_extraction().
 
     Parameters
-    ==========
-
-    records_dict
-      Dictionary of sequence name: list of features as SeqRecords.
-
-    min_sequence_length
-      Discard sequences with length less than this integer.
+    ----------
+    records_dict : dict
+        Dictionary of sequence name: list of features as SeqRecords.
+    min_sequence_length : int
+        Discard sequences with length less than this integer.
     """
     report_index = [
         "input_construct",
