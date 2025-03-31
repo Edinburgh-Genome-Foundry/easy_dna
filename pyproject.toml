@@ -1,6 +1,6 @@
 [project]
 name = "easy_dna"
-version = "0.3.5"
+version = "0.4.0"
 license = "MIT"
 authors = [{ name = "Zulko" }]
 description = "Methods for DNA sequence reading, writing and editing."
