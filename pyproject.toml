@@ -22,8 +22,8 @@ Homepage = "https://github.com/Edinburgh-Genome-Foundry/easy_dna"
 requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
-[tool.setuptools]
-include-package-data = true
-
 [tool.setuptools.packages.find]
-exclude = ["docs"]
+exclude = ["docs*", "tests*"]
+
+[tool.setuptools.package-data]
+easy_dna = ["data/*"]
